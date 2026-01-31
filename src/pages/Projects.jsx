@@ -9,6 +9,20 @@ import "../styles/Projects.css";
 
 const projectsData = [
   {
+    title: "TCC: ARQUITETURA & IA",
+    subtitle: "PROJETO ACADÊMICO",
+    description: `
+      Projeto de conclusão de curso focado na interseção entre <strong>Arquitetura de Software</strong> e <strong>Inteligência Artificial</strong>.
+      <br/><br/>
+      Desenvolvido para explorar como algoritmos inteligentes podem otimizar decisões arquiteturais e processamento de dados.
+      Envolve o uso de <strong>Python, Machine Learning</strong> e arquiteturas modernas para criar soluções preditivas e eficientes.
+      Um marco acadêmico que demonstra capacidade de pesquisa e implementação complexa.
+    `,
+    link: "https://github.com/joaomarcosribeiretee",
+    media: { type: "youtube", src: "" },
+    isHighlight: true,
+  },
+  {
     title: "LIGAMASTER",
     subtitle: "APLICAÇÃO WEB",
     description: `
@@ -81,26 +95,33 @@ const Projects = () => {
 
           {projectsData.map((project, index) => (
             <SwiperSlide key={index}>
-              <div className="project-slide">
+              <div className={`project-slide ${project.isHighlight ? "highlight-project" : ""}`}>
                 <div className="project-text">
                   <h3 className="project-subtitle">{project.subtitle}</h3>
                   <h2 className="project-title">{project.title}</h2>
                   <p className="project-description" dangerouslySetInnerHTML={{ __html: project.description }}></p>
                   <a href={project.link} target="_blank" rel="noopener noreferrer" className="projects-link">
-                    Acessar o App &gt;
+                    {project.isHighlight ? "Ver Detalhes >" : "Acessar o App >"}
                   </a>
                 </div>
                 <div className="project-media-container">
                   <div className="video-container">
-                    <iframe
-                      className="youtube-iframe"
-                      id={`youtube-${index}`}
-                      src={project.media.src}
-                      title={project.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
+                    {project.media.src ? (
+                      <iframe
+                        className="youtube-iframe"
+                        id={`youtube-${index}`}
+                        src={project.media.src}
+                        title={project.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      ></iframe>
+                    ) : (
+                      /* Fallback for projects without video (like TCC if not ready) */
+                      <div className="media-placeholder">
+                        <span>Em Breve - Documentação Visual</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

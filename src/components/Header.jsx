@@ -17,18 +17,18 @@ const Header = () => {
         setActiveItem("Sobre Mim");
         break;
       case "/skills":
-        setActiveItem("Skills");
+        setActiveItem("Habilidades");
         break;
       case "/projects":
         setActiveItem("Projetos");
         break;
-        case "/experience":
-          setActiveItem("Experiência");
+      case "/experience":
+        setActiveItem("Experiência");
         break;
-        case "/contact":
-          setActiveItem("Contato");
+      case "/contact":
+        setActiveItem("Contato");
         break;
-      
+
       default:
         setActiveItem("Página Inicial");
     }
@@ -70,8 +70,8 @@ const Header = () => {
           </li>
 
           {/* Skills */}
-          <li className={activeItem === "Skills" ? "active" : ""}>
-            <Link to="/skills" onClick={() => handleMenuItemClick("Skills", "/skills")}>Habilidades</Link>
+          <li className={activeItem === "Habilidades" ? "active" : ""}>
+            <Link to="/skills" onClick={() => handleMenuItemClick("Habilidades", "/skills")}>Habilidades</Link>
           </li>
 
           {/* Projetos */}
@@ -79,13 +79,13 @@ const Header = () => {
             <Link to="/projects" onClick={() => handleMenuItemClick("Projetos", "/projects")}>Projetos</Link>
           </li>
 
-         {/* Experiencia */}
+          {/* Experiencia */}
           <li className={activeItem === "Experiência" ? "active" : ""}>
             <Link to="/experience" onClick={() => handleMenuItemClick("Experiência", "/experience")}>Experiência</Link>
           </li>
 
-         {/* Contato */}
-         <li className={activeItem === "Contato" ? "active" : ""}>
+          {/* Contato */}
+          <li className={activeItem === "Contato" ? "active" : ""}>
             <Link to="/contact" onClick={() => handleMenuItemClick("Contato", "/contact")}>Contato</Link>
           </li>
 

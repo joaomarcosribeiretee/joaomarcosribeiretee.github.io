@@ -2,337 +2,364 @@
 
 
 .projects-container {
-    font-family: "Inria Serif", serif;
+  font-family: "Inria Serif", serif;
 }
 
 /* Configurações gerais da página de Projetos */
 .projects-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #2A2A2A;
-    color: white;
-    font-family: "Inria Serif", serif;
-    text-align: center;
-    
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #121212;
+  color: white;
+  font-family: "Inria Serif", serif;
+  text-align: center;
+
 }
 
 /* Wrapper para centralizar o conteúdo */
 .content-wrapper {
-    max-width: 1400px;
-    display: flex;
-    margin-top: 20px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  max-width: 1400px;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Título principal */
 .projects-title {
-    font-family: "Inria Serif", serif;
-    font-weight: 700;
-    font-size: 85px;
-    letter-spacing: 0%;
-    margin-bottom: 25px;
-    text-align: center; /* Garante centralização do título */
+  font-family: "Inria Serif", serif;
+  font-weight: 700;
+  font-size: 85px;
+  letter-spacing: 0%;
+  margin-bottom: 25px;
+  text-align: center;
+  /* Garante centralização do título */
 }
 
 /* Descrição */
 .project-description {
-    font-family: 'Inria Sans', sans-serif; /* Aplica a fonte correta */
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    max-width: 600px;
+  font-family: 'Inria Sans', sans-serif;
+  /* Aplica a fonte correta */
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 600px;
 }
 
 .project-description strong {
-        font-family: 'Inria Sans', sans-serif; /* Aplica a fonte correta */
-    font-weight:900; /* Garante o negrito */
-    color: #FFD700; /* Opcional: cor diferente para destacar */
+  font-family: 'Inria Sans', sans-serif;
+  /* Aplica a fonte correta */
+  font-weight: 900;
+  /* Garante o negrito */
+  color: #FFD700;
+  /* Opcional: cor diferente para destacar */
 }
 
 
 /* Swiper - Container dos Slides */
 .projects-swiper {
-    width: 100%;
-    max-width: 1700px;
-    padding-bottom: 30px; /* Reduza se estiver exagerado */
-    overflow: visible; /* importante para evitar cortes */
-  }
-  
+  width: 100%;
+  max-width: 1700px;
+  padding-bottom: 30px;
+  /* Reduza se estiver exagerado */
+  overflow: visible;
+  /* importante para evitar cortes */
+}
+
 
 /* Estilização dos slides dos projetos */
 .project-slide {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1400px;
-    margin: auto;
-    text-align: left;
-    flex-direction: row;
-    gap: 10px;
-    padding-left: 120px; /* Novo: espaço p/ os ícones */
-    padding-right: 120px;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: auto;
+  text-align: left;
+  flex-direction: row;
+  gap: 10px;
+  padding-left: 120px;
+  /* Novo: espaço p/ os ícones */
+  padding-right: 120px;
+}
+
 /* Ajuste específico para o primeiro slide */
 .first-slide {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 /* Texto do projeto */
 .project-text {
-    flex: 1;
-    max-width: 600px; 
-    padding: 5px;
-    text-align: left;
+  flex: 1;
+  max-width: 600px;
+  padding: 5px;
+  text-align: left;
 }
 
 .project-subtitle {
-    font-family: "Inria Serif", serif;
-    font-size: 22px;
-    font-weight: 300;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    color: #bbb;
+  font-family: "Inria Serif", serif;
+  font-size: 22px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  color: #bbb;
 }
 
 .project-title {
-    font-family: "Inria Serif", serif;
-    font-size: 80px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    margin-top: -5px;
-    
+  font-family: "Inria Serif", serif;
+  font-size: 80px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-top: -5px;
+
 }
 
 .project-description {
-    font-family: 'Inria Sans', sans-serif; /* Aplica a fonte correta */
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    max-width: 600px;
+  font-family: 'Inria Sans', sans-serif;
+  /* Aplica a fonte correta */
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 600px;
 }
 
 .project-media-container {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    max-width: 85%; /* Aumente para dar mais espaço ao vídeo */
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 85%;
+  /* Aumente para dar mais espaço ao vídeo */
 }
 
 
 .project-media {
-    width: 100%;
-    max-width: 1110px; /* Aumentado para expandir o vídeo */
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 1110px;
+  /* Aumentado para expandir o vídeo */
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilo específico para vídeos */
 .project-media video {
-    width: 100%;
-    max-width: 111111px; /* Aumentado para expandir o vídeo */
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    object-fit: cover;
-} 
+  width: 100%;
+  max-width: 111111px;
+  /* Aumentado para expandir o vídeo */
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+}
 
 /* Ajuste para a posição correta do retângulo decorativo */
 .corner-decor2 {
-    position: fixed;
-    bottom: 800px;
-    left: 0px;
-    z-index: 900;
+  position: fixed;
+  bottom: 800px;
+  left: 0px;
+  z-index: 900;
 }
 
 .corner-decor2 img {
-    width: 210px;
-    height: auto;
-    opacity: 0.8;
+  width: 210px;
+  height: auto;
+  opacity: 0.8;
 }
 
 /* Swiper - Paginação (dots) */
 .swiper-pagination-bullet {
-    background-color: #aaa;
-    opacity: 0.7;
+  background-color: #aaa;
+  opacity: 0.7;
 }
 
 .swiper-pagination-bullet-active {
-    background-color: #fff;
-    opacity: 1;
+  background-color: #fff;
+  opacity: 1;
 }
 
 /* Ajuste para evitar bug visual no Swiper */
 .swiper {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 
 /* Título principal */
 .projects-title {
-    font-family: "Inria Serif", serif;
-    font-weight: 700; /* Experimente 800 ou 900 também */
-    font-size: 78px;
-    letter-spacing: 0%;
-    margin-bottom: 25px
+  font-family: "Inria Serif", serif;
+  font-weight: 700;
+  /* Experimente 800 ou 900 também */
+  font-size: 78px;
+  letter-spacing: 0%;
+  margin-bottom: 25px
 }
 
 /* Descrição */
 .projects-description {
-    max-width: 800px;
-    font-size: 1.18rem;
-    line-height: 1.4;
-    font-weight: lighter;
-    margin-bottom: 35px;
-    margin-top: 2px;
+  max-width: 800px;
+  font-size: 1.18rem;
+  line-height: 1.4;
+  font-weight: lighter;
+  margin-bottom: 35px;
+  margin-top: 2px;
 }
 
 /* Destacar palavras-chave */
 .projects-description .highlight {
-    font-weight: bold;
-    color: #FFD700;
+  font-weight: bold;
+  color: #FFD700;
 }
 
 /* Botão de visualizar projetos */
 .projects-link {
-    font-size: 1.2rem;
-    color: #2D1BD6;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out;
+  font-size: 1.2rem;
+  color: #2D1BD6;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
 }
 
 .projects-link:hover {
-    color: #ffeb75;
-    cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
+  color: #ffeb75;
+  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
 }
 
 .wave-container2 {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  
-  .wave-svg2 {
-    width: 100%;
-    opacity: 30%;
-    height: auto;
-    animation: waveMove 5s infinite ease-in-out;
-  }
-  
-  /* Animação suave de subir e descer */
-  @keyframes waveMove {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(15px); } /* Sobe um pouco */
-    100% { transform: translateY(0px); } /* Volta para a posição inicial */
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wave-svg2 {
+  width: 100%;
+  opacity: 30%;
+  height: auto;
+  animation: waveMove 5s infinite ease-in-out;
+}
+
+/* Animação suave de subir e descer */
+@keyframes waveMove {
+  0% {
+    transform: translateY(0px);
   }
 
-  /* Animação suave para entrada e saída dos textos */
+  50% {
+    transform: translateY(15px);
+  }
+
+  /* Sobe um pouco */
+  100% {
+    transform: translateY(0px);
+  }
+
+  /* Volta para a posição inicial */
+}
+
+/* Animação suave para entrada e saída dos textos */
 .project-description,
 .project-subtitle,
 .projects-description,
 .project-title,
 .projects-link {
-    transition: 
-        transform 0.3s ease-in-out,
-        text-shadow 0.3s ease-in-out,
-        color 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    text-shadow 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
 /* Hover nos textos: leve brilho e deslize */
 .project-description:hover,
 .project-subtitle:hover,
 .projects-description:hover {
-    transform: translateX(2px);
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  transform: translateX(2px);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .projects-title {
-    font-family: "Inria Serif", serif;
-    font-weight: 700;
-    font-size: 78px;
-    letter-spacing: 0%;
-    margin-bottom: 25px;
-    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  font-family: "Inria Serif", serif;
+  font-weight: 700;
+  font-size: 78px;
+  letter-spacing: 0%;
+  margin-bottom: 25px;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .projects-title:hover {
-    color: #FFD730;
-    transform: scale(1.05);
+  color: #FFD730;
+  transform: scale(1.05);
 }
 
 @media (max-width: 1024px) {
-    .projects-title {
-      font-size: 60px;
-    }
-  
-    .project-title {
-      font-size: 50px;
-    }
-  
-    .project-media {
-      max-width: 90%;
-    }
+  .projects-title {
+    font-size: 60px;
   }
-  
-  @media (max-width: 768px) {
-    .project-slide {
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-    }
-  
-    .project-media-container {
-      max-width: 100%;
-      justify-content: center;
-    }
-  
-    .project-title {
-      font-size: 40px;
-      text-align: center;
-    }
-  
-    .project-subtitle {
-      font-size: 18px;
-      text-align: center;
-    }
-  
-    .project-description {
-      font-size: 0.95rem;
-      text-align: center;
-    }
-  
-    .project-text {
-      align-items: center;
-      text-align: center;
-    }
-  }
-  
 
-  /* Responsividade para vídeos do YouTube */
+  .project-title {
+    font-size: 50px;
+  }
+
+  .project-media {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-slide {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .project-media-container {
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .project-title {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .project-subtitle {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .project-description {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .project-text {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+
+/* Responsividade para vídeos do YouTube */
+/* Responsividade para vídeos do YouTube */
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
+  /* 16:9 */
   height: 0;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 1110px;
+  background: #111;
 }
 
 .video-container iframe {
@@ -342,4 +369,39 @@
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* Media Placeholder for TCC */
+.media-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+  color: #555;
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 1px solid #333;
+}
+
+/* Highlight Project Style (TCC) */
+.highlight-project .project-title {
+  color: #FFD700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.highlight-project .project-subtitle {
+  color: #fff;
+  font-weight: 700;
+}
+
+.highlight-project .video-container {
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
 }

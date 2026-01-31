@@ -1,36 +1,78 @@
 .loading-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #2B2B2B; /* Fundo escuro */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Transição suave */
-  }
-  
-  .loading-screen.fade-out {
-    opacity: 0; /* Transição de opacidade */
-    transform: scale(0.90); /* Leve redução de escala */
-  }
-  
-  .circle {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: conic-gradient(
-      #6F6F6F var(--progress, 100%), /* Cinza na borda */
-      #000 var(--progress, 100%) /* Preto avança no sentido anti-horário */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #121212;
+  /* Deep Dark */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+/* Container for the ring and photo */
+.circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Minimalist Thin Ring: Gradient Mask approach or simple concentric div */
+  background: conic-gradient(#00BFFF var(--progress, 0%),
+      /* Blue Progress */
+      #1a1a1a 0deg
+      /* Dark Track */
     );
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  /* Ambient shadow */
+  padding: 3px;
+  /* Controls ring thickness implicitly with mask or content size */
+}
+
+/* Inner masking to make it a ring */
+.circle::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  /* Thickness of the ring (140 - 2*3 = 134px inner) */
+  background-color: #121212;
+  /* Match background */
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 1;
+  border: 4px solid #121212;
+  /* Gap between ring and photo */
+  animation: photoPulse 2s infinite ease-in-out;
+}
+
+@keyframes photoPulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
   }
-  
-  .profile-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    z-index: 1; /* Coloca a foto acima */
-    background: #929292; /* Fundo branco */
+
+  50% {
+    transform: scale(1.02);
+    filter: brightness(1.1);
   }
-  
+
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}

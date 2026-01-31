@@ -3,229 +3,284 @@
 /* ======================== */
 
 .about-page {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0a0a0a;
+  color: #e0e0e0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  /* Context for background accent */
+}
+
+/* ========================= */
+/* Estrutura do Grid/Flex */
+/* ========================= */
+
+.about-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  height: 100vh;
+  padding: 0 4rem;
+  gap: 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================= */
+/* Seção Esquerda: Conteúdo */
+/* ========================= */
+
+.about-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+  padding-right: 0rem;
+}
+
+/* Título Impactante */
+.about-title {
+  font-family: 'Inria Sans', sans-serif;
+  font-size: clamp(3rem, 5vw, 6rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  color: #ffffff;
+  margin: 0 0 2rem 0;
+  text-transform: uppercase;
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1px #ffffff;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.outline-text:hover {
+  -webkit-text-stroke: 1px #00BFFF;
+  opacity: 1;
+}
+
+/* Biografia */
+.about-bio {
+  max-width: 600px;
+}
+
+.about-bio p {
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #a0a0a0;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.about-bio strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Ações e Ícones */
+.about-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.about-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.about-icons img {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  filter: grayscale(100%);
+}
+
+.about-icons img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* Spotify Status */
+.music-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.spotify-link {
+  color: #1ed760;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.spotify-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #1db954;
+  transition: width 0.3s ease;
+}
+
+.spotify-link:hover {
+  color: #1db954;
+}
+
+.spotify-link:hover::after {
+  width: 100%;
+}
+
+/* ========================= */
+/* Seção Direita: Visual */
+/* ========================= */
+
+.about-visual {
+  flex: 1;
+  height: 80%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+
+/* Frame Effect Implementation - Cleaned */
+.image-wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 450px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Reverted to hidden since no more outer frames */
+  border: none;
+  box-shadow: none;
+  /* No shadow */
+}
+
+/* Clean Image */
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%) contrast(110%);
+  border-radius: 8px;
+  transition: transform 0.7s ease;
+}
+
+.image-wrapper:hover .profile-image {
+  transform: scale(1.03);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.8) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: 8px;
+}
+
+/* ========================= */
+/* Media Queries (Mobile) */
+/* ========================= */
+
+@media (max-width: 1024px) {
+  .about-container {
+    flex-direction: column-reverse;
     align-items: center;
-    min-height: 100vh; /* Permite rolagem se necessário */
-    width: 100vw;
-    background-color: #2a2a2a;
-    color: #fff;
-    padding: 50px;
-    box-sizing: border-box;
-    overflow-x: auto;
+    justify-content: center;
+    padding: 6rem 2rem 2rem 2rem;
+    height: auto;
+    min-height: 100vh;
+    gap: 3rem;
+  }
+
+  /* Adjust background for mobile */
+  .about-page::before {
+    display: none;
+  }
+
+  .about-page {
     overflow-y: auto;
   }
-  
-  /* ========================= */
-  /* Estrutura do Conteúdo */
-  /* ========================= */
-  
-  .about-container {
-    display: flex;
+
+  .about-content {
+    padding-right: 0;
     align-items: center;
+    text-align: center;
+  }
+
+  .about-title {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .about-bio p {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .about-actions {
+    align-items: center;
+    width: 100%;
+  }
+
+  .about-icons,
+  .music-status {
     justify-content: center;
-    gap: 40px;
-    max-width: 1400px;
     width: 100%;
-    flex-wrap: wrap;
   }
-  
-  /* ========================= */
-  /* Foto de Perfil */
-  /* ========================= */
-  
-  .about-photo-container {
+
+  .about-visual {
     width: 100%;
-    max-width: 450px;
-    height: auto;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
+    height: 400px;
     justify-content: center;
-    overflow: hidden;
   }
-  
-  .about-photo {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 15px;
-    transition: transform 0.3s ease-in-out;
+
+  .image-wrapper {
+    max-width: 100%;
+    max-height: 400px;
   }
-  
-  .about-photo:hover {
-    transform: scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .about-visual {
+    height: 300px;
   }
-  
-  /* ========================= */
-  /* Texto "Sobre Mim" */
-  /* ========================= */
-  
-  .about-text {
-    max-width: 900px;
-    text-align: left;
-    font-family: 'Inria Sans', sans-serif;
-    font-size: clamp(0.9rem, 1.5vw, 1rem);
-    line-height: 1.4;
-    opacity: 0;
-    animation: fadeIn 1s ease-in-out forwards;
-    font-weight: 400;
-    margin-bottom: 15px;
+
+  .about-icons img {
+    width: 32px;
+    height: 32px;
   }
-  
-  /* Título */
-  
-  .about-text h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 2px;
-    text-align: left;
-    opacity: 1;
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-    transform-origin: left;
-  }
-  
-  .about-text h1:hover {
-    transform: scale(1.2);
-    color: #ffd730;
-  }
-  
-  /* Parágrafos */
-  
-  .about-text p {
-    margin-bottom: 12px;
-    text-align: justify;
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-  }
-  
-  .about-text p:hover {
-    transform: translateX(5px);
-  }
-  
-  /* Destaques */
-  
-  .about-text strong {
-    color: #ffffff;
-  }
-  
-  .about-text em {
-    font-style: italic;
-    color: #ddd;
-  }
-  
-  /* ========================= */
-  /* Link do Spotify */
-  /* ========================= */
-  
-  .spotify-link {
-    color: #1db954;
-    font-weight: bold;
-    text-decoration: none;
-    position: relative;
-    display: inline-block;
-    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
-    animation: spotifyGlow 1.5s infinite alternate ease-in-out;
-  }
-  
-  .spotify-link::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: #1db954;
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .spotify-link:hover::after {
-    transform: scaleX(1);
-  }
-  
-  .spotify-link:hover {
-    color: #1ed760;
-    transform: scale(1.1);
-    cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
-  }
-  
-  @keyframes spotifyGlow {
-    from {
-      text-shadow: 0 0 5px #1db954;
-    }
-    to {
-      text-shadow: 0 0 10px #1db954;
-    }
-  }
-  
-  /* ========================= */
-  /* Animações */
-  /* ========================= */
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* ========================= */
-  /* Título + Ícones */
-  /* ========================= */
-  
-  .about-title-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 12px;
-  }
-  
-  .about-icons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
-  }
-  
-  .about-icon {
-    width: 44px;
-    height: 44px;
-    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
-  }
-  
-  .thorfinn-icon {
-    margin-right: -5px;
-  }
-  
-  .about-icon:hover {
-    transform: scale(1.2);
-    filter: brightness(1.3);
-  }
-  
-  /* ========================= */
-  /* Media Queries */
-  /* ========================= */
-  
-  @media (max-width: 1024px) {
-    .about-container {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .about-photo-container {
-      max-width: 350px;
-    }
-  
-    .about-text {
-      max-width: 90%;
-    }
-  }
-  
+}
