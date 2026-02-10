@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
+  HashRouter as Router
 } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 
 // Componentes
 import Header from "./components/Header";
@@ -28,49 +23,21 @@ import Contact from "./pages/Contact";
 // Estilos
 import "./styles/App.css";
 
-// Rotas com animação
-const AnimatedRoutes = () => {
-  const location = useLocation();
-
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/experience" element={<Experience />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </AnimatePresence>
-  );
-};
+// Divider elegante para separação de seções
+const SectionDivider = () => (
+  <div style={{
+    height: "2px",
+    width: "60%",
+    margin: "0 auto",
+    background: "linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.2), transparent)",
+    boxShadow: "0 0 15px rgba(0, 191, 255, 0.1)"
+  }} />
+);
 
 // App principal separado
 const AppContent = () => {
-  const location = useLocation();
   const [fadeIn, setFadeIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const isScrollablePage = ["/experience", "/about", "/projects", "/skills"].includes(location.pathname);
-
-  // Transição bloqueia scroll temporariamente
-  useEffect(() => {
-    setIsTransitioning(true);
-    const timeout = setTimeout(() => setIsTransitioning(false), 600); // Duração da animação
-    return () => clearTimeout(timeout);
-  }, [location]);
-
-  // Controla overflow da página (scroll)
-  useEffect(() => {
-    if (isTransitioning) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = isScrollablePage ? "auto" : "hidden";
-    }
-  }, [isTransitioning, isScrollablePage]);
 
   // Animação fade-in
   useEffect(() => {
@@ -82,18 +49,30 @@ const AppContent = () => {
   if (isLoading) return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
 
   return (
-    <div className={`app-container ${fadeIn ? "fade-in" : ""} ${isTransitioning ? "transitioning" : ""}`}>
+    <div className={`app-container ${fadeIn ? "fade-in" : ""}`}>
       <LanguageToggle />
       <Header />
       <div className="desktop-only">
         <SocialIcons />
       </div>
-      <AnimatedRoutes />
+
+      {/* Seções em sequência para Single Page Scroll */}
+      <Home />
+      <SectionDivider />
+      <About />
+      <SectionDivider />
+      <Skills />
+      <SectionDivider />
+      <Projects />
+      <SectionDivider />
+      <Experience />
+      <SectionDivider />
+      <Contact />
     </div>
   );
 };
 
-// Componente com roteador (usando HashRouter para GitHub Pages)
+// Componente com roteador (Mantive HashRouter para compatibilidade se necessário, mas as rotas foram removidas)
 const App = () => (
   <LanguageProvider>
     <Router>

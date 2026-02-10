@@ -35,7 +35,7 @@ const Experience = () => {
 
   return (
     <PageTransition2>
-      <div className="experience-page">
+      <div id="experience" className="experience-page">
         <header className="experience-header">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}

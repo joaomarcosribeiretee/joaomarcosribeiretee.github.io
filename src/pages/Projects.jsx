@@ -335,7 +335,7 @@ const Projects = () => {
 
   return (
     <PageTransition5>
-      <div className="projects-page-container">
+      <div id="projects" className="projects-page-container">
 
         {/* --- LIST VIEW (Esquerda) --- */}
         <div className="projects-list-wrapper">

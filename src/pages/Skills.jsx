@@ -77,7 +77,7 @@ const Skills = () => {
 
   return (
     <PageTransition6>
-      <div className="skills-page-container">
+      <div id="skills" className="skills-page-container">
 
         {/* Mobile Layout: Accordion */}
         {isMobile ? (

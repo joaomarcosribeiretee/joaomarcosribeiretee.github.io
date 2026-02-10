@@ -38,9 +38,9 @@ const About = () => {
 
   return (
     <PageTransition3>
-      <div className="about-page">
+      <div id="about" className="about-page">
         <div className="about-container">
-
+          {/* ... existing content ... */}
           {/* Seção da Esquerda: Texto */}
           <div className="about-content">
             <motion.div
