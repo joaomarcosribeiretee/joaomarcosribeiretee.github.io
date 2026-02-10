@@ -11,10 +11,10 @@
 }
 
 .experience-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--bg-dark);
   color: var(--text-white);
-  padding: 100px 20px 50px;
+  padding: calc(60px + env(safe-area-inset-top)) 20px 80px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -226,6 +226,10 @@
 
 /* --- Mobile / Responsive --- */
 @media (max-width: 768px) {
+  .experience-page {
+    padding-top: calc(80px + env(safe-area-inset-top));
+  }
+
   .experience-title {
     font-size: 2.5rem;
   }

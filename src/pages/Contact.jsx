@@ -74,7 +74,7 @@ const Contact = () => {
 
   return (
     <PageTransition4>
-      <div className="contact-page">
+      <div id="contact" className="contact-page">
         <div className="contact-container">
 
           {/* Header Section */}

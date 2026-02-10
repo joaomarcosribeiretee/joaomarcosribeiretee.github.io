@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 
 const pageVariants = {
@@ -19,21 +18,6 @@ const pageVariants = {
 };
 
 const PageTransition = ({ children }) => {
-  useEffect(() => {
-    // 🔒 Bloqueia scroll do body durante a animação
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const timeout = setTimeout(() => {
-      document.body.style.overflow = originalOverflow || "auto"; // 🔓 Restaura
-    }, 700); // um pouco mais que a duração da animação
-
-    return () => {
-      clearTimeout(timeout);
-      document.body.style.overflow = originalOverflow || "auto";
-    };
-  }, []);
-
   return (
     <motion.div
       initial="initial"
@@ -43,7 +27,6 @@ const PageTransition = ({ children }) => {
       style={{
         position: "relative",
         width: "100%",
-        overflow: "hidden",
       }}
     >
       {children}

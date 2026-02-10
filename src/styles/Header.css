@@ -2,10 +2,12 @@
 
 /* Estilo do cabeçalho */
 .header {
-  position: absolute;
-  top: 40px;
-  right: 30px;
-  z-index: 1000;
+  position: fixed;
+  top: clamp(20px, 4vh, 40px);
+  top: calc(clamp(20px, 4vh, 40px) + env(safe-area-inset-top));
+  right: clamp(20px, 3vw, 30px);
+  right: calc(clamp(20px, 3vw, 30px) + env(safe-area-inset-right));
+  z-index: 2000;
 }
 
 /* Botão de menu */
@@ -45,12 +47,13 @@
   transform: translateX(100%);
   width: 93%;
   /* Volta a ser largo para o estilo poster */
-  height: 100vh;
+  height: 100dvh;
+  /* Using dvh for iOS compatibility */
   background-color: #1a1a1a;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   /* Transição premium */
-  z-index: 999;
+  z-index: 1999;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -76,7 +79,6 @@
   transition: transform 0.3s ease-in-out, opacity 0.3s;
   opacity: 0.6;
   flex: 0 0 auto;
-  /* Don't grow or shrink, fixed size */
 }
 
 .close-button:hover {
@@ -114,7 +116,11 @@
   counter-increment: menu-counter;
 }
 
-.menu ul li a {
+/* Targeting buttons to match Header.jsx logic while keeping 'a' styles */
+.menu ul li button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
   color: #888;
   /* Cinza inativo */
   text-decoration: none;
@@ -128,10 +134,11 @@
   transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
   position: relative;
   letter-spacing: -2px;
+  text-align: left;
 }
 
 /* Numeração (01, 02...) Desktop Only */
-.menu ul li a::before {
+.menu ul li button::before {
   content: "0" counter(menu-counter);
   font-family: 'Inria Sans', sans-serif;
   font-size: 1.2rem;
@@ -144,24 +151,11 @@
 }
 
 /* Hover Effect */
-.menu ul li a:hover {
+.menu ul li button:hover,
+.menu ul li button.active {
   color: #fff;
   transform: translateX(10px);
   opacity: 1;
-}
-
-/* Destaque para o item ativo */
-.menu ul li.active {
-  background-color: transparent;
-}
-
-.menu ul li.active a {
-  color: #fff;
-  opacity: 1;
-}
-
-.menu ul li.active a::after {
-  display: none;
 }
 
 /* Animação nos botões */
@@ -175,7 +169,7 @@
   /* Menu em tela cheia */
   .menu {
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     top: 0;
     left: 0;
     right: auto;
@@ -217,10 +211,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    counter-increment: none;
+    /* Avoid weird counts on mobile if hidden */
   }
 
   /* Links no Mobile */
-  .menu ul li a {
+  .menu ul li button {
     font-size: 3rem;
     /* Tamanho menor */
     color: #888;
@@ -231,17 +227,17 @@
   }
 
   /* Esconder números no mobile */
-  .menu ul li a::before {
+  .menu ul li button::before {
     display: none !important;
   }
 
   /* Hover/Active no Mobile */
-  .menu ul li.active a {
+  .menu ul li button.active {
     color: #fff;
     transform: scale(1.1);
   }
 
-  .menu ul li a:hover {
+  .menu ul li button:hover {
     color: #fff;
     transform: scale(1.05);
   }
@@ -249,8 +245,8 @@
   /* Botão de fechar */
   .close-button {
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    top: calc(1rem + env(safe-area-inset-top));
+    right: calc(1rem + env(safe-area-inset-right));
     margin: 0;
     font-size: 3rem;
     color: #fff;

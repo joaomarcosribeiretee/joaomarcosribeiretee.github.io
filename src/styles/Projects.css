@@ -4,29 +4,34 @@
 
 .projects-page-container {
   width: 100%;
-  min-height: 100vh;
+  height: 100dvh;
+  /* Force exact viewport height */
   background-color: #0c0c0c;
   color: #e0e0e0;
   display: flex;
   position: relative;
+  padding: 0 8vw;
+  /* Slightly increased to bring content closer to center */
+  justify-content: center;
+  align-items: center;
+  /* This will center the block vertically if children are not 100vh */
+  gap: 4rem;
+  /* Balanced gap */
   overflow: hidden;
-  /* Adjusted padding-left to balance position */
-  padding: 0 4rem 0 10vw;
 }
 
 /* --- LIST VIEW (Side) --- */
 
 .projects-list-wrapper {
-  width: 50%;
-  /* Slightly wider to feel less "cramped" */
-  min-height: 100vh;
+  width: 40%;
+  /* Slightly wider as requested */
   display: flex;
   flex-direction: column;
   justify-content: center;
   z-index: 10;
-  padding-right: 2rem;
-  /* Ensure it doesn't hit the absolute bottom where icons might be */
-  padding-bottom: 4rem;
+  padding-right: 0;
+  padding-bottom: 0;
+  /* Removed bottom padding to ensure true centering */
 }
 
 .projects-header-minimal {
@@ -60,9 +65,9 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  /* Scrollable List Logic - Fits approx 4 items */
-  max-height: 58vh;
-  /* Adjust to show approx 4 items */
+  /* Scrollable List Logic - fits approx 4 items but slightly shorter */
+  max-height: 62vh;
+  /* Adjusted to be slightly shorter as requested */
   overflow-y: auto;
   overflow-x: hidden;
   /* Prevent horizontal scrollbar on hover */
@@ -163,22 +168,18 @@
 
 .project-preview-stage {
   width: 50%;
-  /* Adjusted to match new list width */
-  height: 100vh;
-  position: absolute;
-  right: 0;
-  top: 0;
+  /* Adjusted to maintain balance and centering */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
   pointer-events: none;
-  /* Let clicks pass through if needed, though mostly visual */
 }
 
 /* The Preview Card */
 .preview-card {
-  width: 75%;
+  width: 90%;
+  /* Slightly smaller as requested */
   aspect-ratio: 16/9;
   background-color: #222;
   border-radius: 12px;

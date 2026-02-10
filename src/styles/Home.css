@@ -19,10 +19,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100dvh;
   text-align: center;
   position: relative;
   padding: 0 clamp(1.5rem, 5vw, 6rem);
+  background: linear-gradient(180deg, #121212 0%, #0a0a0a 100%);
 }
 
 /* Content Width Control */
@@ -83,7 +84,6 @@ body {
   /* Align left to match bar */
   margin-left: auto;
   margin-right: auto;
-  /* Since it's flex centered, but text alignment is left now, let's keep it centered container-wise */
 }
 
 /* Buttons */
@@ -94,6 +94,13 @@ body {
   align-items: center;
   opacity: 0;
   animation: fadeSlideUp 0.8s ease-out 0.6s forwards;
+}
+
+/* Buttons in Home are now real buttons but styled like the old ones */
+.home-buttons button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-custom {
@@ -160,7 +167,7 @@ body {
   }
 }
 
-/* Wave Decoration */
+/* Wave Decoration - Using User's requested properties but absolute within container */
 .wave-container {
   position: absolute;
   bottom: 0;
@@ -168,7 +175,8 @@ body {
   width: 100%;
   overflow: hidden;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
+  /* Above background, but below content (z-index 10) */
   opacity: 0.4;
   animation: waveEntry 1.5s ease-out forwards;
 }
@@ -187,14 +195,16 @@ body {
 
 .wave-svg {
   width: 100%;
-  height: auto;
+  height: clamp(150px, 20vh, 320px);
+  /* Increased height for PC */
   display: block;
   transform-origin: bottom;
   animation: waveBreath 6s ease-in-out infinite alternate;
 }
 
 .wave-svg path {
-  fill: #2a2a2a;
+  fill: #737373;
+  /* User requested color from JSX */
 }
 
 @keyframes waveBreath {
@@ -216,6 +226,7 @@ body {
   }
 
   .content {
+    padding-top: calc(20px + env(safe-area-inset-top));
     padding-bottom: 4rem;
     width: 100%;
   }
