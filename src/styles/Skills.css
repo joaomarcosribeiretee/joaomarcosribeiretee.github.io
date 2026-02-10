@@ -206,7 +206,15 @@
 
 .skills-header-mobile .skills-main-title {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.skills-header-mobile .title-underline {
+  margin: 0 auto;
+  width: 60px;
+  height: 3px;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .skills-mobile-accordion {
@@ -250,6 +258,11 @@
   align-items: center;
 }
 
+.accordion-header.active {
+  background: linear-gradient(90deg, rgba(0, 191, 255, 0.1) 0%, transparent 100%);
+  border-left: 3px solid #00BFFF;
+}
+
 .accordion-header.active .accordion-title {
   color: var(--accent-color);
 }
@@ -263,12 +276,24 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  padding: 1.5rem;
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+  /* Reduced top padding */
+}
+
+.mobile-skill-description {
+  color: #a0a0a0;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  text-align: left;
+  padding: 0 1.5rem 0.5rem 1.5rem;
+  /* Reduced bottom padding */
+  line-height: 1.4;
 }
 
 .skill-card-mobile-minimal {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  /* Blue Border */
   border-radius: 12px;
   padding: 1rem;
   display: flex;
@@ -281,7 +306,8 @@
 
 .skill-icon-mobile {
   font-size: 1.8rem;
-  color: #fff;
+  color: #00BFFF;
+  /* Blue Icon */
 }
 
 .skill-name-mobile {
@@ -299,6 +325,16 @@
     align-items: flex-start;
     height: auto;
     overflow-y: auto;
+  }
+
+  /* Glow mais visível no Mobile */
+  .ambient-glow {
+    width: 120vw;
+    height: 120vw;
+    top: -20%;
+    right: -30%;
+    opacity: 0.4;
+    background: radial-gradient(circle, rgba(0, 191, 255, 0.15), transparent 70%);
   }
 }
 

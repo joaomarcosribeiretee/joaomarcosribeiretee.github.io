@@ -12,6 +12,10 @@ import { AnimatePresence } from "framer-motion";
 import Header from "./components/Header";
 import LoadingScreen from "./components/LoadingScreen";
 import SocialIcons from "./components/SocialIcons";
+import LanguageToggle from "./components/LanguageToggle";
+
+// Contextos
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Páginas
 import Home from "./pages/Home";
@@ -79,6 +83,7 @@ const AppContent = () => {
 
   return (
     <div className={`app-container ${fadeIn ? "fade-in" : ""} ${isTransitioning ? "transitioning" : ""}`}>
+      <LanguageToggle />
       <Header />
       <div className="desktop-only">
         <SocialIcons />
@@ -90,9 +95,11 @@ const AppContent = () => {
 
 // Componente com roteador (usando HashRouter para GitHub Pages)
 const App = () => (
-  <Router>
-    <AppContent />
-  </Router>
+  <LanguageProvider>
+    <Router>
+      <AppContent />
+    </Router>
+  </LanguageProvider>
 );
 
 export default App;

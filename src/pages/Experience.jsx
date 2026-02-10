@@ -2,46 +2,37 @@ import React from "react";
 import PageTransition2 from "../components/PageTransition2";
 import "../styles/Experience.css";
 import { motion } from "framer-motion";
-
-const experienceData = [
-  {
-    role: "AI Analytics",
-    company: "FIAP",
-    period: "Cursando - 2026",
-    description: "Pós-graduação em Inteligência Artificial e Data Analytics, com foco em Machine Learning, Deep Learning e estratégias data-driven. Estou aprofundando meus conhecimentos na aplicação de modelos preditivos para resolver problemas complexos de negócios e engenharia.",
-    type: "education"
-  },
-  {
-    role: "Analista de Testes",
-    company: "Lucy",
-    period: "2025 - Atual",
-    description: "Atuo na garantia de qualidade de software, combinando testes manuais e automatizados para assegurar entregas impecáveis. Especializei-me em automação com Playwright e Percy, criando fluxos de verificação robustos com foco total na confiabilidade do sistema e na experiência do usuário.",
-    type: "work"
-  },
-  {
-    role: "Analista de Testes Jr",
-    company: "Virtual Town",
-    period: "2023 - 2025",
-    description: "Responsável pela execução e gestão do ciclo de vida de testes (ALM) utilizando Jira. Desenvolvi um Painel Funcional (HTML/CSS/JS/Express) que automatizou tarefas recorrentes, aumentando significativamente a produtividade da equipe.",
-    type: "work"
-  },
-  {
-    role: "Estagiário Unity",
-    company: "VRGlass",
-    period: "2022 - 2023",
-    description: "Atuei no desenvolvimento de aplicações interativas e jogos utilizando Unity e C#, participando de projetos inovadores de Realidade Virtual e Aumentada. Meu foco era otimizar a performance e garantir a integridade das aplicações.",
-    type: "work"
-  },
-  {
-    role: "Ciência da Computação",
-    company: "PUC-SP",
-    period: "2020 - 2023",
-    description: "Bacharelado Concluído. Tive uma formação sólida em Engenharia de Software e Algoritmos, desenvolvendo a base teórica e prática necessária para criar soluções tecnológicas escaláveis e arquiteturas de sistemas eficientes.",
-    type: "education"
-  }
-];
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../translations";
 
 const Experience = () => {
+  const { language } = useLanguage();
+  const t = translations[language].experience;
+
+  // Map experience items from translations
+  const experienceData = [
+    {
+      ...t.items.aiAnalytics,
+      type: "education"
+    },
+    {
+      ...t.items.analistaTestes,
+      type: "work"
+    },
+    {
+      ...t.items.analistaTestesJr,
+      type: "work"
+    },
+    {
+      ...t.items.estagiarioUnity,
+      type: "work"
+    },
+    {
+      ...t.items.cienciaComputacao,
+      type: "education"
+    }
+  ];
+
   return (
     <PageTransition2>
       <div className="experience-page">
@@ -52,7 +43,7 @@ const Experience = () => {
             transition={{ duration: 0.6 }}
             className="experience-title"
           >
-            MINHA JORNADA
+            {t.title}
           </motion.h1>
           <div className="title-underline"></div>
         </header>

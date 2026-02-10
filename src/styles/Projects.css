@@ -1,407 +1,625 @@
-@import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@300;400;700&display=swap");
+/* ============================ */
+/* Projects Page - Refined Design */
+/* ============================ */
 
-
-.projects-container {
-  font-family: "Inria Serif", serif;
-}
-
-/* Configurações gerais da página de Projetos */
-.projects-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.projects-page-container {
+  width: 100%;
   min-height: 100vh;
-  background-color: #121212;
-  color: white;
-  font-family: "Inria Serif", serif;
-  text-align: center;
-
-}
-
-/* Wrapper para centralizar o conteúdo */
-.content-wrapper {
-  max-width: 1400px;
+  background-color: #0c0c0c;
+  color: #e0e0e0;
   display: flex;
-  margin-top: 20px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  /* Adjusted padding-left to balance position */
+  padding: 0 4rem 0 10vw;
 }
 
-/* Título principal */
-.projects-title {
-  font-family: "Inria Serif", serif;
+/* --- LIST VIEW (Side) --- */
+
+.projects-list-wrapper {
+  width: 50%;
+  /* Slightly wider to feel less "cramped" */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 10;
+  padding-right: 2rem;
+  /* Ensure it doesn't hit the absolute bottom where icons might be */
+  padding-bottom: 4rem;
+}
+
+.projects-header-minimal {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+/* Updated Font: Inria Serif (Editorial Look) */
+.list-main-title {
+  font-family: 'Inria Serif', serif;
+  font-size: clamp(3rem, 5vw, 4.5rem);
   font-weight: 700;
-  font-size: 85px;
-  letter-spacing: 0%;
-  margin-bottom: 25px;
-  text-align: center;
-  /* Garante centralização do título */
+  margin: 0;
+  line-height: 0.9;
+  color: #fff;
+  letter-spacing: -2px;
 }
 
-/* Descrição */
-.project-description {
+.list-subtitle {
   font-family: 'Inria Sans', sans-serif;
-  /* Aplica a fonte correta */
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  max-width: 600px;
-}
-
-.project-description strong {
-  font-family: 'Inria Sans', sans-serif;
-  /* Aplica a fonte correta */
-  font-weight: 900;
-  /* Garante o negrito */
-  color: #FFD700;
-  /* Opcional: cor diferente para destacar */
-}
-
-
-/* Swiper - Container dos Slides */
-.projects-swiper {
-  width: 100%;
-  max-width: 1700px;
-  padding-bottom: 30px;
-  /* Reduza se estiver exagerado */
-  overflow: visible;
-  /* importante para evitar cortes */
-}
-
-
-/* Estilização dos slides dos projetos */
-.project-slide {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1400px;
-  margin: auto;
-  text-align: left;
-  flex-direction: row;
-  gap: 10px;
-  padding-left: 120px;
-  /* Novo: espaço p/ os ícones */
-  padding-right: 120px;
-}
-
-/* Ajuste específico para o primeiro slide */
-.first-slide {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-/* Texto do projeto */
-.project-text {
-  flex: 1;
-  max-width: 600px;
-  padding: 5px;
-  text-align: left;
-}
-
-.project-subtitle {
-  font-family: "Inria Serif", serif;
-  font-size: 22px;
-  font-weight: 300;
+  font-size: 0.9rem;
+  color: #737373;
+  margin-top: 10px;
+  display: block;
   text-transform: uppercase;
-  margin-bottom: 4px;
-  color: #bbb;
+  letter-spacing: 1px;
 }
 
-.project-title {
-  font-family: "Inria Serif", serif;
-  font-size: 80px;
-  font-weight: 700;
-  margin-bottom: 5px;
-  margin-top: -5px;
-
-}
-
-.project-description {
-  font-family: 'Inria Sans', sans-serif;
-  /* Aplica a fonte correta */
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  max-width: 600px;
-}
-
-.project-media-container {
-  flex: 1;
+/* List Items */
+.projects-list {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  max-width: 85%;
-  /* Aumente para dar mais espaço ao vídeo */
+  flex-direction: column;
+  gap: 1.5rem;
+  /* Scrollable List Logic - Fits approx 4 items */
+  max-height: 58vh;
+  /* Adjust to show approx 4 items */
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Prevent horizontal scrollbar on hover */
+  padding-right: 1rem;
+  /* Space for scrollbar */
+
+  /* Firefox Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #00BFFF transparent;
 }
 
-
-.project-media {
-  width: 100%;
-  max-width: 1110px;
-  /* Aumentado para expandir o vídeo */
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+/* Custom Scrollbar for Chrome/Safari/Edge */
+.projects-list::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* Estilo específico para vídeos */
-.project-media video {
-  width: 100%;
-  max-width: 111111px;
-  /* Aumentado para expandir o vídeo */
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  object-fit: cover;
+.projects-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
 }
 
-/* Ajuste para a posição correta do retângulo decorativo */
-.corner-decor2 {
-  position: fixed;
-  bottom: 800px;
-  left: 0px;
-  z-index: 900;
+.projects-list::-webkit-scrollbar-thumb {
+  background-color: #00BFFF;
+  border-radius: 4px;
+  border: 1px solid #1a1a1a;
+  /* Contrast separation */
 }
 
-.corner-decor2 img {
-  width: 210px;
-  height: auto;
-  opacity: 0.8;
+.projects-list::-webkit-scrollbar-thumb:hover {
+  background-color: #009ACD;
 }
 
-/* Swiper - Paginação (dots) */
-.swiper-pagination-bullet {
-  background-color: #aaa;
+.project-list-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: border 0.3s ease, transform 0.2s ease;
+  position: relative;
+  margin-right: 1.5rem;
+  /* Prevent overlap with scrollbar */
+}
+
+.project-list-item:hover {
+  border-bottom-color: #00BFFF;
+  transform: translateX(10px);
+  /* Move slightly right on hover */
+}
+
+.project-item-content {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+
+.project-index {
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #00BFFF;
   opacity: 0.7;
 }
 
-.swiper-pagination-bullet-active {
-  background-color: #fff;
-  opacity: 1;
+/* New Title Font Here too */
+.project-list-title {
+  font-family: 'Inria Serif', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  margin: 0;
+  color: #ccc;
+  font-weight: 400;
+  transition: color 0.3s ease;
+  line-height: 1;
 }
 
-/* Ajuste para evitar bug visual no Swiper */
-.swiper {
-  overflow: hidden;
+.project-list-item:hover .project-list-title {
+  color: #fff;
+}
+
+.project-list-category {
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 0.8rem;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+  /* Increased spacing from Title */
+  margin-left: 0;
+  /* Align under title */
+  transition: color 0.3s ease;
+}
+
+.project-list-item:hover .project-list-category {
+  color: #00BFFF;
 }
 
 
-/* Título principal */
-.projects-title {
-  font-family: "Inria Serif", serif;
-  font-weight: 700;
-  /* Experimente 800 ou 900 também */
-  font-size: 78px;
-  letter-spacing: 0%;
-  margin-bottom: 25px
-}
+/* --- PREVIEW STAGE (Right Side) --- */
 
-/* Descrição */
-.projects-description {
-  max-width: 800px;
-  font-size: 1.18rem;
-  line-height: 1.4;
-  font-weight: lighter;
-  margin-bottom: 35px;
-  margin-top: 2px;
-}
-
-/* Destacar palavras-chave */
-.projects-description .highlight {
-  font-weight: bold;
-  color: #FFD700;
-}
-
-/* Botão de visualizar projetos */
-.projects-link {
-  font-size: 1.2rem;
-  color: #2D1BD6;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease-in-out;
-}
-
-.projects-link:hover {
-  color: #ffeb75;
-  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
-}
-
-.wave-container2 {
-  width: 100%;
+.project-preview-stage {
+  width: 50%;
+  /* Adjusted to match new list width */
+  height: 100vh;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 0;
-  overflow: hidden;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
   pointer-events: none;
+  /* Let clicks pass through if needed, though mostly visual */
 }
 
-.wave-svg2 {
+/* The Preview Card */
+.preview-card {
+  width: 75%;
+  aspect-ratio: 16/9;
+  background-color: #222;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-placeholder-text {
+  font-family: 'Pixelify Sans', sans-serif;
+  /* Kept Pixelify just for this "techy" placeholder */
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+
+/* --- DETAIL OVERLAY (Case Study) --- */
+/* Mostly same as before, ensuring updated fonts logic */
+
+.project-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  opacity: 30%;
-  height: auto;
-  animation: waveMove 5s infinite ease-in-out;
+  height: 100%;
+  background-color: #121212;
+  z-index: 2000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  /* Firefox */
+  scrollbar-color: #333 #121212;
+  /* Firefox */
 }
 
-/* Animação suave de subir e descer */
-@keyframes waveMove {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(15px);
-  }
-
-  /* Sobe um pouco */
-  100% {
-    transform: translateY(0px);
-  }
-
-  /* Volta para a posição inicial */
+/* Custom Scrollbar for Detail Overlay */
+.project-detail-overlay::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Animação suave para entrada e saída dos textos */
-.project-description,
-.project-subtitle,
-.projects-description,
-.project-title,
-.projects-link {
-  transition:
-    transform 0.3s ease-in-out,
-    text-shadow 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+.project-detail-overlay::-webkit-scrollbar-track {
+  background: #121212;
 }
 
-/* Hover nos textos: leve brilho e deslize */
-.project-description:hover,
-.project-subtitle:hover,
-.projects-description:hover {
-  transform: translateX(2px);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+.project-detail-overlay::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 4px;
 }
 
-.projects-title {
-  font-family: "Inria Serif", serif;
+.project-detail-overlay::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.close-detail-btn {
+  position: fixed;
+  top: 2rem;
+  left: 3rem;
+  /* Moved slightly right */
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-family: 'Inria Sans', sans-serif;
   font-weight: 700;
-  font-size: 78px;
-  letter-spacing: 0%;
-  margin-bottom: 25px;
-  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  z-index: 2001;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
 }
 
-.projects-title:hover {
-  color: #FFD730;
-  transform: scale(1.05);
+.close-detail-btn:hover {
+  background: #00BFFF;
+  color: #000;
+  border-color: #00BFFF;
 }
 
+.detail-content {
+  width: 100%;
+  max-width: 1400px;
+  /* Vertical Centering: margin auto in flex column centers strictly when space allows */
+  margin: auto;
+  /* NO SCROLL GOAL: Aggressive reduction */
+  padding: 5rem 2rem 2rem 2rem;
+}
+
+.detail-hero {
+  /* Minimal margin */
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+/* Updated Title Font */
+.detail-title {
+  font-family: 'Inria Serif', serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  /* Slightly smaller max */
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.5rem 0;
+  /* Tightest possible */
+  line-height: 1;
+}
+
+.detail-meta {
+  display: flex;
+  gap: 2rem;
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.meta-item strong {
+  color: #00BFFF;
+  margin-right: 5px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  /* Compact gap */
+}
+
+.section-label {
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  /* Tighter to text */
+  display: block;
+}
+
+.detail-description {
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Inria Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  /* Explicit size for buttons */
+  cursor: pointer;
+  /* Ensure pointer for buttons */
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+}
+
+.action-btn.highlight {
+  background: #00BFFF;
+  border-color: #00BFFF;
+  color: #000;
+}
+
+.action-btn.highlight:hover {
+  background: #009acd;
+  color: #fff;
+}
+
+/* Tech Tags */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 2rem;
+  /* Reduced space */
+}
+
+.tech-tag {
+  background: rgba(0, 191, 255, 0.1);
+  color: #00BFFF;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-family: 'Inria Sans', sans-serif;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+.media-preview {
+  width: 100%;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #000;
+  border: 1px solid #222;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.no-media-placeholder {
+  width: 100%;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  font-family: 'Inria Sans', sans-serif;
+  border: 1px dashed #333;
+  border-radius: 8px;
+}
+
+.detail-footer {
+  margin-top: 4rem;
+  /* Reduced from 6rem */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.detail-footer p {
+  color: #888;
+}
+
+.detail-footer a {
+  color: #00BFFF;
+  text-decoration: none;
+  font-weight: 700;
+  position: relative;
+  /* For pseudo-element */
+  display: inline-block;
+}
+
+/* Link Line Animation */
+.detail-footer a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #00BFFF;
+  transition: width 0.3s ease;
+}
+
+.detail-footer a:hover::after {
+  width: 100%;
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
-  .projects-title {
-    font-size: 60px;
+  .projects-page-container {
+    padding: 0 2rem;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
-  .project-title {
-    font-size: 50px;
+  .projects-list-wrapper {
+    width: 100%;
+    padding-right: 0;
+    justify-content: flex-start;
+    padding-top: 6rem;
+    height: auto;
+    padding-left: 0;
+    /* Reset extra padding on mobile */
   }
 
-  .project-media {
-    max-width: 90%;
+  .project-preview-stage {
+    display: none;
+    /* Hide hover preview on tablet/mobile */
+  }
+
+  .list-main-title {
+    font-size: 3rem;
   }
 }
 
 @media (max-width: 768px) {
-  .project-slide {
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
-  .project-media-container {
-    max-width: 100%;
-    justify-content: center;
+  .close-detail-btn {
+    top: 1rem;
+    left: 1rem;
+    padding: 8px 16px;
   }
 
-  .project-title {
-    font-size: 40px;
-    text-align: center;
+  .detail-content {
+    padding-top: 5rem;
   }
 
-  .project-subtitle {
-    font-size: 18px;
-    text-align: center;
-  }
-
-  .project-description {
-    font-size: 0.95rem;
-    text-align: center;
-  }
-
-  .project-text {
-    align-items: center;
-    text-align: center;
+  .detail-title {
+    font-size: 2.5rem;
   }
 }
 
-
-/* Responsividade para vídeos do YouTube */
-/* Responsividade para vídeos do YouTube */
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  /* 16:9 */
-  height: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 1110px;
-  background: #111;
-}
-
-.video-container iframe {
-  position: absolute;
+/* --- TEXT MODAL (Extra Details) --- */
+.text-modal-overlay {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  border: none;
-}
-
-/* Media Placeholder for TCC */
-.media-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  /* Darker backdrop */
+  backdrop-filter: blur(8px);
+  z-index: 3001;
+  /* Above detail overlay */
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
-  color: #555;
-  font-family: 'Inria Sans', sans-serif;
+  align-items: center;
+  padding: 2rem;
+}
+
+.text-modal-content {
+  background: #1a1a1a;
+  width: 100%;
+  max-width: 700px;
+  max-height: 80vh;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  scrollbar-width: thin;
+  scrollbar-color: #555 #1a1a1a;
+}
+
+.text-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.text-modal-content::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 0 12px 12px 0;
+}
+
+.text-modal-content::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.text-modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+.text-modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: transparent;
+  border: none;
+  color: #737373;
   font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  border: 1px solid #333;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-/* Highlight Project Style (TCC) */
-.highlight-project .project-title {
-  color: #FFD700;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-}
-
-.highlight-project .project-subtitle {
+.text-modal-close:hover {
   color: #fff;
-  font-weight: 700;
 }
 
-.highlight-project .video-container {
-  border: 2px solid rgba(255, 215, 0, 0.3);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+.text-modal-title {
+  font-family: 'Inria Serif', serif;
+  font-size: 2rem;
+  color: #00BFFF;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.text-modal-body {
+  font-family: 'Inria Sans', sans-serif;
+  color: #ccc;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.text-modal-body h3 {
+  color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.text-modal-body ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.text-modal-body li {
+  margin-bottom: 0.8rem;
+}
+
+.text-modal-body strong {
+  color: #eee;
+}
+
+.text-modal-body em {
+  font-style: italic;
+  color: #aaa;
 }

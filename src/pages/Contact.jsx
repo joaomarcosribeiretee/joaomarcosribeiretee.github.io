@@ -5,8 +5,13 @@ import PageTransition4 from "../components/PageTransition4";
 import { motion } from "framer-motion";
 import "../styles/Contact.css";
 import { FaEnvelope, FaLinkedin, FaGithub, FaFileDownload } from "react-icons/fa";
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../translations";
 
 const Contact = () => {
+  const { language } = useLanguage();
+  const t = translations[language].contact;
+
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
@@ -80,10 +85,10 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="contact-title">
-              VAMOS <span className="outline-text">CONVERSAR</span>
+              {t.title.split(' ')[0]} <span className="outline-text">{t.title.split(' ').slice(1).join(' ')}</span>
             </h1>
             <p className="contact-subtitle">
-              Tem um projeto em mente ou quer apenas trocar uma ideia?
+              {t.subtitle}
             </p>
           </motion.div>
 
@@ -127,7 +132,7 @@ const Contact = () => {
 
               <div className="cv-section">
                 <button type="button" className="download-btn-modern" onClick={handleDownload}>
-                  <FaFileDownload /> Baixar Currículo
+                  <FaFileDownload /> {t.downloadCV}
                 </button>
               </div>
             </motion.div>
@@ -144,7 +149,7 @@ const Contact = () => {
                   <input
                     type="text"
                     name="name"
-                    placeholder="Seu Nome"
+                    placeholder={t.form.namePlaceholder}
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -155,7 +160,7 @@ const Contact = () => {
                   <input
                     type="email"
                     name="email"
-                    placeholder="Seu Email"
+                    placeholder={t.form.emailPlaceholder}
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -165,7 +170,7 @@ const Contact = () => {
                 <div className="form-group">
                   <textarea
                     name="message"
-                    placeholder="Sua Mensagem..."
+                    placeholder={t.form.messagePlaceholder}
                     value={formData.message}
                     onChange={handleChange}
                     required
@@ -175,7 +180,7 @@ const Contact = () => {
 
                 <div className="form-footer">
                   <button type="submit" className="submit-btn-modern" disabled={isSubmitting}>
-                    {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
+                    {isSubmitting ? t.form.sending : t.form.sendButton}
                   </button>
 
                   {submitStatus === "success" && (
@@ -184,11 +189,11 @@ const Contact = () => {
                       animate={{ opacity: 1 }}
                       className="status-msg success"
                     >
-                      Enviado com sucesso!
+                      {t.form.successMessage}
                     </motion.span>
                   )}
                   {submitStatus === "error" && (
-                    <p className="status-msg error">Erro ao enviar. Tente novamente.</p>
+                    <p className="status-msg error">{t.form.errorMessage}</p>
                   )}
                 </div>
               </form>

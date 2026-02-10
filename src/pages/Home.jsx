@@ -4,9 +4,12 @@ import PageTransition from "../components/PageTransition";
 import "../styles/Home.css";
 import { motion } from "framer-motion";
 import SocialIcons from "../components/SocialIcons";
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../translations";
 
 const Home = () => {
-  const nameText = "JOÃO MARCOS";
+  const { language } = useLanguage();
+  const t = translations[language].home;
 
   // Configuração da animação "fluida e leve"
   const springTransition = (delay) => ({
@@ -40,13 +43,13 @@ const Home = () => {
               transition={springTransition(0.1)}
             >
               <h1 className="home-title">
-                OLÁ, EU SOU{" "}
+                {t.greeting}{" "}
                 <motion.span
                   className="highlight-name"
                   style={{ display: "inline-block" }}
                   whileHover={{ scale: 1.05, textShadow: "0px 0px 8px rgb(255,255,255)" }}
                 >
-                  {nameText}
+                  {t.name}
                 </motion.span>
               </h1>
             </motion.div>
@@ -58,7 +61,7 @@ const Home = () => {
               transition={springTransition(0.3)}
               whileHover={{ scale: 1.05, color: "#ffffff", cursor: "default" }}
             >
-              Desenvolvedor Full Stack | QA (Automação de Testes)
+              {t.subtitle}
             </motion.h2>
 
             <motion.p
@@ -67,9 +70,8 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={springTransition(0.5)}
               whileHover={{ scale: 1.05, color: "#e0e0e0", cursor: "default" }}
-            >
-              Aplicando <strong>Inteligência Artificial</strong> para elevar o padrão de desenvolvimento e automação.
-            </motion.p>
+              dangerouslySetInnerHTML={{ __html: t.description }}
+            />
 
             <motion.div
               className="home-buttons"
@@ -78,10 +80,10 @@ const Home = () => {
               transition={springTransition(0.7)}
             >
               <Link to="/projects" className="btn-custom btn-primary">
-                <span className="arrow">→</span> ver meus projetos
+                <span className="arrow">→</span> {t.btnProjects}
               </Link>
               <Link to="/about" className="btn-custom btn-secondary">
-                <span className="arrow">→</span> sobre mim
+                <span className="arrow">→</span> {t.btnAbout}
               </Link>
             </motion.div>
           </main>

@@ -9,12 +9,14 @@ import {
   SiAdobecreativecloud
 } from "react-icons/si";
 import { FaFileExcel, FaTasks, FaRobot, FaChevronDown } from "react-icons/fa";
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../translations";
 
 const skillsData = [
   {
     id: "frontend",
     label: "Front-End",
-    description: "Interfaces imersivas e experiências nativas.",
+    description: "Interfaces modernas, responsivas e focadas na experiência do usuário",
     items: [
       { name: "React", icon: <SiReact /> },
       { name: "React Native", icon: <SiReact /> },
@@ -27,7 +29,7 @@ const skillsData = [
   {
     id: "backend",
     label: "Back-End",
-    description: "Arquiteturas robustas e escaláveis.",
+    description: "Lógica de negócio, APIs e integração com bancos de dados",
     items: [
       { name: "Python", icon: <SiPython /> },
       { name: "Node.js", icon: <SiNodedotjs /> },
@@ -38,7 +40,7 @@ const skillsData = [
   {
     id: "qa",
     label: "Testes & QA",
-    description: "Qualidade de software e automação.",
+    description: "Garantia de qualidade, estabilidade e confiabilidade do sistema",
     items: [
       { name: "Playwright", icon: <FaRobot /> },
       { name: "Percy", icon: <SiPercy /> },
@@ -48,7 +50,7 @@ const skillsData = [
   {
     id: "utils",
     label: "Utilitários",
-    description: "Ferramentas para produtividade.",
+    description: "Ferramentas de apoio para produtividade e criação",
     items: [
       { name: "Git", icon: <SiGit /> },
       { name: "GitHub", icon: <SiGithub /> },
@@ -61,6 +63,9 @@ const skillsData = [
 ];
 
 const Skills = () => {
+  const { language } = useLanguage();
+  const t = translations[language].skills;
+
   const [activeCategory, setActiveCategory] = useState(skillsData[0].id);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
@@ -78,7 +83,8 @@ const Skills = () => {
         {isMobile ? (
           <div className="skills-mobile-container">
             <header className="skills-header-mobile">
-              <h1 className="skills-main-title">Habilidades</h1>
+              <h1 className="skills-main-title">{t.title}</h1>
+              <div className="title-underline"></div>
             </header>
 
             <div className="skills-mobile-accordion">
@@ -88,7 +94,7 @@ const Skills = () => {
                     className={`accordion-header ${activeCategory === cat.id ? "active" : ""}`}
                     onClick={() => setActiveCategory(activeCategory === cat.id ? null : cat.id)}
                   >
-                    <span className="accordion-title">{cat.label}</span>
+                    <span className="accordion-title">{t.categories[cat.id].label}</span>
                     <motion.div
                       animate={{ rotate: activeCategory === cat.id ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
@@ -107,6 +113,7 @@ const Skills = () => {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="accordion-content"
                       >
+                        <p className="mobile-skill-description">{t.categories[cat.id].description}</p>
                         <div className="accordion-grid">
                           {cat.items.map((skill, idx) => (
                             <div key={idx} className="skill-card-mobile-minimal">
@@ -128,7 +135,7 @@ const Skills = () => {
             {/* Esquerda: Navegação */}
             <div className="skills-nav-section">
               <header className="skills-header-minimal">
-                <h1 className="skills-main-title">Habilidades</h1>
+                <h1 className="skills-main-title">{t.title}</h1>
                 <div className="title-underline"></div>
               </header>
 
@@ -139,7 +146,7 @@ const Skills = () => {
                     className={`nav-item ${activeCategory === cat.id ? "active" : ""}`}
                     onClick={() => setActiveCategory(cat.id)}
                   >
-                    <span className="nav-item-text">{cat.label}</span>
+                    <span className="nav-item-text">{t.categories[cat.id].label}</span>
                     {activeCategory === cat.id && (
                       <motion.div
                         className="nav-active-indicator"
@@ -165,10 +172,10 @@ const Skills = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <h2 className="stage-title">
-                    {skillsData.find(d => d.id === activeCategory)?.label}
+                    {t.categories[activeCategory]?.label}
                   </h2>
                   <p className="stage-description">
-                    {skillsData.find(d => d.id === activeCategory)?.description}
+                    {t.categories[activeCategory]?.description}
                   </p>
 
                   <div className="stage-grid">

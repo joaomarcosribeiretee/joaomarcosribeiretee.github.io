@@ -43,7 +43,7 @@
   top: 0;
   right: 0;
   transform: translateX(100%);
-  width: 88%;
+  width: 93%;
   /* Volta a ser largo para o estilo poster */
   height: 100vh;
   background-color: #1a1a1a;
@@ -75,6 +75,8 @@
   cursor: pointer;
   transition: transform 0.3s ease-in-out, opacity 0.3s;
   opacity: 0.6;
+  flex: 0 0 auto;
+  /* Don't grow or shrink, fixed size */
 }
 
 .close-button:hover {
@@ -89,15 +91,16 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  /* Centraliza verticalmente */
   align-items: flex-start;
   /* Alinhamento à esquerda no Desktop */
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  /* Perfect vertical centering */
+  width: 100%;
   padding-left: 15%;
   /* Margem esquerda para Desktop */
-  padding-bottom: 10vh;
-  /* Empurra o centro visual para cima */
   counter-reset: menu-counter;
 }
 
@@ -194,15 +197,17 @@
 
   /* Container da lista no Mobile */
   .menu ul {
+    position: static;
+    /* Reset absolute positioning from desktop */
+    transform: none;
+    /* Reset transform from desktop */
     width: 100%;
     padding: 0;
-    /* Remove padding total */
-    padding-bottom: 0;
-    /* Reseta padding do desktop */
     margin: 0;
     align-items: center;
-    /* Centraliza itens */
     justify-content: center;
+    gap: 0.5rem;
+    /* Add spacing between menu items */
   }
 
   /* Itens de lista no Mobile */

@@ -75,7 +75,15 @@ body {
   max-width: 800px;
   opacity: 0;
   animation: fadeSlideUp 0.8s ease-out 0.4s forwards;
-  /* Removed Vertical Blue Bar */
+
+  /* Vertical Blue Bar (Restored) */
+  border-left: 3px solid #00BFFF;
+  padding-left: 1.5rem;
+  text-align: left;
+  /* Align left to match bar */
+  margin-left: auto;
+  margin-right: auto;
+  /* Since it's flex centered, but text alignment is left now, let's keep it centered container-wise */
 }
 
 /* Buttons */
@@ -234,8 +242,10 @@ body {
 
   .home-buttons {
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.5rem;
+    /* Increased for better touch spacing */
     width: 100%;
+    padding: 0 0.5rem;
   }
 
   .btn-custom {

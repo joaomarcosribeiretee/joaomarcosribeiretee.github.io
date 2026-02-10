@@ -1,0 +1,50 @@
+.language-toggle {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 9999;
+
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    padding: 0;
+}
+
+.language-toggle svg {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    /* Slightly rounded corners for the flag itself */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.language-toggle:hover {
+    transform: scale(1.1);
+    background: #252525;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.language-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .language-toggle {
+        bottom: 1.5rem;
+        left: 1.5rem;
+        width: 50px;
+        height: 50px;
+    }
+}

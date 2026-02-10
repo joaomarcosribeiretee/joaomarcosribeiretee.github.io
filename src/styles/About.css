@@ -272,6 +272,10 @@
     max-width: 100%;
     max-height: 400px;
   }
+
+  .profile-image {
+    object-position: center 80% !important;
+  }
 }
 
 @media (max-width: 480px) {

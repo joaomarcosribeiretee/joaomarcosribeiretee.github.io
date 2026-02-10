@@ -2,8 +2,13 @@ import React, { useEffect } from "react";
 import PageTransition3 from "../components/PageTransition3";
 import { motion } from "framer-motion";
 import "../styles/About.css";
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../translations";
 
 const About = () => {
+  const { language } = useLanguage();
+  const t = translations[language].about;
+
   // Aplica o cursor personalizado
   useEffect(() => {
     document.body.style.cursor = '';
@@ -45,7 +50,7 @@ const About = () => {
               custom={0}
               variants={fadeInUp}
             >
-              <h1 className="about-title">SOBRE <span className="outline-text">MIM</span></h1>
+              <h1 className="about-title">{t.title} <span className="outline-text">{t.titleHighlight}</span></h1>
             </motion.div>
 
             <motion.div
@@ -55,15 +60,9 @@ const About = () => {
               custom={1}
               variants={fadeInUp}
             >
-              <p>
-                Olá! Sou <strong>João Marcos Ribeirete Garbelini</strong>, Desenvolvedor Full Stack e Analista de QA com foco em construir software de alta qualidade e performance. Sou graduado em Ciência da Computação pela PUC-SP e estou em especialização como AI Scientist pela FIAP, unindo o desenvolvimento tradicional às possibilidades da Inteligência Artificial.
-              </p>
-              <p>
-                Minha expertise concentra-se em <strong>React, Node.js</strong>, além de uma forte atuação em automação de testes com <strong>Playwright, Percy e Cypress</strong>. Estou expandindo minha atuação para a área de <strong>dados e IA</strong>, buscando integrar tecnologias inteligentes para otimizar processos e desenvolver soluções que acompanhem as constantes evoluções do mercado.
-              </p>
-              <p>
-                Fora do terminal, busco equilíbrio na musculação e no futebol, mantendo o corpo ativo tanto quanto a mente. Meu lado entusiasta se completa com jogos, filmes de ficção e animações, que são minhas principais fontes de inspiração para explorar novas ideias e continuar evoluindo no mundo da tecnologia.
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: t.bio1 }} />
+              <p dangerouslySetInnerHTML={{ __html: t.bio2 }} />
+              <p dangerouslySetInnerHTML={{ __html: t.bio3 }} />
             </motion.div>
 
             <motion.div
@@ -82,7 +81,7 @@ const About = () => {
               </div>
 
               <div className="music-status">
-                <span className="listening-label">Ouvindo agora no</span>
+                <span className="listening-label">{t.listeningLabel}</span>
                 <a href="https://open.spotify.com/user/22lseke5ukek7jgd4sepaacoy?si=81add31631224262" target="_blank" rel="noopener noreferrer" className="spotify-link">
                   Spotify
                 </a>
