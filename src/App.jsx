@@ -11,8 +11,11 @@ import { AnimatePresence } from "framer-motion";
 // Componentes
 import Header from "./components/Header";
 import LoadingScreen from "./components/LoadingScreen";
-import MobileNotice from "./components/MobileNotice";
 import SocialIcons from "./components/SocialIcons";
+import LanguageToggle from "./components/LanguageToggle";
+
+// Contextos
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Páginas
 import Home from "./pages/Home";
@@ -48,7 +51,6 @@ const AnimatedRoutes = () => {
 const AppContent = () => {
   const location = useLocation();
   const [fadeIn, setFadeIn] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -70,17 +72,6 @@ const AppContent = () => {
     }
   }, [isTransitioning, isScrollablePage]);
 
-  // Responsividade
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   // Animação fade-in
   useEffect(() => {
     if (!isLoading) {
@@ -89,12 +80,14 @@ const AppContent = () => {
   }, [isLoading]);
 
   if (isLoading) return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
-  if (isMobile) return <MobileNotice />;
 
   return (
     <div className={`app-container ${fadeIn ? "fade-in" : ""} ${isTransitioning ? "transitioning" : ""}`}>
+      <LanguageToggle />
       <Header />
-      <SocialIcons />
+      <div className="desktop-only">
+        <SocialIcons />
+      </div>
       <AnimatedRoutes />
     </div>
   );
@@ -102,9 +95,11 @@ const AppContent = () => {
 
 // Componente com roteador (usando HashRouter para GitHub Pages)
 const App = () => (
-  <Router>
-    <AppContent />
-  </Router>
+  <LanguageProvider>
+    <Router>
+      <AppContent />
+    </Router>
+  </LanguageProvider>
 );
 
 export default App;

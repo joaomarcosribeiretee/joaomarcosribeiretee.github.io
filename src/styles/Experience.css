@@ -1,201 +1,280 @@
-.experience-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    overflow-y: auto;
-    background-color: #2A2A2A;
-    color: white;
-    font-family: "Inria Serif", serif;
-    text-align: center;
-    padding: 50px 3rem;
-    box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;600&display=swap");
+
+:root {
+  --accent-blue: #00BFFF;
+  --bg-dark: #0f0f0f;
+  --text-white: #ffffff;
+  --text-gray: #B3B3B3;
+  /* Lighter gray ("meio cinza") */
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+.experience-page {
+  min-height: 100vh;
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  padding: 100px 20px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+}
+
+.experience-header {
+  text-align: center;
+  margin-bottom: 80px;
+  z-index: 2;
+}
+
+.experience-title {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+  letter-spacing: -1px;
+}
+
+.title-underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--accent-blue);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+}
+
+/* --- Timeline Container --- */
+.timeline-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* The Central Line */
+.timeline-bar {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--accent-blue), transparent);
+  transform: translateX(-50%);
+  opacity: 0.3;
+}
+
+/* --- Timeline Item --- */
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Desktop Zig-Zag Logic - Text always Left */
+.timeline-item.left {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.timeline-item.right {
+  align-self: flex-end;
+  text-align: left;
+}
+
+/* The Dot */
+.timeline-dot {
+  position: absolute;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+  border: 2px solid var(--accent-blue);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dot positioning */
+.timeline-item.left .timeline-dot {
+  right: -8px;
+}
+
+.timeline-item.right .timeline-dot {
+  left: -8px;
+}
+
+.dot-core {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-blue);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-blue);
+}
+
+.dot-ripple {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-blue);
+  opacity: 0;
+  animation: ripple 2s infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
   }
-  
+
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Content Box */
+.timeline-content {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 191, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Typography */
+.timeline-header-group {
+  margin-bottom: 0.8rem;
+  width: 100%;
+}
+
+.timeline-date {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--accent-blue);
+  font-weight: 700;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(0, 191, 255, 0.1);
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.timeline-role {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin: 8px 0 0 0;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.timeline-company {
+  font-size: 1rem;
+  color: #ccc;
+  display: block;
+  font-weight: 300;
+  margin-top: 4px;
+}
+
+/* Description Paragraph with Leading Arrow */
+.timeline-description {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin: 0;
+  position: relative;
+  text-align: left;
+  padding-left: 20px;
+  /* Space for arrow */
+}
+
+/* The "Setinha" */
+.timeline-description::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent-blue);
+  font-weight: bold;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* --- Mobile / Responsive --- */
+@media (max-width: 768px) {
   .experience-title {
-    font-size: 4.4rem;
-    font-weight: bold;
-    margin-bottom: 50px;
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    font-size: 2.5rem;
   }
-  
-  .experience-title:hover {
-    color: #FFD730;
-    transform: scale(1.03);
+
+  /* Reset Zig-Zag to Linear Left-Aligned */
+  .timeline-container {
+    padding-left: 0;
+    max-width: 100%;
   }
-  
-  .experience-item {
-    display: flex;
-    align-items: flex-start;
+
+  .timeline-bar {
+    left: 20px;
+    transform: none;
+  }
+
+  .timeline-item {
     width: 100%;
-    max-width: 900px;
-    margin-bottom: 30px;
-    text-align: left;
-    position: relative;
+    align-self: flex-start !important;
+    text-align: left !important;
+    padding-left: 50px;
+    /* Space for line + dot */
+    padding-right: 20px;
+    margin-bottom: 40px;
   }
-  
-  /* Timeline */
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 20px;
-    position: relative;
-    min-height: 100%;
+
+  .timeline-item.left .timeline-dot,
+  .timeline-item.right .timeline-dot {
+    left: 12px;
+    right: auto;
   }
-  
-  .circle-icon {
-    width: 30px;
-    height: 30px;
-    margin-top: 20px;
-    z-index: 1;
-    transition: transform 0.3s ease-in-out;
+
+  .timeline-content {
+    padding: 20px;
   }
-  
-  .circle-icon:hover {
-    transform: scale(1.15);
+
+  .timeline-role {
+    font-size: 1.3rem;
   }
-  
-  /* Altura exata da linha para cada item */
-  .timeline-line {
-    width: 2px;
-    background-color: white;
-    position: absolute;
-    border-radius: 5px;
-    top: 47px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 90%;
-    height: calc(100% + 113px);
-  }
-  
-  .timeline-line2 {
-    height: calc(100% + 100px);
-    /* outros estilos herdados do .timeline-line */
-    width: 2px;
-    background-color: white;
-    position: absolute;
-    border-radius: 5px;
-    top: 47px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 90%;
-  }
-  
-  .timeline-line3 {
-    height: 180px;
-    /* mesmos ajustes */
-    width: 2px;
-    background-color: white;
-    position: absolute;
-    border-radius: 5px;
-    top: 47px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 90%;
-  }
-  
-  /* Conteúdo */
-  .experience-info {
-    flex: 1;
-    padding-top: 5px;
-  }
-  
-  .experience-info h2 {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .experience-info p {
-    font-size: 16px;
-    font-family: 'Inria Sans', sans-serif;
-    line-height: 1.6;
-    font-weight: 50;
-  }
-  
-  .year {
-    color: #FFD700;
-    font-weight: bold;
-    float: right;
-    margin-top: -3px;
-    font-size: 22px;
-  }
-  
-  /* Decoração do canto */
-  .corner-decor3 {
-    position: fixed;
-    top: 0;
-    right: 210px;
-    z-index: 100;
-  }
-  
-  .corner-decor3 img {
-    width: 60px;
-    height: auto;
-    opacity: 0.8;
-  }
-  
-  /* Hover suave */
-  .experience-info p,
-  .experience-info h2,
-  .year {
-    transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
-  }
-  
-  .experience-info p:hover,
-  .experience-info h2:hover,
-  .year:hover {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
-  }
-  
-  /* ======================= */
-  /* MEDIA QUERIES           */
-  /* ======================= */
-  @media (max-width: 900px) {
-    .experience-item {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-  
-    .timeline {
-      flex-direction: row;
-      justify-content: flex-start;
-      margin-bottom: 10px;
-      margin-right: 0;
-    }
-  
-    /* Mantém as linhas, só ajusta se necessário */
-    .timeline-line,
-    .timeline-line2,
-    .timeline-line3 {
-      height: 100px;
-    }
-  
-    .experience-title {
-      font-size: 3rem;
-    }
-  
-    .experience-info h2 {
-      font-size: 20px;
-    }
-  
-    .experience-info p {
-      font-size: 15px;
-    }
-  
-    .year {
-      float: none;
-      font-size: 18px;
-      margin-top: 5px;
-    }
-  
-    .corner-decor3 {
-      display: none;
-    }
-  }
-  
+}
+
+/* --- Ambient Effects --- */
+.glow-orb {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 191, 255, 0.08), transparent 70%);
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+}

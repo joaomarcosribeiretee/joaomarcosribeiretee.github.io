@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@300;400;700&display=swap");
+
 /* Estilo do cabeçalho */
 .header {
   position: absolute;
@@ -41,24 +42,25 @@
   position: fixed;
   top: 0;
   right: 0;
-  transform: translateX(100%); /* Fora da tela inicialmente */
-  width: 88%; /* O menu ocupa 85% da largura da tela */
+  transform: translateX(100%);
+  width: 93%;
+  /* Volta a ser largo para o estilo poster */
   height: 100vh;
-  background-color: #414141; /* Fundo escuro */
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra invertida para o lado direito */
-  transition: transform 0.3s ease-in-out; /* Transição suave */
+  background-color: #1a1a1a;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Transição premium */
   z-index: 999;
   display: flex;
   flex-direction: column;
-  padding: 0; /* Remove o padding interno */
+  padding: 0;
   color: #fff;
   font-family: 'Inria Sans', sans-serif;
-  
 }
 
 /* Menu aberto */
 .menu.open {
-  transform: translateX(0); /* Faz o menu deslizar para dentro da tela */
+  transform: translateX(0);
 }
 
 /* Botão de fechar */
@@ -67,12 +69,19 @@
   border: none;
   color: #737373;
   font-size: 64px;
-  align-self: flex-end; /* Alinha o botão à esquerda do menu */
-  margin-right: 30px; /* Ajusta a posição horizontal */
-  margin-top: 12px;
+  align-self: flex-end;
+  margin-right: 50px;
+  margin-top: 30px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out, opacity 0.3s;
-  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
+  opacity: 0.6;
+  flex: 0 0 auto;
+  /* Don't grow or shrink, fixed size */
+}
+
+.close-button:hover {
+  transform: rotate(90deg);
+  opacity: 1;
 }
 
 /* Links do menu */
@@ -80,57 +89,170 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Alinhamento à esquerda no Desktop */
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  /* Perfect vertical centering */
+  width: 100%;
+  padding-left: 15%;
+  /* Margem esquerda para Desktop */
+  counter-reset: menu-counter;
 }
 
 .menu ul li {
-  margin: 15px 0;
-  background-color: #3C3C3C; /* Fundo padrão dos itens */
-  border: 1px solid #2F2F2F; /* Bordas para os retângulos */
-  overflow: hidden; /* Garante que o texto não saia do limite */
-  max-width: 1525px; /* Limita a largura do link */
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  overflow: visible;
+  text-align: left;
+  position: relative;
+  counter-increment: menu-counter;
 }
 
 .menu ul li a {
-  color: #8D8D8D; /* Nova cor do texto */
+  color: #888;
+  /* Cinza inativo */
   text-decoration: none;
-  font-size: 38px;
-  font-weight: 400; /* Estilo regular */
-  padding: 30px 20px;
-  display: block;
-  transition: background-color 0.3s, color 0.3s;
-  padding-left: 65px;
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 10px 0;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  position: relative;
+  letter-spacing: -2px;
 }
 
-
-/* Colar o texto na borda esquerda do menu */
-.menu ul li a {
-  padding-left: 65px; /* Espaçamento para alinhar próximo à borda */
+/* Numeração (01, 02...) Desktop Only */
+.menu ul li a::before {
+  content: "0" counter(menu-counter);
+  font-family: 'Inria Sans', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #737373;
+  position: absolute;
+  top: 20px;
+  left: -40px;
+  letter-spacing: 0;
 }
 
+/* Hover Effect */
 .menu ul li a:hover {
-  background-color: #555; /* Fundo mais escuro ao passar o mouse */
-  color: #bbb; /* Cor do texto ao passar o mouse */
-  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
+  color: #fff;
+  transform: translateX(10px);
+  opacity: 1;
 }
 
 /* Destaque para o item ativo */
 .menu ul li.active {
-  background-color: #2F2F2F; /* Fundo preto para o item ativo */
+  background-color: transparent;
 }
 
 .menu ul li.active a {
-  color: #8D8D8D; /* Nova cor do texto */
-  font-size: 38px;
-  font-weight: 400; /* Deixa o texto em negrito */
-  background-image: url('/public/icons/sete.png'); /* Caminho para a seta */
-  background-repeat: no-repeat; /* Não repetir a seta */
-  background-size: 20px 50px; /* Ajusta o tamanho da seta */
-  background-position: left center; /* Posição da seta (esquerda e centralizada) */
-  padding-left: 65px; /* Ajusta o espaçamento para o texto não sobrepor a seta */
+  color: #fff;
+  opacity: 1;
 }
 
-/* Animação nos textos */
+.menu ul li.active a::after {
+  display: none;
+}
+
+/* Animação nos botões */
 .close-button:hover {
-  transform: scale(1.5);
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Responsive / Mobile Styles */
+@media (max-width: 768px) {
+
+  /* Menu em tela cheia */
+  .menu {
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: auto;
+    transform: translateY(-100%);
+    background-color: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    padding: 0;
+  }
+
+  .menu.open {
+    transform: translateY(0);
+  }
+
+  /* Container da lista no Mobile */
+  .menu ul {
+    position: static;
+    /* Reset absolute positioning from desktop */
+    transform: none;
+    /* Reset transform from desktop */
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* Add spacing between menu items */
+  }
+
+  /* Itens de lista no Mobile */
+  .menu ul li {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Links no Mobile */
+  .menu ul li a {
+    font-size: 3rem;
+    /* Tamanho menor */
+    color: #888;
+    width: auto;
+    padding: 15px 0;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  /* Esconder números no mobile */
+  .menu ul li a::before {
+    display: none !important;
+  }
+
+  /* Hover/Active no Mobile */
+  .menu ul li.active a {
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  .menu ul li a:hover {
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  /* Botão de fechar */
+  .close-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    margin: 0;
+    font-size: 3rem;
+    color: #fff;
+  }
 }

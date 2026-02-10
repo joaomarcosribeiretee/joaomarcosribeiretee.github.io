@@ -1,66 +1,97 @@
 import React from "react";
 import PageTransition2 from "../components/PageTransition2";
 import "../styles/Experience.css";
+import { motion } from "framer-motion";
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../translations";
 
 const Experience = () => {
+  const { language } = useLanguage();
+  const t = translations[language].experience;
+
+  // Map experience items from translations
+  const experienceData = [
+    {
+      ...t.items.aiAnalytics,
+      type: "education"
+    },
+    {
+      ...t.items.analistaTestes,
+      type: "work"
+    },
+    {
+      ...t.items.analistaTestesJr,
+      type: "work"
+    },
+    {
+      ...t.items.estagiarioUnity,
+      type: "work"
+    },
+    {
+      ...t.items.cienciaComputacao,
+      type: "education"
+    }
+  ];
+
   return (
     <PageTransition2>
-      <div className="experience-container">
+      <div className="experience-page">
+        <header className="experience-header">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="experience-title"
+          >
+            {t.title}
+          </motion.h1>
+          <div className="title-underline"></div>
+        </header>
 
-        
-        <div className="corner-decor3">
-          <img src={`${process.env.PUBLIC_URL}/icons/Retangulos2.png`} alt="Decoração" />
+        <div className="timeline-container">
+          <div className="timeline-bar"></div>
+
+          {experienceData.map((item, index) => (
+            <TimelineItem key={index} data={item} index={index} />
+          ))}
         </div>
 
-        <div className="content-wrapper">
-          <h1 className="experience-title">Experiência Profissional.</h1>
-
-          <div className="experience-item">
-            <div className="timeline">
-              <img src={`${process.env.PUBLIC_URL}/icons/Circle.png`} alt="Circle Icon" className="circle-icon" />
-              <div className="timeline-line"></div>
-            </div>
-            <div className="experience-info">
-              <h2>Estagiário Desenvolvedor Unity | VRGlass <span className="year">2022-2023</span></h2>
-              <p>
-                Atuei no planejamento e desenvolvimento de programas para criação de jogos, com foco em assegurar a integridade e o desempenho dos sistemas
-                através da detecção e correção de erros. Colaborei com a equipe para implementar melhorias nos processos e funcionalidades,
-                garantindo a estabilidade dos projetos e uma experiência de qualidade para os usuários.
-              </p>
-            </div>
-          </div>
-
-          <div className="experience-item">
-            <div className="timeline">
-              <img src={`${process.env.PUBLIC_URL}/icons/Circle.png`} alt="Circle Icon" className="circle-icon" />
-              <div className="timeline-line2"></div>
-            </div>
-            <div className="experience-info">
-              <h2>Analista de Testes Jr | Virtual Town <span className="year">2023-2025</span></h2>
-              <p>
-              Responsável pela execução de testes manuais e automatizados, garantindo a qualidade e a funcionalidade do software. Possuo proficiência no uso do <strong>Jira Software</strong> para gerenciar e acompanhar todo o ciclo de vida dos testes de forma eficiente. Além disso, desenvolvi um <strong>painel funcional</strong> utilizando <strong>HTML, CSS, JavaScript</strong> e <strong>Express</strong>, com o objetivo de otimizar processos e automatizar tarefas recorrentes no fluxo de trabalho.
-              </p>
-            </div>
-          </div>
-
-          <h1 className="experience-title">Experiência Acadêmica.</h1>
-
-          <div className="experience-item">
-            <div className="timeline">
-              <img src={`${process.env.PUBLIC_URL}/icons/Circle.png`} alt="Circle Icon" className="circle-icon" />
-              <div className="timeline-line3"></div>
-            </div>
-            <div className="experience-info">
-              <h2>Ciência da Computação | PUC-SP <span className="year">2022-2023</span></h2>
-              <p>
-              Graduação em Ciência da Computação na PUC-SP, com formação voltada para áreas como desenvolvimento de software, algoritmos, inteligência artificial, bancos de dados e engenharia de sistemas. O curso proporciona uma base sólida, unindo teoria e prática, e prepara para resolver problemas complexos e criar soluções tecnológicas inovadoras.
-              Ao longo da graduação, venho aplicando os conhecimentos adquiridos em projetos práticos, desenvolvendo habilidades técnicas e colaborativas diretamente alinhadas às demandas do mercado.
-              </p>
-            </div>
-          </div>
-        </div>
+        {/* Ambient Element */}
+        <div className="glow-orb"></div>
       </div>
     </PageTransition2>
+  );
+};
+
+const TimelineItem = ({ data, index }) => {
+  const isLeft = index % 2 === 0;
+
+  return (
+    <motion.div
+      className={`timeline-item ${isLeft ? "left" : "right"}`}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      <div className="timeline-content">
+        <div className="timeline-header-group">
+          <div className="timeline-date">{data.period}</div>
+          <h3 className="timeline-role">{data.role}</h3>
+          <span className="timeline-company">{data.company}</span>
+        </div>
+
+        {/* Single paragraph with decorative arrow styled via CSS */}
+        <p className="timeline-description">
+          {data.description}
+        </p>
+      </div>
+
+      <div className="timeline-dot">
+        <div className="dot-core"></div>
+        <div className="dot-ripple"></div>
+      </div>
+    </motion.div>
   );
 };
 
