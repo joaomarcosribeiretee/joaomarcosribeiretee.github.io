@@ -21,6 +21,22 @@
   transform: scale(1.2);
   opacity: 1;
   cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
+  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
+}
+
+/* Laptop Adjustments */
+@media (max-width: 1440px) {
+  .social-icons {
+    left: 15px;
+    /* Slightly closer to edge */
+    gap: 10px;
+  }
+
+  .social-icons a img {
+    width: 40px;
+    /* Smaller icons for laptops */
+    height: 40px;
+  }
 }
 
 /* Responsivo */

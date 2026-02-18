@@ -137,6 +137,27 @@
   text-align: left;
 }
 
+/* Laptop / Tablet Landscape Adjustments */
+@media (max-width: 1440px),
+(max-height: 900px) {
+  .menu ul li button {
+    font-size: 5.5rem;
+    /* Adjusted to 5.5rem for better visibility on laptops */
+    padding: 5px 0;
+  }
+
+  .menu ul li button::before {
+    font-size: 0.9rem;
+    top: 15px;
+    left: -30px;
+  }
+
+  .menu ul {
+    padding-left: 10%;
+    /* Slightly reduce left padding to center better */
+  }
+}
+
 /* Numeração (01, 02...) Desktop Only */
 .menu ul li button::before {
   content: "0" counter(menu-counter);
