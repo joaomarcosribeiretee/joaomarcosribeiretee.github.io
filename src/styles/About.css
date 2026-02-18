@@ -33,6 +33,27 @@
   z-index: 1;
 }
 
+/* Laptop Adjustments */
+@media (max-width: 1440px) {
+  .about-container {
+    padding: 0 4rem 0 6rem;
+    /* Increased left padding to clear social icons */
+    gap: 2rem;
+    /* Reduced gap */
+    max-width: 100%;
+  }
+
+  .about-title {
+    font-size: 4rem;
+    /* Smaller title for laptops */
+  }
+
+  .about-bio p {
+    font-size: 1rem;
+    /* Slightly smaller text */
+  }
+}
+
 /* ========================= */
 /* Seção Esquerda: Conteúdo */
 /* ========================= */

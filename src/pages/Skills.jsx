@@ -66,7 +66,9 @@ const Skills = () => {
   const { language } = useLanguage();
   const t = translations[language].skills;
 
-  const [activeCategory, setActiveCategory] = useState(skillsData[0].id);
+  const [activeCategory, setActiveCategory] = useState(
+    window.innerWidth <= 1024 ? null : skillsData[0].id
+  );
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PageTransition3 from "../components/PageTransition3";
 import { motion } from "framer-motion";
 import "../styles/About.css";
@@ -17,10 +17,23 @@ const About = () => {
     };
   }, []);
 
-  // Função para tocar o áudio
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Função para tocar o áudio com validação
   const playSound = (soundFile) => {
+    if (isPlaying) return; // Se já estiver tocando, ignora o clique
+
+    setIsPlaying(true);
     const audio = new Audio(`${process.env.PUBLIC_URL}/audio/${soundFile}`);
-    audio.play();
+
+    audio.play().catch(error => {
+      console.error("Erro ao reproduzir áudio:", error);
+      setIsPlaying(false); // Reseta estado em caso de erro
+    });
+
+    audio.onended = () => {
+      setIsPlaying(false); // Libera o clique quando o áudio termina
+    };
   };
 
   const fadeInUp = {
