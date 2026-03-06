@@ -144,7 +144,7 @@ const projectsData = [
   },
   {
     id: "ultrafit",
-    title: "ULTRAFIT ACADEMY",
+    title: "ULTRAFIT GYM",
     year: "2024",
     context: "Aplicação Web",
     role: "Full Stack Team",

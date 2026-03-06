@@ -103,7 +103,7 @@ export const en = {
         },
 
         ultrafit: {
-            title: "ULTRAFIT ACADEMY",
+            title: "ULTRAFIT GYM",
             year: "2024",
             context: "Web Application",
             role: "Full Stack Team",
