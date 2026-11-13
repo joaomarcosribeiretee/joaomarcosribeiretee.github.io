@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_cover.css">
+<style>
+  :root { --c1: #8b5cf6; --c2: #22c55e; }
+  .screen { background: #0f0f14; }
+  .p1 { left: 330px; top: 160px; transform: rotate(-7deg); }
+  .p2 { left: 640px; top: 120px; z-index: 2; }
+  .p3 { left: 950px; top: 160px; transform: rotate(7deg); }
+  .pad { padding: 18px 20px; }
+  .brand { text-align: center; font-weight: 800; letter-spacing: .2em; color: #a1a1aa; font-size: 13px; margin-top: 6px; }
+  h3 { margin-top: 18px; font-size: 22px; font-weight: 800; line-height: 1.2; }
+  .sub { font-size: 13px; color: #8a8a96; margin-top: 6px; line-height: 1.5; }
+  .day { margin-top: 12px; padding: 14px; border-radius: 14px; background: #17171f; border: 1px solid #262631; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+  .day b { font-size: 15px; }
+  .day span { font-size: 12px; color: #8a8a96; }
+  .go { margin-top: 16px; height: 48px; border-radius: 12px; background: #22c55e; color: #052e14; display: grid; place-items: center; font-weight: 800; }
+  .set { display: grid; grid-template-columns: 22px 1fr 1fr 30px; gap: 8px; align-items: center; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  .cell { height: 38px; border-radius: 10px; border: 1px solid #262631; background: #17171f; display: grid; place-items: center; font-weight: 700; }
+  .ok .cell { border-color: rgba(34,197,94,.5); background: rgba(34,197,94,.1); color: #86efac; }
+  .ck { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+  .ok .ck { background: #22c55e; color: #052e14; } .no .ck { border: 1px solid #333340; }
+  .meal { margin-top: 10px; padding: 14px; border-radius: 14px; background: #17171f; border: 1px solid #262631; }
+  .meal-h { display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; }
+  .macros { margin-top: 10px; display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; font-size: 11px; color: #8a8a96; }
+  .macros b { display: block; color: #fff; font-size: 15px; }
+  .ring { margin: 18px auto 0; width: 150px; height: 150px; border-radius: 50%; background: conic-gradient(#22c55e 0 72%, #262631 72% 100%); display: grid; place-items: center; }
+  .ring div { width: 118px; height: 118px; border-radius: 50%; background: #0f0f14; display: grid; place-items: center; text-align: center; font-size: 12px; color: #8a8a96; }
+  .ring b { display: block; color: #fff; font-size: 24px; }
+  .brain { left: 70px; top: 830px; padding: 14px 18px; border-radius: 14px; background: #17171f; border: 1px solid #262631; font-size: 14px; font-weight: 600; }
+  .brain b { color: #a78bfa; }
+</style></head>
+<body><div class="stage">
+  <div class="mark"><i></i>AI Fitness System <small>TCC · PUC-SP</small></div>
+
+  <div class="phone p1"><div class="screen"><div class="island"></div><div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="pad"><div class="brand">WEIGHT</div>
+      <h3>Dieta · Hipertrofia</h3><div class="sub">2.650 kcal · calculado para você</div>
+      <div class="ring"><div><b>1.908</b>de 2.650 kcal</div></div>
+      <div class="meal"><div class="meal-h"><span>Almoço</span><span>712 kcal</span></div>
+        <div class="macros"><div><b>48 g</b>proteína</div><div><b>82 g</b>carbo</div><div><b>18 g</b>gordura</div></div></div>
+      <div class="meal"><div class="meal-h"><span>Lanche</span><span>380 kcal</span></div></div>
+    </div></div></div>
+
+  <div class="phone p2"><div class="screen"><div class="island"></div><div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="pad"><div class="brand">WEIGHT</div>
+      <h3>Full Body Balance · Low Carb</h3>
+      <div class="sub">Plano gerado pela IA a partir da sua anamnese: 4x por semana, sem impacto no joelho.</div>
+      <div class="day"><div><b>Treino A</b><br><span>Peito · Costas · Core</span></div><span>55 min</span></div>
+      <div class="day"><div><b>Treino B</b><br><span>Pernas (sem impacto)</span></div><span>50 min</span></div>
+      <div class="day"><div><b>Treino C</b><br><span>Ombros · Braços</span></div><span>45 min</span></div>
+      <div class="go">✓ Aceitar treino</div>
+    </div></div></div>
+
+  <div class="phone p3"><div class="screen"><div class="island"></div><div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="pad"><div class="brand">WEIGHT</div>
+      <h3>Agachamento livre</h3><div class="sub">Série 3 de 4 · descanso 90s</div>
+      <div class="set ok"><span>1</span><div class="cell">40 kg</div><div class="cell">12</div><div class="ck">✓</div></div>
+      <div class="set ok"><span>2</span><div class="cell">45 kg</div><div class="cell">10</div><div class="ck">✓</div></div>
+      <div class="set no"><span>3</span><div class="cell">45 kg</div><div class="cell">–</div><div class="ck"></div></div>
+      <div class="set no"><span>4</span><div class="cell">45 kg</div><div class="cell">–</div><div class="ck"></div></div>
+      <div class="go" style="background:#262631;color:#d4d4d8">+ Adicionar série</div>
+    </div></div></div>
+
+  <div class="float brain">GPT-4o mini · <b>fine-tuning</b> · FastAPI</div>
+</div></body></html>

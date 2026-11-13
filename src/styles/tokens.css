@@ -1,0 +1,141 @@
+/* Design tokens. Single source for color, type, radius, motion. */
+:root {
+  /* Dark is the default theme. The light theme only overrides colour tokens, below. */
+  color-scheme: dark;
+
+  /* color */
+  --bg: #09090b;
+  --bg-raised: #0f0f12;
+  --surface: #131317;
+  --surface-2: #1a1a1f;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --text-strong: #ffffff;
+  --text: #ededef;
+  --text-2: #a1a1aa;
+  --text-3: #71717a;
+  --accent: #00bfff;
+  --accent-ink: #001a24;
+  --accent-soft: rgba(0, 191, 255, 0.12);
+  --accent-line: rgba(0, 191, 255, 0.4);
+  --success: #34d399;
+  --danger: #f87171;
+
+  /* overlays, glows, brand one-offs */
+  --scrim-photo: rgba(9, 9, 11, 0.55);
+  --glass: rgba(9, 9, 11, 0.72);
+  --glass-strong: rgba(9, 9, 11, 0.96);
+  --fill-subtle: rgba(255, 255, 255, 0.03);
+  --accent-glow-soft: rgba(0, 191, 255, 0.14);
+  --accent-fade: rgba(0, 191, 255, 0.25);
+  --dot: rgba(255, 255, 255, 0.09);
+  --accent-glow: rgba(0, 191, 255, 0.35);
+  --neutral-glow: rgba(115, 115, 115, 0.35);
+  --accent-spot: rgba(0, 191, 255, 0.07);
+  --surface-glass: rgba(15, 15, 18, 0.85);
+  --shadow-strong: rgba(0, 0, 0, 0.85);
+  --scrim: rgba(0, 0, 0, 0.72);
+  --grabber: rgba(255, 255, 255, 0.35);
+  --spotify: #1db954;
+  --wave: #737373;
+  --mask: #000;
+  --media-bg: #000;
+
+  /* character effects (see src/components/effects) */
+  --fx-ink-rgb: 255 255 255;
+  --fx-streak: rgba(255, 244, 200, 0.8);
+  --fx-flake: rgba(222, 236, 255, 0.9);
+  --fx-vignette: rgba(4, 8, 16, 0.62);
+  --fx-ring: rgba(150, 195, 255, 0.9);
+  --fx-trail-end: #ffffff;
+  --fx-core: #ffffff;
+
+  /* type */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inria Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-h2: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --fs-hero: clamp(2.6rem, 1.2rem + 6.4vw, 6.5rem);
+
+  /* radius: control / surface / pill */
+  --r-control: 10px;
+  --r-surface: 18px;
+  --r-pill: 999px;
+
+  /* layout */
+  --container: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --header-h: 68px;
+
+  /* motion (mirror of src/lib/motion.js) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 120ms;
+  --dur-fast: 160ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+}
+
+/* Light theme: <html data-theme="light">. Accent is a deeper cyan so it keeps >= 4.5:1
+   as text on the light surfaces; every pair below was checked against WCAG AA. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f6f7f9;
+  --bg-raised: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #eceff3;
+  --line: rgba(20, 24, 32, 0.09);
+  --line-strong: rgba(20, 24, 32, 0.18);
+  --text-strong: #000000;
+  --text: #14161a;
+  --text-2: #4b5260;
+  --text-3: #5f6775;
+  --accent: #00739a;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(0, 115, 154, 0.1);
+  --accent-line: rgba(0, 115, 154, 0.4);
+  --success: #06724a;
+  --danger: #c42b1c;
+
+  --scrim-photo: rgba(15, 18, 24, 0.4);
+  --glass: rgba(255, 255, 255, 0.78);
+  --glass-strong: rgba(246, 247, 249, 0.96);
+  --fill-subtle: rgba(20, 24, 32, 0.03);
+  --accent-glow-soft: rgba(0, 150, 200, 0.12);
+  --accent-fade: rgba(0, 115, 154, 0.25);
+  --dot: rgba(20, 24, 32, 0.12);
+  --accent-glow: rgba(0, 170, 220, 0.28);
+  --neutral-glow: rgba(120, 130, 150, 0.25);
+  --accent-spot: rgba(0, 150, 200, 0.08);
+  --surface-glass: rgba(255, 255, 255, 0.85);
+  --shadow-strong: rgba(20, 24, 32, 0.28);
+  --scrim: rgba(10, 12, 16, 0.5);
+  --grabber: rgba(20, 24, 32, 0.25);
+  --wave: #94a3b8;
+
+  --fx-ink-rgb: 20 28 40;
+  --fx-streak: rgba(20, 28, 40, 0.6);
+  --fx-flake: rgba(90, 120, 170, 0.85);
+  --fx-vignette: rgba(30, 42, 64, 0.4);
+  --fx-ring: rgba(30, 107, 255, 0.75);
+  --fx-trail-end: #1346b8;
+  /* the pale yellow of the Flash bolts disappears on white: only the light theme sets this */
+  --fx-bolt: #d99200;
+  --fx-sparkle-edge: #1a0a00;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

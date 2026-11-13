@@ -1,123 +1,162 @@
-import React, { useEffect, useState } from "react";
-import PageTransition3 from "../components/PageTransition3";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { FaSpotify } from "react-icons/fa";
+import { FiMapPin } from "react-icons/fi";
+import SectionHeader from "../components/SectionHeader";
+import Reveal from "../components/Reveal";
+import { useLanguage, useT } from "../contexts/LanguageContext";
+import { CHARACTERS } from "../data/characters";
+import { EFFECTS } from "../components/effects";
 import "../styles/About.css";
-import { useLanguage } from "../contexts/LanguageContext";
-import { translations } from "../translations";
+
+const publicPath = (path) => `${process.env.PUBLIC_URL}${path}`;
+
+const CharacterIcon = ({ icon }) => {
+  if (typeof icon !== "string") {
+    const Icon = icon;
+    return <Icon className="about-icon-glyph" aria-hidden="true" />;
+  }
+  // file icons are painted as a silhouette so their colour follows the state
+  const url = `url("${publicPath(icon)}")`;
+  return <span className="about-icon-glyph" aria-hidden="true" style={{ WebkitMaskImage: url, maskImage: url }} />;
+};
+
+// a character effect never outlives this, even if its sound is longer
+const EFFECT_MAX_MS = 3200;
+
+const SPOTIFY_URL = "https://open.spotify.com/user/22lseke5ukek7jgd4sepaacoy?si=81add31631224262";
 
 const About = () => {
+  const t = useT("about");
   const { language } = useLanguage();
-  const t = translations[language].about;
+  const audioRef = useRef(null);
+  const [playing, setPlaying] = useState(null);
+  const [fx, setFx] = useState(null); // { key, effect, origin } while a screen effect runs
+  const fxTimer = useRef(0);
 
-  // Aplica o cursor personalizado
-  useEffect(() => {
-    document.body.style.cursor = '';
-    return () => {
-      document.body.style.cursor = "auto";
+  useEffect(
+    () => () => {
+      audioRef.current?.pause();
+      clearTimeout(fxTimer.current);
+    },
+    []
+  );
+
+  const stop = () => {
+    audioRef.current?.pause();
+    audioRef.current = null;
+    clearTimeout(fxTimer.current);
+    setFx(null);
+    setPlaying(null);
+  };
+
+  // One sound at a time: another character replaces it, the same one stops it.
+  const toggleSound = (character, button) => {
+    const wasPlaying = playing === character.id;
+    stop();
+    if (wasPlaying) return;
+
+    const audio = new Audio(publicPath(character.audio));
+    audioRef.current = audio;
+    setPlaying(character.id);
+
+    if (EFFECTS[character.effect]) {
+      const rect = button.getBoundingClientRect();
+      setFx({
+        key: Date.now(),
+        effect: character.effect,
+        character,
+        origin: { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 },
+      });
+      fxTimer.current = setTimeout(() => setFx(null), EFFECT_MAX_MS);
+    }
+
+    const done = () => {
+      if (audioRef.current !== audio) return;
+      audioRef.current = null;
+      clearTimeout(fxTimer.current);
+      setFx(null);
+      setPlaying(null);
     };
-  }, []);
-
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  // Função para tocar o áudio com validação
-  const playSound = (soundFile) => {
-    if (isPlaying) return; // Se já estiver tocando, ignora o clique
-
-    setIsPlaying(true);
-    const audio = new Audio(`${process.env.PUBLIC_URL}/audio/${soundFile}`);
-
-    audio.play().catch(error => {
-      console.error("Erro ao reproduzir áudio:", error);
-      setIsPlaying(false); // Reseta estado em caso de erro
+    audio.onended = done;
+    audio.play().catch(() => {
+      // sound missing or blocked: the button resets, but the effect still runs its course
+      if (audioRef.current !== audio) return;
+      audioRef.current = null;
+      setPlaying(null);
     });
-
-    audio.onended = () => {
-      setIsPlaying(false); // Libera o clique quando o áudio termina
-    };
   };
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: 0.2 + i * 0.1,
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1], // Custom ease for smooth entry
-      },
-    }),
-  };
+  const ActiveEffect = fx && EFFECTS[fx.effect];
 
   return (
-    <PageTransition3>
-      <div id="about" className="about-page">
-        <div className="about-container">
-          {/* ... existing content ... */}
-          {/* Seção da Esquerda: Texto */}
-          <div className="about-content">
-            <motion.div
-              className="about-header"
-              initial="hidden"
-              animate="visible"
-              custom={0}
-              variants={fadeInUp}
-            >
-              <h1 className="about-title">{t.title} <span className="outline-text">{t.titleHighlight}</span></h1>
-            </motion.div>
+    <section id="about" className="section about" aria-labelledby="about-title">
+      <div className="container about-grid">
+        <div className="about-text">
+          <SectionHeader id="about-title" title={t.title} />
 
-            <motion.div
-              className="about-bio"
-              initial="hidden"
-              animate="visible"
-              custom={1}
-              variants={fadeInUp}
-            >
-              <p dangerouslySetInnerHTML={{ __html: t.bio1 }} />
-              <p dangerouslySetInnerHTML={{ __html: t.bio2 }} />
-              <p dangerouslySetInnerHTML={{ __html: t.bio3 }} />
-            </motion.div>
+          <Reveal className="about-bio" index={1}>
+            <p dangerouslySetInnerHTML={{ __html: t.bio1 }} />
+            <p dangerouslySetInnerHTML={{ __html: t.bio2 }} />
+            <p dangerouslySetInnerHTML={{ __html: t.bio3 }} />
+          </Reveal>
 
-            <motion.div
-              className="about-actions"
-              initial="hidden"
-              animate="visible"
-              custom={2}
-              variants={fadeInUp}
-            >
-              {/* Ícones Interativos */}
+          <Reveal className="about-extras" index={2}>
+            <div className="about-characters">
+              <span className="about-hint">{t.soundHint}</span>
               <div className="about-icons">
-                <motion.img whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} src={`${process.env.PUBLIC_URL}/icons/spider.png`} alt="Spider-Man" onClick={() => playSound("spider.MP3")} />
-                <motion.img whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} src={`${process.env.PUBLIC_URL}/icons/95.png`} alt="95" className="icon-95" onClick={() => playSound("katchau.mp3")} />
-                <motion.img whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} src={`${process.env.PUBLIC_URL}/icons/thorfin.png`} alt="Thorfinn" className="thorfinn-icon" onClick={() => playSound("thorfin.MP3")} />
-                <motion.img whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} src={`${process.env.PUBLIC_URL}/icons/flash.png`} alt="Flash" className="flash-icon" onClick={() => playSound("flash.MP3")} />
+                {CHARACTERS.map((c) => {
+                  const name = c.name[language];
+                  const isPlaying = playing === c.id;
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      className={`about-icon ${isPlaying ? "is-playing" : ""}`}
+                      style={{ "--char-accent": c.accentColor }}
+                      onClick={(e) => toggleSound(c, e.currentTarget)}
+                      aria-label={t.playSound.replace("{name}", name)}
+                      aria-pressed={isPlaying}
+                    >
+                      <CharacterIcon icon={c.icon} />
+                      <span className="about-tooltip" aria-hidden="true">
+                        {name}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
-
-              <div className="music-status">
-                <span className="listening-label">{t.listeningLabel}</span>
-                <a href="https://open.spotify.com/user/22lseke5ukek7jgd4sepaacoy?si=81add31631224262" target="_blank" rel="noopener noreferrer" className="spotify-link">
-                  Spotify
-                </a>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Seção da Direita: Imagem */}
-          <motion.div
-            className="about-visual"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-          >
-            <div className="image-wrapper">
-              <img src={`${process.env.PUBLIC_URL}/icons/fotoabout.jpg`} alt="João Marcos" className="profile-image" />
-              <div className="image-overlay"></div>
             </div>
-          </motion.div>
 
+            <a className="about-spotify" href={SPOTIFY_URL} target="_blank" rel="noopener noreferrer">
+              <span className="about-eq" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+              {t.listeningLabel} <FaSpotify aria-hidden="true" className="about-spotify-icon" /> Spotify
+            </a>
+          </Reveal>
         </div>
+
+        <Reveal className="about-visual" index={1}>
+          <div className="about-photo">
+            <img
+              src={`${process.env.PUBLIC_URL}/icons/fotoabout.jpg`}
+              alt="João Marcos"
+              loading="lazy"
+              width="560"
+              height="700"
+            />
+          </div>
+          <p className="about-location">
+            <FiMapPin aria-hidden="true" /> {t.location}
+          </p>
+        </Reveal>
       </div>
-    </PageTransition3>
+
+      <AnimatePresence>{ActiveEffect && <ActiveEffect key={fx.key} origin={fx.origin} character={fx.character} accent={fx.character.accentColor} />}</AnimatePresence>
+    </section>
   );
 };
 

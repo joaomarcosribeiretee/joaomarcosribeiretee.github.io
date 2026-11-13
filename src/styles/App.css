@@ -1,16 +1,93 @@
+/* Base, layout and shared primitives (buttons, section header). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
-  min-height: 100%;
-  font-family: 'Inria Sans', sans-serif;
-  background-color: #0a0a0a;
-  /* Darker, more premium background */
-  color: #e0e0e0;
-  overflow-x: hidden !important;
-  width: 100%;
-  scroll-behavior: smooth;
-  background-color: #0a0a0a;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+img,
+svg,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Colours ease between themes for a moment (ThemeContext adds the class). Only colour
+   properties, so framer-motion transforms are untouched; skipped with reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out),
+      border-color 300ms var(--ease-out), fill 300ms var(--ease-out), stroke 300ms var(--ease-out) !important;
+  }
+}
+
+/* Focus ring: keyboard only. Never use :focus for rings; selected/active states are
+   shown with background and colour, not with the ring. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* a soft corner only for elements that don't define their own radius */
+:where(:focus-visible) {
+  border-radius: 6px;
+}
+
+/* Kept at zero specificity so it can never override a component's own styles.
+   (box-shadow is deliberately left alone: hover glows share that property.) */
+:where(:focus:not(:focus-visible)) {
+  outline: none;
+}
+
+/* Script-driven focus after a mouse/touch interaction (modal open, focus restored on
+   close) must not show the ring. Text fields keep it: they always show focus. */
+html[data-input="pointer"] :focus-visible:not(input, textarea, select) {
+  outline: none;
+}
+
+strong {
+  color: var(--text);
+  font-weight: 700;
 }
 
 .app-container {
@@ -20,87 +97,238 @@ body {
   position: relative;
 }
 
-.fade-in {
-  animation: fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Ensure sections are stacked and not overlapping */
-section {
+.container {
   width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Sections */
+.section {
   position: relative;
+  padding-block: clamp(72px, 10vw, 140px);
+  scroll-margin-top: calc(var(--header-h) - 8px);
 }
 
-/* Desktop Only Social Icons */
-.desktop-only {
+.section + .section {
+  border-top: 1px solid var(--line);
+}
+
+.section-header {
+  margin-bottom: clamp(32px, 5vw, 56px);
+  max-width: 720px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--text);
+}
+
+.section-title::after {
+  content: "";
   display: block;
+  width: 48px;
+  height: 3px;
+  margin-top: 18px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
 }
 
-@media (max-width: 1024px) {
-  .desktop-only {
+.section-subtitle {
+  margin: 18px 0 0;
+  color: var(--text-2);
+  font-size: var(--fs-lg);
+  max-width: 56ch;
+}
+
+/* Buttons */
+.btn {
+  --btn-h: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: var(--btn-h);
+  padding: 0 22px;
+  border-radius: var(--r-pill);
+  border: 1px solid transparent;
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: var(--dur-base);
+  transition-timing-function: var(--ease-out);
+}
+
+.btn svg {
+  flex-shrink: 0;
+  font-size: 1.1em;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 0 4px var(--accent-soft), 0 10px 30px -10px var(--accent);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.btn-ghost {
+  background: var(--fill-subtle);
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.btn-sm {
+  --btn-h: 38px;
+  padding: 0 16px;
+  font-size: var(--fs-sm);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-arrow {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Segmented control (project filters) */
+.segmented-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+}
+
+/* right-edge fade: only while there is more to scroll (data-fade is set from JS) */
+.segmented-wrap::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  width: 48px;
+  border-radius: 0 calc(var(--r-surface) - 1px) calc(var(--r-surface) - 1px) 0;
+  background: linear-gradient(to right, transparent, var(--surface) 85%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.segmented-wrap[data-fade="true"]::after {
+  opacity: 1;
+}
+
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.segmented-option {
+  position: relative;
+  border: 0;
+  background: none;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.segmented-option:hover,
+.segmented-option.is-active {
+  color: var(--text);
+}
+
+.segmented-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+}
+
+.segmented-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.segmented-count {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.segmented-option.is-active .segmented-count {
+  color: var(--accent);
+}
+
+@media (max-width: 520px) {
+  .segmented-wrap {
+    display: block;
+  }
+
+  .segmented {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-radius: var(--r-surface);
+  }
+
+  .segmented::-webkit-scrollbar {
     display: none;
   }
-}
 
-.container {
-  display: flex;
-  justify-content: space-between;
-  padding: 4rem 2rem;
-  /* More breathing room */
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    padding: 2rem 1rem;
+  .segmented-option {
+    flex-shrink: 0;
+    padding: 0 14px;
   }
-}
-
-.content-container {
-  flex: 1;
-}
-
-.footer {
-  text-align: center;
-  padding: 2rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  /* Subtle transparency */
-  color: #888;
-  backdrop-filter: blur(5px);
-  width: 100%;
-  font-size: 0.9rem;
-}
-
-.app-container.transitioning {
-  overflow-y: hidden !important;
-}
-
-/* Common Section Waves */
-.wave-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.wave-svg {
-  width: 100%;
-  height: clamp(80px, 12vh, 200px);
-  display: block;
-  transform-origin: bottom;
 }

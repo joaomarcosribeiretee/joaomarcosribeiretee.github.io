@@ -1,99 +1,61 @@
 .social-icons {
-  position: fixed;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
   display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.social-icons a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  font-size: 1.15rem;
+  transition-property: color, background-color;
+  transition-duration: var(--dur-base);
+  transition-timing-function: var(--ease-out);
+}
+
+.social-icons a:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Fixed vertical rail, wide screens only */
+.social-icons--rail {
+  position: fixed;
+  left: max(16px, calc((100vw - var(--container)) / 2 - 72px));
+  bottom: 0;
+  z-index: 50;
   flex-direction: column;
-  gap: 15px;
-  z-index: 999;
-
+  transition: opacity var(--dur-slow) var(--ease-out);
 }
 
-.social-icons a img {
-  width: 55px;
-  height: 55px;
-  opacity: 1;
-  transition: transform 0.3s ease-in-out, opacity 0.3s;
+/* Hidden over the Contact section: fade out, then drop out of the tab order. */
+.social-icons--rail.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur-slow) var(--ease-out), visibility 0s linear var(--dur-slow);
 }
 
-.social-icons a img:hover {
-  transform: scale(1.2);
-  opacity: 1;
-  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
-  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
-}
-
-/* Laptop Adjustments */
-@media (max-width: 1440px) {
-  .social-icons {
-    left: 15px;
-    /* Slightly closer to edge */
-    gap: 10px;
-  }
-
-  .social-icons a img {
-    width: 40px;
-    /* Smaller icons for laptops */
-    height: 40px;
+@media (prefers-reduced-motion: reduce) {
+  .social-icons--rail,
+  .social-icons--rail.is-hidden {
+    transition: none;
   }
 }
 
-/* Responsivo */
-/* Responsivo */
-/* Visibility Utilities */
-.desktop-only {
-  display: block;
+.social-rail-line {
+  width: 1px;
+  height: 72px;
+  margin-top: 8px;
+  background: linear-gradient(var(--line-strong), transparent);
 }
 
-.mobile-only {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .desktop-only {
+@media (max-width: 1360px) {
+  .social-icons--rail {
     display: none;
   }
-
-  .mobile-only {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  /* When icons are embedded in Home (mobile), reset fixed positioning */
-  .mobile-only .social-icons {
-    position: static !important;
-    transform: none !important;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-    gap: 20px;
-    width: 100%;
-    bottom: auto !important;
-    left: auto !important;
-    top: auto !important;
-  }
-
-  .social-icons a img {
-    width: 30px;
-    height: 30px;
-  }
-}
-
-/* Ajustes quando usado no aviso de mobile */
-.social-icons-wrapper-mobile .social-icons {
-  position: static;
-  transform: none;
-  flex-direction: row;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.social-icons-wrapper-mobile .social-icons img {
-  width: 45px;
-  height: 45px;
 }

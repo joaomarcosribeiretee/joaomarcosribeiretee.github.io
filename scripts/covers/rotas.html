@@ -1,0 +1,82 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_cover.css">
+<style>
+  :root { --c1: #f59e0b; --c2: #ea580c; }
+  .app { left: 170px; top: 150px; width: 1260px; height: 740px; display: grid; grid-template-rows: 44px 1fr; }
+  .body { display: grid; grid-template-columns: 1fr 340px; }
+  .map { position: relative; background: #0c0d10; overflow: hidden; }
+  .map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .panel { border-left: 1px solid var(--line); padding: 26px 24px; display: flex; flex-direction: column; gap: 16px; }
+  .box { padding: 18px; }
+  .big { margin-top: 8px; font-size: 30px; white-space: nowrap; font-weight: 800; }
+  .big small { white-space: nowrap; font-size: 15px; color: #34d399; font-weight: 700; margin-left: 8px; }
+  .cmp { margin-top: 14px; display: grid; gap: 12px; font-size: 13px; }
+  .cmp .row { display: grid; grid-template-columns: 112px 1fr 56px; align-items: center; gap: 10px; color: var(--text-2); }
+  .cmp .bar span { background: #3f3f46; } .cmp .ga .bar span { background: #f59e0b; } .cmp .ga { color: #fff; font-weight: 700; }
+  .veh { display: grid; gap: 10px; margin-top: 12px; font-size: 14px; }
+  .veh div { display: flex; align-items: center; gap: 10px; }
+  .veh i { width: 22px; height: 4px; border-radius: 2px; }
+  .veh span:last-child { margin-left: auto; color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .legend { position: absolute; left: 24px; bottom: 22px; display: flex; gap: 10px; }
+</style></head>
+<body><div class="stage">
+  <div class="mark"><i></i>Rotas Médicas <small>FIAP · Fase 2</small></div>
+  <div class="win app">
+    <div class="win-bar"><b></b><b></b><b></b><span class="url">notebooks/01_experimentos.ipynb · Folium</span></div>
+    <div class="body">
+      <div class="map">
+        <svg viewBox="0 0 920 696" preserveAspectRatio="xMidYMid slice">
+          <g stroke="rgba(255,255,255,.05)" stroke-width="10" fill="none" stroke-linecap="round">
+            <path d="M-20,180 C200,160 400,240 940,200"/><path d="M-20,520 C260,480 520,560 940,500"/>
+            <path d="M200,-20 C220,200 160,420 240,720"/><path d="M640,-20 C600,240 700,460 660,720"/>
+            <path d="M-20,360 L940,330"/><path d="M420,-20 L460,720"/>
+          </g>
+          <g stroke="rgba(255,255,255,.035)" stroke-width="3" fill="none">
+            <path d="M0,90 L920,120"/><path d="M0,270 L920,250"/><path d="M0,440 L920,420"/><path d="M0,620 L920,600"/>
+            <path d="M100,0 L120,696"/><path d="M320,0 L330,696"/><path d="M540,0 L560,696"/><path d="M780,0 L770,696"/>
+          </g>
+          <path d="M150,640 C260,560 380,600 520,520 C600,470 760,540 840,480" fill="none" stroke="rgba(56,189,248,.12)" stroke-width="22" stroke-linecap="round"/>
+          <!-- routes: best GA solution of experiment C (4 | 6 | 4 stops) -->
+          <g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="450,350 300,270 200,170 330,100 400,200 450,350" stroke="#f59e0b"/>
+            <polyline points="450,350 560,240 680,150 800,210 830,330 720,400 600,390 450,350" stroke="#38bdf8"/>
+            <polyline points="450,350 580,500 700,590 480,620 290,520 450,350" stroke="#a78bfa"/>
+          </g>
+          <g fill="#0c0d10" stroke-width="3">
+            <circle cx="300" cy="270" r="9" stroke="#f59e0b"/><circle cx="200" cy="170" r="9" stroke="#f59e0b"/><circle cx="330" cy="100" r="9" stroke="#f59e0b"/><circle cx="400" cy="200" r="9" stroke="#f59e0b"/>
+            <circle cx="560" cy="240" r="9" stroke="#38bdf8"/><circle cx="680" cy="150" r="9" stroke="#38bdf8"/><circle cx="800" cy="210" r="9" stroke="#38bdf8"/><circle cx="830" cy="330" r="9" stroke="#38bdf8"/><circle cx="720" cy="400" r="9" stroke="#38bdf8"/><circle cx="600" cy="390" r="9" stroke="#38bdf8"/>
+            <circle cx="580" cy="500" r="9" stroke="#a78bfa"/><circle cx="700" cy="590" r="9" stroke="#a78bfa"/><circle cx="480" cy="620" r="9" stroke="#a78bfa"/><circle cx="290" cy="520" r="9" stroke="#a78bfa"/>
+          </g>
+          <g fill="#f87171"><circle cx="200" cy="170" r="4"/><circle cx="700" cy="590" r="4"/><circle cx="800" cy="210" r="4"/></g>
+          <rect x="430" y="330" width="40" height="40" rx="10" fill="#fff"/><path d="M450,340 v20 M440,350 h20" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+        <div class="legend"><span class="pill">● Farmácia central</span><span class="pill" style="color:#fca5a5">● prioridade alta</span><span class="pill">14 unidades · SP</span></div>
+      </div>
+      <aside class="panel">
+        <div class="card box">
+          <div class="label">Melhor solução · experimento C</div>
+          <div class="big num">68,3 km <small>14/14 atendidas</small></div>
+          <div class="label" style="margin-top:18px">Custo (km + penalidades)</div>
+          <div class="cmp">
+            <div class="row"><span>Aleatória</span><div class="bar"><span style="width:43%"></span></div><span class="num">564</span></div>
+            <div class="row"><span>Vizinho próx.</span><div class="bar"><span style="width:100%"></span></div><span class="num">1.307</span></div>
+            <div class="row ga"><span>Alg. genético</span><div class="bar"><span style="width:25%"></span></div><span class="num">324</span></div>
+          </div>
+          <div class="sub" style="margin-top:12px;font-size:12px;color:var(--text-3)">Vizinho mais próximo deixa 3 unidades sem atender</div>
+        </div>
+        <div class="card box">
+          <div class="label">Frota · 90 kg · 70 km</div>
+          <div class="veh">
+            <div><i style="background:#f59e0b"></i>Veículo 1<span>4 paradas</span></div>
+            <div><i style="background:#38bdf8"></i>Veículo 2<span>6 paradas</span></div>
+            <div><i style="background:#a78bfa"></i>Veículo 3<span>4 paradas</span></div>
+          </div>
+        </div>
+        <div class="card box" style="font-size:14px;line-height:1.5;color:#d4d4d8">
+          <div class="label" style="margin-bottom:8px">LLM · instruções</div>
+          “Veículo 1: saia da farmácia central e comece pela unidade de prioridade alta…”
+        </div>
+      </aside>
+    </div>
+  </div>
+</div></body></html>

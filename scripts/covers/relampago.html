@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_cover.css">
+<style>
+  :root { --c1: #ff2d2d; --c2: #7a0b0b; }
+  .app { left: 250px; top: 150px; width: 1100px; height: 720px; background: #050506; }
+  .cockpit { position: relative; height: calc(100% - 44px); display: grid; place-items: center; }
+  .hud { position: absolute; top: 26px; left: 30px; right: 30px; display: flex; justify-content: space-between; font-family: "JetBrains Mono"; font-size: 13px; color: #8a8a92; letter-spacing: .08em; }
+  .hud b { color: #ff3b3b; font-weight: 600; }
+  .core { position: relative; width: 340px; height: 340px; transform: translateY(-60px); display: grid; place-items: center; }
+  .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(255,60,60,.25); }
+  .r1 { inset: 0; } .r2 { inset: 36px; border-color: rgba(255,60,60,.4); } .r3 { inset: 76px; border: 2px solid rgba(255,60,60,.7); box-shadow: 0 0 60px rgba(255,40,40,.35), inset 0 0 40px rgba(255,40,40,.25); }
+  .nucleus { width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #ff6a6a, #d10f0f 55%, #4a0000); box-shadow: 0 0 80px rgba(255,30,30,.7); }
+  .ticks { position: absolute; inset: 0; }
+  .ticks span { position: absolute; left: 50%; top: 50%; width: 4px; margin-left: -2px; border-radius: 2px; background: #ff3b3b; transform-origin: 50% 0; }
+  .say { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); width: 640px; text-align: center; }
+  .say p { font-size: 26px; font-weight: 600; line-height: 1.35; }
+  .say small { display: block; margin-top: 10px; font-size: 14px; color: #8a8a92; }
+  .event { right: 110px; top: 300px; width: 340px; padding: 20px; border-radius: 16px; background: #fff; color: #1f1f1f; }
+  .event .cal { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: #5f6368; }
+  .event .cal i { width: 12px; height: 12px; border-radius: 3px; background: #d50000; }
+  .event h4 { margin-top: 12px; font-size: 22px; font-weight: 700; }
+  .event p { margin-top: 6px; font-size: 15px; color: #5f6368; }
+  .event .ok { margin-top: 16px; display: inline-flex; gap: 8px; align-items: center; font-size: 13px; font-weight: 700; color: #188038; }
+  .chip { left: 150px; top: 560px; padding: 14px 18px; border-radius: 14px; background: #121215; border: 1px solid rgba(255,255,255,.12); font-family: "JetBrains Mono"; font-size: 13px; color: #c9c9cf; }
+  .chip b { color: #ff4d4d; }
+</style></head>
+<body><div class="stage">
+  <div class="mark"><i></i>Relâmpago <small>Assistente de voz</small></div>
+
+  <div class="win app">
+    <div class="win-bar"><b></b><b></b><b></b><span class="url">localhost:3000</span></div>
+    <div class="cockpit">
+      <div class="hud"><span><b>●</b> OUVINDO</span><span>AMERICA/SAO_PAULO · 18:42</span></div>
+      <div class="core">
+        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+        <div class="ticks" id="ticks"></div>
+        <div class="nucleus"></div>
+      </div>
+      <div class="say">
+        <p>“Marca treino de perna amanhã às 7h e reunião com o time às 14h.”</p>
+        <small>Silêncio detectado · enviando</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="float event">
+    <div class="cal"><i></i>Treinos (Musculação)</div>
+    <h4>Treino de perna</h4>
+    <p>Amanhã · 07:00 – 08:00</p>
+    <div class="ok">✓ Evento criado</div>
+  </div>
+
+  <div class="float chip">gpt-4o-mini-transcribe → <b>agente</b> → Google Agenda → tts</div>
+</div>
+<script>
+  const t = document.getElementById('ticks');
+  for (let i = 0; i < 64; i++) {
+    const s = document.createElement('span');
+    const h = 10 + Math.abs(Math.sin(i * 0.9) * 26) + (i % 5) * 2;
+    s.style.height = h + 'px';
+    s.style.opacity = 0.35 + (h / 70) * 0.65;
+    s.style.transform = `rotate(${(i / 64) * 360}deg) translateY(150px)`;
+    t.appendChild(s);
+  }
+</script>
+</body></html>

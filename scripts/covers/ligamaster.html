@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_cover.css">
+<style>
+  :root { --c1: #3b82f6; --c2: #16a34a; }
+  .app { left: 180px; top: 150px; width: 1240px; height: 740px; }
+  .nav { display: flex; align-items: center; gap: 28px; padding: 16px 30px; background: #0d1b3a; border-bottom: 1px solid rgba(59,130,246,.3); font-size: 14px; color: #93c5fd; }
+  .nav b { color: #fff; font-size: 19px; margin-right: 12px; }
+  .main { padding: 26px 30px; display: grid; grid-template-columns: 1.55fr 1fr; gap: 18px; }
+  .champ { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; }
+  .crest { width: 54px; height: 54px; border-radius: 14px; background: linear-gradient(135deg, #2563eb, #1e3a8a); display: grid; place-items: center; font-weight: 800; font-size: 20px; }
+  .champ h2 { font-size: 24px; }
+  .champ .muted { font-size: 14px; }
+  .table { padding: 18px 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th { font-size: 11px; color: var(--text-3); text-align: center; padding: 0 6px 10px; letter-spacing: .06em; }
+  th:nth-child(2) { text-align: left; }
+  td { text-align: center; padding: 11px 6px; border-top: 1px solid var(--line); }
+  td:nth-child(2) { text-align: left; font-weight: 600; }
+  td:last-child { font-weight: 800; }
+  .pos { width: 24px; height: 24px; border-radius: 7px; display: inline-grid; place-items: center; font-size: 12px; font-weight: 800; background: #27272a; }
+  .g .pos { background: #16a34a; } .r .pos { background: #dc2626; }
+  .form { display: inline-flex; gap: 3px; } .form i { width: 8px; height: 8px; border-radius: 50%; }
+  .side { display: flex; flex-direction: column; gap: 16px; }
+  .match { padding: 18px 20px; }
+  .teams { margin-top: 14px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; text-align: center; gap: 10px; }
+  .t { font-weight: 700; font-size: 15px; }
+  .t i { display: block; margin: 0 auto 8px; width: 44px; height: 44px; border-radius: 12px; }
+  .score { font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .live { font-size: 12px; font-weight: 700; color: #4ade80; }
+  .scorers { padding: 18px 20px; }
+  .sc { display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .sc b { font-variant-numeric: tabular-nums; }
+</style></head>
+<body><div class="stage">
+  <div class="mark"><i></i>Ligamaster <small>Campeonatos</small></div>
+  <div class="win app">
+    <div class="win-bar"><b></b><b></b><b></b><span class="url">localhost:3000/campeonatos/1</span></div>
+    <div class="nav"><b>⚽ Ligamaster</b><span>Campeonatos</span><span>Times</span><span>Jogos</span><span>Tabela</span></div>
+    <div class="main">
+      <div class="champ"><div class="crest">CP</div><div><h2>Campeonato dos Amigos 2024</h2><div class="muted">Pontos corridos · 8 times · rodada 9 de 14</div></div></div>
+      <div class="card table">
+        <table>
+          <tr><th>#</th><th>TIME</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th><th>ÚLT.</th><th>PTS</th></tr>
+          <tr class="g"><td><span class="pos">1</span></td><td>Tigres FC</td><td>9</td><td>7</td><td>1</td><td>1</td><td>+14</td><td><span class="form"><i style="background:#22c55e"></i><i style="background:#22c55e"></i><i style="background:#a1a1aa"></i></span></td><td>22</td></tr>
+          <tr class="g"><td><span class="pos">2</span></td><td>Atlético Vila</td><td>9</td><td>6</td><td>2</td><td>1</td><td>+9</td><td><span class="form"><i style="background:#22c55e"></i><i style="background:#ef4444"></i><i style="background:#22c55e"></i></span></td><td>20</td></tr>
+          <tr><td><span class="pos">3</span></td><td>Real Várzea</td><td>9</td><td>5</td><td>2</td><td>2</td><td>+6</td><td><span class="form"><i style="background:#a1a1aa"></i><i style="background:#22c55e"></i><i style="background:#22c55e"></i></span></td><td>17</td></tr>
+          <tr><td><span class="pos">4</span></td><td>Unidos da Rua 7</td><td>9</td><td>4</td><td>3</td><td>2</td><td>+3</td><td><span class="form"><i style="background:#22c55e"></i><i style="background:#a1a1aa"></i><i style="background:#ef4444"></i></span></td><td>15</td></tr>
+          <tr><td><span class="pos">5</span></td><td>Galáticos</td><td>9</td><td>3</td><td>2</td><td>4</td><td>−2</td><td><span class="form"><i style="background:#ef4444"></i><i style="background:#22c55e"></i><i style="background:#ef4444"></i></span></td><td>11</td></tr>
+          <tr class="r"><td><span class="pos">8</span></td><td>Esporte Quintal</td><td>9</td><td>1</td><td>1</td><td>7</td><td>−15</td><td><span class="form"><i style="background:#ef4444"></i><i style="background:#ef4444"></i><i style="background:#a1a1aa"></i></span></td><td>4</td></tr>
+        </table>
+      </div>
+      <div class="side">
+        <div class="card match">
+          <div class="label">Próximo jogo · rodada 10</div>
+          <div class="teams">
+            <div class="t"><i style="background:linear-gradient(135deg,#f59e0b,#b45309)"></i>Tigres FC</div>
+            <div class="score">2 – 1</div>
+            <div class="t"><i style="background:linear-gradient(135deg,#3b82f6,#1e3a8a)"></i>Atlético Vila</div>
+          </div>
+          <div style="text-align:center;margin-top:10px" class="live">Resultado registrado</div>
+        </div>
+        <div class="card scorers">
+          <div class="label">Artilharia</div>
+          <div class="sc" style="margin-top:8px"><span>Gabriel · Tigres FC</span><b>11</b></div>
+          <div class="sc"><span>André · Atlético Vila</span><b>9</b></div>
+          <div class="sc"><span>Vitor · Real Várzea</span><b>7</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></body></html>

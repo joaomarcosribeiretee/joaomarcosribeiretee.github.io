@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_cover.css">
+<style>
+  :root { --c1: #2979ff; --c2: #4fc3f7; }
+  .screen { background: #141418; }
+  .p1 { left: 440px; top: 170px; transform: rotate(-6deg); }
+  .p2 { left: 860px; top: 130px; transform: rotate(5deg); }
+  .grad { background: linear-gradient(135deg, #4FC3F7 0%, #2979FF 50%, #1A237E 100%); }
+  .pad { padding: 20px 22px; }
+  h3 { font-size: 24px; font-weight: 800; margin-top: 18px; }
+  .sub { font-size: 13px; color: #8A8A9A; margin-top: 4px; }
+  .ex { margin-top: 18px; padding: 16px; border-radius: 16px; background: #1E1E24; border: 1px solid #2A2A35; }
+  .ex-h { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; }
+  .pr { font-size: 11px; font-weight: 800; color: #00170b; background: #00E676; padding: 4px 8px; border-radius: 6px; }
+  .sets { margin-top: 12px; display: grid; gap: 8px; }
+  .set { display: grid; grid-template-columns: 26px 1fr 1fr 1fr 28px; align-items: center; gap: 8px; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .set.head { font-size: 11px; color: #8A8A9A; font-weight: 700; letter-spacing: .06em; }
+  .cell { height: 34px; border-radius: 9px; background: #141418; border: 1px solid #2A2A35; display: grid; place-items: center; font-weight: 600; }
+  .done .cell { border-color: rgba(0,230,118,.45); background: rgba(0,230,118,.08); }
+  .chk { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-size: 13px; font-weight: 800; }
+  .done .chk { background: #00E676; color: #062; }
+  .todo .chk { border: 1px solid #2A2A35; }
+  .btn { margin-top: 16px; height: 50px; border-radius: 14px; display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+  .hero { margin: 16px 0 0; padding: 20px; border-radius: 20px; position: relative; overflow: hidden; }
+  .avatar { width: 64px; height: 64px; border-radius: 20px; background: #141418; border: 2px solid rgba(255,255,255,.6); display: grid; place-items: center; font-weight: 800; font-size: 22px; }
+  .lvl { margin-top: 12px; font-size: 13px; font-weight: 700; opacity: .9; }
+  .name { font-size: 22px; font-weight: 800; }
+  .xp { margin-top: 12px; height: 10px; border-radius: 99px; background: rgba(0,0,0,.3); overflow: hidden; }
+  .xp span { display: block; width: 68%; height: 100%; background: #fff; border-radius: inherit; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+  .stat { padding: 12px; border-radius: 14px; background: #1E1E24; border: 1px solid #2A2A35; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 11px; color: #8A8A9A; }
+  .quest { margin-top: 14px; padding: 14px; border-radius: 14px; background: #1E1E24; border: 1px solid #2A2A35; font-size: 13px; }
+  .quest .bar { margin-top: 10px; } .quest .bar span { width: 60%; background: linear-gradient(90deg,#4FC3F7,#2979FF); }
+  .tag { position: absolute; left: 90px; top: 800px; padding: 14px 18px; border-radius: 14px; background: #1E1E24; border: 1px solid #2A2A35; font-size: 14px; font-weight: 600; }
+  .tag b { color: #00E676; }
+</style></head>
+<body><div class="stage">
+  <div class="mark"><i class="grad"></i>IronSynk <small>Treino · Nutrição · Social</small></div>
+
+  <div class="phone p1"><div class="screen"><div class="island"></div>
+    <div class="status"><span>7:12</span><span>●●● 5G</span></div>
+    <div class="pad">
+      <div class="sub">Push · Semana 6</div>
+      <h3>Supino reto</h3>
+      <div class="ex">
+        <div class="ex-h"><span>Séries</span><span class="pr">NOVO PR</span></div>
+        <div class="sets">
+          <div class="set head"><span>#</span><span>KG</span><span>REPS</span><span>RIR</span><span></span></div>
+          <div class="set done"><span>1</span><div class="cell">80</div><div class="cell">8</div><div class="cell">2</div><div class="chk">✓</div></div>
+          <div class="set done"><span>2</span><div class="cell">82,5</div><div class="cell">7</div><div class="cell">1</div><div class="chk">✓</div></div>
+          <div class="set todo"><span>3</span><div class="cell">82,5</div><div class="cell">–</div><div class="cell">–</div><div class="chk"></div></div>
+        </div>
+      </div>
+      <div class="ex">
+        <div class="ex-h"><span>Volume semanal</span><span class="sub" style="margin:0">peito</span></div>
+        <div class="bar" style="margin-top:12px"><span style="width:74%;background:linear-gradient(90deg,#4FC3F7,#2979FF)"></span></div>
+        <div class="sub">14 de 18 séries</div>
+      </div>
+      <div class="btn grad">+ Adicionar série</div>
+    </div>
+  </div></div>
+
+  <div class="phone p2"><div class="screen"><div class="island"></div>
+    <div class="status"><span>7:12</span><span>●●● 5G</span></div>
+    <div class="pad">
+      <div class="hero grad">
+        <div class="avatar">JM</div>
+        <div class="lvl">NÍVEL 23 · GUERREIRO</div>
+        <div class="name">joaomarcos</div>
+        <div class="xp"><span></span></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>41</b><span>dias seguidos</span></div>
+        <div class="stat"><b>12</b><span>PRs no mês</span></div>
+        <div class="stat"><b>2.180</b><span>kcal hoje</span></div>
+      </div>
+      <div class="quest"><b>Missão semanal</b><div class="sub">Treine 5x e bata a meta de proteína</div><div class="bar"><span></span></div></div>
+      <div class="quest"><b>Feed</b><div class="sub">gabriel bateu PR no agachamento · 140 kg</div></div>
+    </div>
+  </div></div>
+
+  <div class="float tag">Expo · Fastify · Supabase · <b>+250 XP</b></div>
+</div></body></html>

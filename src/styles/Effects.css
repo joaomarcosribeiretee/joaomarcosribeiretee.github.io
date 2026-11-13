@@ -1,0 +1,187 @@
+/* Full-screen decorative layer for character effects. Never blocks input. */
+.fx-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx-layer svg {
+  display: block;
+  filter: drop-shadow(0 0 3px rgb(var(--fx-ink-rgb) / 0.45));
+}
+
+.fx-layer path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Spider-Man web: a wide faint copy under a thin bright one */
+.fx-strand {
+  stroke: rgb(var(--fx-ink-rgb) / 0.95);
+  stroke-width: 1.6;
+}
+
+.fx-strand--glow {
+  stroke: rgb(var(--fx-ink-rgb) / 0.28);
+  stroke-width: 4;
+}
+
+.fx-web--spokes {
+  stroke: rgb(var(--fx-ink-rgb) / 0.9);
+  stroke-width: 1.4;
+}
+
+.fx-web--rings {
+  stroke: rgb(var(--fx-ink-rgb) / 0.7);
+  stroke-width: 1;
+}
+
+.fx-fill {
+  position: absolute;
+  inset: 0;
+}
+
+/* Flash: lightning bolts and speed streaks */
+.fx-bolt {
+  stroke: var(--fx-bolt, var(--fx-accent, #ffd23f));
+  stroke-width: 3;
+  stroke-linejoin: miter;
+}
+
+.fx-bolt--glow {
+  stroke: var(--fx-bolt, var(--fx-accent, #ffd23f));
+  stroke-width: 10;
+  opacity: 0.25;
+}
+
+.fx-bolt--core {
+  stroke: var(--fx-core);
+  stroke-width: 1.2;
+}
+
+.fx-streak {
+  stroke: var(--fx-streak);
+  stroke-width: 1.4;
+}
+
+.fx-streak--race {
+  stroke: rgb(var(--fx-ink-rgb) / 0.85);
+  stroke-width: 2;
+}
+
+/* McQueen: comic burst */
+.fx-center {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 0;
+  height: 0;
+}
+
+.fx-kachow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.35));
+}
+
+.fx-kachow svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fx-kachow-burst {
+  fill: #ffd23f;
+  stroke: #1a0a00;
+  stroke-width: 5;
+  stroke-linejoin: round;
+}
+
+.fx-kachow-burst--inner {
+  fill: var(--fx-accent, #ff7a1a);
+  stroke: none;
+}
+
+.fx-kachow-text {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  -webkit-text-stroke: 0.14em #1a0a00;
+  paint-order: stroke fill;
+  white-space: nowrap;
+}
+
+.fx-sparkle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
+}
+
+.fx-layer .fx-sparkle path {
+  fill: #fff;
+  stroke: var(--fx-sparkle-edge, none);
+  stroke-width: 0.07;
+}
+
+/* Thorfinn: vignette, slashes, snow */
+.fx-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 42%, var(--fx-vignette) 100%);
+}
+
+.fx-slash {
+  stroke: rgb(var(--fx-ink-rgb));
+  stroke-width: 2.2;
+}
+
+.fx-slash--glow {
+  stroke: var(--fx-accent, #9fb7cc);
+  stroke-width: 9;
+  opacity: 0.45;
+}
+
+.fx-layer .fx-flake {
+  fill: var(--fx-flake);
+  stroke: none;
+}
+
+/* Superman: shield, sonic rings, trail */
+.fx-shield-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  filter: drop-shadow(0 0 14px rgba(70, 130, 255, 0.75));
+}
+
+.fx-shield {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #7db2ff 0%, #1e6bff 55%, #1346b8 100%);
+  -webkit-mask: no-repeat center / contain;
+  mask: no-repeat center / contain;
+}
+
+.fx-ring {
+  fill: none;
+  stroke: var(--fx-ring);
+  stroke-width: 3;
+}
+
+.fx-trail {
+  stroke-width: 5;
+}

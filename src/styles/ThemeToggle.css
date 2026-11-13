@@ -1,0 +1,22 @@
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-strong);
+  background: var(--fill-subtle);
+  color: var(--text-2);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+}
+
+.theme-toggle-icon {
+  display: grid;
+  place-items: center;
+}
