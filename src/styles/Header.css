@@ -1,275 +1,245 @@
-@import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@300;400;700&display=swap");
-
-/* Estilo do cabeçalho */
 .header {
   position: fixed;
-  top: clamp(20px, 4vh, 40px);
-  top: calc(clamp(20px, 4vh, 40px) + env(safe-area-inset-top));
-  right: clamp(20px, 3vw, 30px);
-  right: calc(clamp(20px, 3vw, 30px) + env(safe-area-inset-right));
-  z-index: 2000;
+  inset: 0 0 auto 0;
+  z-index: 1000;
+  padding-top: env(safe-area-inset-top);
+  transition-property: background-color, backdrop-filter;
+  transition-duration: var(--dur-slow);
+  transition-timing-function: var(--ease-out);
 }
 
-/* Botão de menu */
-.menu-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
+.header.is-scrolled {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+}
+
+.header-inner {
   display: flex;
   align-items: center;
-  transition: transform 0.3s ease-in-out, opacity 0.3s;
-  cursor: url(https://cur.cursors-4u.net/cursors/cur-7/cur638.cur), auto !important;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--header-h);
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
 }
 
-.menu-button:hover {
-  transform: scale(1.4);
-}
-
-.menu-icon {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.menu-icon span {
-  width: 45px;
-  height: 2px;
-  background-color: #737373;
-  border-radius: 4px;
-  transition: 0.3s;
-}
-
-/* Menu lateral */
-.menu {
-  position: fixed;
-  top: 0;
-  right: 0;
-  transform: translateX(100%);
-  width: 93%;
-  /* Volta a ser largo para o estilo poster */
-  height: 100dvh;
-  /* Using dvh for iOS compatibility */
-  background-color: #1a1a1a;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  /* Transição premium */
-  z-index: 1999;
-  display: flex;
-  flex-direction: column;
+.brand {
+  border: 0;
+  background: none;
   padding: 0;
-  color: #fff;
-  font-family: 'Inria Sans', sans-serif;
-}
-
-/* Menu aberto */
-.menu.open {
-  transform: translateX(0);
-}
-
-/* Botão de fechar */
-.close-button {
-  background: transparent;
-  border: none;
-  color: #737373;
-  font-size: 64px;
-  align-self: flex-end;
-  margin-right: 50px;
-  margin-top: 30px;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out, opacity 0.3s;
-  opacity: 0.6;
-  flex: 0 0 auto;
-}
-
-.close-button:hover {
-  transform: rotate(90deg);
-  opacity: 1;
-}
-
-/* Links do menu */
-.menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  /* Alinhamento à esquerda no Desktop */
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  /* Perfect vertical centering */
-  width: 100%;
-  padding-left: 15%;
-  /* Margem esquerda para Desktop */
-  counter-reset: menu-counter;
-}
-
-.menu ul li {
-  margin: 0;
-  background-color: transparent;
-  border: none;
-  overflow: visible;
-  text-align: left;
-  position: relative;
-  counter-increment: menu-counter;
-}
-
-/* Targeting buttons to match Header.jsx logic while keeping 'a' styles */
-.menu ul li button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #888;
-  /* Cinza inativo */
-  text-decoration: none;
-  font-family: 'Inria Sans', sans-serif;
-  font-size: 7rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
   font-weight: 700;
-  text-transform: uppercase;
-  line-height: 1;
-  padding: 10px 0;
-  display: inline-block;
-  transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  color: var(--text);
+  cursor: pointer;
+  letter-spacing: -0.03em;
+}
+
+.brand-dot {
+  color: var(--accent);
+}
+
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: var(--fill-subtle);
+  border: 1px solid var(--line);
+}
+
+.nav-link {
   position: relative;
-  letter-spacing: -2px;
-  text-align: left;
+  border: 0;
+  background: none;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
 }
 
-/* Laptop / Tablet Landscape Adjustments */
-@media (max-width: 1440px),
-(max-height: 900px) {
-  .menu ul li button {
-    font-size: 5.5rem;
-    /* Adjusted to 5.5rem for better visibility on laptops */
-    padding: 5px 0;
-  }
-
-  .menu ul li button::before {
-    font-size: 0.9rem;
-    top: 15px;
-    left: -30px;
-  }
-
-  .menu ul {
-    padding-left: 10%;
-    /* Slightly reduce left padding to center better */
-  }
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--text);
 }
 
-/* Numeração (01, 02...) Desktop Only */
-.menu ul li button::before {
-  content: "0" counter(menu-counter);
-  font-family: 'Inria Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #737373;
+.nav-pill {
   position: absolute;
-  top: 20px;
-  left: -40px;
-  letter-spacing: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
 }
 
-/* Hover Effect */
-.menu ul li button:hover,
-.menu ul li button.active {
-  color: #fff;
-  transform: translateX(10px);
-  opacity: 1;
+.nav-label {
+  position: relative;
 }
 
-/* Animação nos botões */
-.close-button:hover {
-  transform: rotate(90deg) scale(1.1);
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Responsive / Mobile Styles */
-@media (max-width: 768px) {
+/* Hamburger */
+.menu-toggle {
+  display: block;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-strong);
+  background: var(--fill-subtle);
+  cursor: pointer;
+}
 
-  /* Menu em tela cheia */
-  .menu {
-    width: 100%;
-    height: 100dvh;
-    top: 0;
-    left: 0;
-    right: auto;
-    transform: translateY(-100%);
-    background-color: rgba(10, 10, 10, 0.98);
-    backdrop-filter: blur(15px);
-    display: flex;
+.menu-toggle span {
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.menu-toggle span:first-child {
+  transform: translateY(-4px);
+}
+
+.menu-toggle span:last-child {
+  transform: translateY(4px);
+}
+
+.menu-toggle.is-open span:first-child {
+  transform: rotate(45deg);
+}
+
+.menu-toggle.is-open span:last-child {
+  transform: rotate(-45deg);
+}
+
+/* Overlay menu: opened by the hamburger on every screen size */
+.site-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--header-h) + env(safe-area-inset-top) + 24px) var(--gutter)
+    calc(32px + env(safe-area-inset-bottom));
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  overflow-y: auto;
+}
+
+.site-menu-inner {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+.site-menu-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-link {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  padding: 16px 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 8vw, 2.6rem);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text-2);
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.site-link:hover,
+.site-link.is-active {
+  color: var(--text);
+}
+
+.site-link-index {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.site-link.is-active .site-link-index {
+  color: var(--accent);
+}
+
+.site-menu-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 32px;
+}
+
+/* Desktop: links on the left, résumé and social links on the right */
+@media (min-width: 961px) {
+  .site-menu {
+    justify-content: center;
+  }
+
+  .site-menu-inner {
+    display: grid;
+    flex: none;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(48px, 8vw, 128px);
+    align-items: end;
+  }
+
+  .site-link {
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    padding-block: 14px;
+  }
+
+  .site-menu-footer {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
-    padding: 0;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 24px;
+    padding-top: 0;
   }
+}
 
-  .menu.open {
-    transform: translateY(0);
-  }
-
-  /* Container da lista no Mobile */
-  .menu ul {
-    position: static;
-    /* Reset absolute positioning from desktop */
-    transform: none;
-    /* Reset transform from desktop */
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    /* Add spacing between menu items */
-  }
-
-  /* Itens de lista no Mobile */
-  .menu ul li {
-    width: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    counter-increment: none;
-    /* Avoid weird counts on mobile if hidden */
-  }
-
-  /* Links no Mobile */
-  .menu ul li button {
-    font-size: 3rem;
-    /* Tamanho menor */
-    color: #888;
-    width: auto;
-    padding: 15px 0;
-    letter-spacing: 1px;
-    text-align: center;
-  }
-
-  /* Esconder números no mobile */
-  .menu ul li button::before {
-    display: none !important;
-  }
-
-  /* Hover/Active no Mobile */
-  .menu ul li button.active {
-    color: #fff;
-    transform: scale(1.1);
-  }
-
-  .menu ul li button:hover {
-    color: #fff;
-    transform: scale(1.05);
-  }
-
-  /* Botão de fechar */
-  .close-button {
-    position: absolute;
-    top: calc(1rem + env(safe-area-inset-top));
-    right: calc(1rem + env(safe-area-inset-right));
-    margin: 0;
-    font-size: 3rem;
-    color: #fff;
+@media (max-width: 960px) {
+  .nav-desktop {
+    display: none;
   }
 }

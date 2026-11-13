@@ -1,355 +1,140 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Inter:wght@300;400;600&display=swap");
-
-/* --- Cores e Variáveis --- */
-:root {
-  --accent-color: #00BFFF;
-  /* Deep Sky Blue */
-  --accent-glow: rgba(0, 191, 255, 0.2);
-  --bg-dark: #0f0f0f;
-  --text-white: #ffffff;
-  --text-gray: #a0a0a0;
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-border: rgba(255, 255, 255, 0.05);
-
-  /* Modern/Tech Fonts */
-  --font-heading: "Outfit", sans-serif;
-  --font-body: "Inter", sans-serif;
+/* Desktop: 3 columns. Row 1 = AI (wide, 2/3) + Quality; row 2 = three cards. */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
 
-/* --- Global Clean Reset --- */
-.skills-page-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100dvh;
-  background-color: var(--bg-dark);
-  color: var(--text-white);
-  width: 100%;
+.skill-card {
+  grid-column: span 1;
   position: relative;
-  padding: 40px;
-  box-sizing: border-box;
-  font-family: var(--font-body);
-}
-
-/* --- Desktop Content Wrapper --- */
-.skills-content-wrapper {
-  display: flex;
-  width: 100%;
-  max-width: 1300px;
-  height: 80vh;
-  min-height: 600px;
-  background: var(--card-bg);
-  border-radius: 24px;
-  border: 1px solid var(--card-border);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  z-index: 10;
+  padding: 24px;
+  border-radius: var(--r-surface);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--surface), var(--bg-raised));
   overflow: hidden;
+  transition: border-color var(--dur-slow) var(--ease-out);
 }
 
-/* --- Left Nav (Desktop) --- */
-.skills-nav-section {
-  flex: 0 0 320px;
-  background: rgba(10, 10, 10, 0.6);
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--card-border);
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-line), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out);
 }
 
-.skills-main-title {
-  font-family: var(--font-heading);
-  font-size: 3rem;
-  font-weight: 600;
-  color: #fff;
+.skill-card:hover {
+  border-color: var(--line-strong);
+}
+
+.skill-card:hover::before {
+  opacity: 1;
+}
+
+.skill-card--wide {
+  grid-column: span 2;
+}
+
+.skill-card-header h3 {
   margin: 0;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.title-underline {
-  width: 50px;
-  height: 3px;
-  background-color: var(--accent-color);
-  margin-top: 1rem;
-  box-shadow: 0 0 15px var(--accent-glow);
-}
-
-.skills-header-minimal {
-  margin-bottom: 3rem;
-}
-
-.skills-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.nav-item {
-  background: transparent;
-  border: none;
-  text-align: left;
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  color: #666;
-  cursor: pointer;
-  padding: 0.8rem 0;
-  position: relative;
-  transition: color 0.3s ease;
-  display: flex;
-  align-items: center;
-}
-
-.nav-item:hover,
-.nav-item.active {
-  color: #fff;
-}
-
-.nav-item.active .nav-item-text {
+  font-family: var(--font-display);
   font-weight: 600;
+  font-size: var(--fs-xl);
+  color: var(--text);
 }
 
-.nav-active-indicator {
+.skill-card-header p {
+  margin: 6px 0 0;
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: var(--r-control);
+  border: 1px solid var(--line);
+  background: var(--fill-subtle);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  transition-property: border-color, background-color, color;
+  transition-duration: var(--dur-base);
+  transition-timing-function: var(--ease-out);
+}
+
+.skill-chip svg {
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: var(--text-2);
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.skill-chip:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.skill-chip:hover svg {
+  color: var(--accent);
+}
+
+/* Core technologies: subtle accent border and slightly brighter text. */
+.skill-chip.is-primary {
+  border-color: var(--accent-line);
+  color: var(--text-strong);
+}
+
+/* "(Core technology)" for screen readers; sighted users get the title tooltip. */
+.skill-sr {
   position: absolute;
-  left: -20px;
-  width: 3px;
-  height: 100%;
-  background-color: var(--accent-color);
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-
-/* --- Right Stage (Desktop) --- */
-.skills-display-section {
-  flex: 1;
-  padding: 4rem;
-  position: relative;
-  overflow-y: auto;
-  background: radial-gradient(circle at top right, rgba(0, 191, 255, 0.03), transparent 50%);
-}
-
-.stage-title {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  color: var(--accent-color);
-  margin-bottom: 0.5rem;
-  font-weight: 400;
-}
-
-.stage-description {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--text-gray);
-  margin-bottom: 3rem;
-  max-width: 600px;
-  line-height: 1.5;
-}
-
-.stage-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 1.5rem;
-}
-
-.skill-card-minimal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 2rem 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.skill-card-minimal:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(0, 191, 255, 0.3);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-.skill-icon-large {
-  font-size: 2.5rem;
-  color: #e0e0e0;
-  transition: transform 0.3s;
-}
-
-.skill-card-minimal:hover .skill-icon-large {
-  transform: scale(1.1);
-  color: var(--accent-color);
-}
-
-.skill-label-minimal {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: #ccc;
-  font-weight: 300;
-}
-
-/* --- Mobile Specific Layout: Vertical Accordion --- */
-.skills-mobile-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 80px;
-  padding-top: calc(80px + env(safe-area-inset-top));
-}
-
-.skills-header-mobile {
-  text-align: center;
-  margin-bottom: 3rem;
-  padding: 0 1rem;
-}
-
-.skills-header-mobile .skills-main-title {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.skills-header-mobile .title-underline {
-  margin: 0 auto;
-  width: 60px;
-  height: 3px;
-  background-color: var(--accent-color);
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-
-.skills-mobile-accordion {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.accordion-item {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
   overflow: hidden;
-  transition: background 0.3s;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.accordion-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-align: left;
+/* Tablet: 2 columns, AI takes the full first row. */
+@media (max-width: 1023px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-.accordion-title {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: 0.5px;
-}
+/* Mobile: 1 column in the same order; chips get a 44px touch height. */
+@media (max-width: 767px) {
+  .skills-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.accordion-icon {
-  color: var(--accent-color);
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-}
+  .skill-card--wide {
+    grid-column: span 1;
+  }
 
-.accordion-header.active {
-  background: linear-gradient(90deg, rgba(0, 191, 255, 0.1) 0%, transparent 100%);
-  border-left: 3px solid #00BFFF;
-}
-
-.accordion-header.active .accordion-title {
-  color: var(--accent-color);
-}
-
-.accordion-content {
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.accordion-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
-  /* Reduced top padding */
-}
-
-.mobile-skill-description {
-  color: #a0a0a0;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  text-align: left;
-  padding: 0 1.5rem 0.5rem 1.5rem;
-  /* Reduced bottom padding */
-  line-height: 1.4;
-}
-
-.skill-card-mobile-minimal {
-  background: transparent;
-  border: 1px solid rgba(0, 191, 255, 0.2);
-  /* Blue Border */
-  border-radius: 12px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  aspect-ratio: 1;
-}
-
-.skill-icon-mobile {
-  font-size: 1.8rem;
-  color: #00BFFF;
-  /* Blue Icon */
-}
-
-.skill-name-mobile {
-  font-size: 0.75rem;
-  color: #bbb;
-  text-align: center;
-  font-weight: 400;
-  font-family: var(--font-body);
-}
-
-/* --- Media Queries --- */
-@media (max-width: 1024px) {
-  .skills-page-container {
+  .skill-card {
     padding: 20px;
-    align-items: flex-start;
-    height: auto;
-    overflow-y: auto;
   }
 
-  /* Glow mais visível no Mobile */
-  .ambient-glow {
-    width: 120vw;
-    height: 120vw;
-    top: -20%;
-    right: -30%;
-    opacity: 0.4;
-    background: radial-gradient(circle, rgba(0, 191, 255, 0.15), transparent 70%);
+  .skill-chip {
+    height: 44px;
   }
-}
-
-@media (max-width: 400px) {
-  .accordion-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* --- Ambient Glow --- */
-.ambient-glow {
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(0, 191, 255, 0.1), transparent 70%);
-  z-index: 0;
-  pointer-events: none;
 }

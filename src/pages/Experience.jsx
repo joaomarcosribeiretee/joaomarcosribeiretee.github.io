@@ -1,97 +1,81 @@
-import React from "react";
-import PageTransition2 from "../components/PageTransition2";
+import React, { useRef } from "react";
+import { motion, useScroll } from "framer-motion";
+import { FiBriefcase, FiBookOpen } from "react-icons/fi";
+import SectionHeader from "../components/SectionHeader";
+import Reveal from "../components/Reveal";
+import { useT } from "../contexts/LanguageContext";
+import { scrollToSection } from "../components/Header";
+import { requestProjectsFilter } from "../lib/projectsFilter";
 import "../styles/Experience.css";
-import { motion } from "framer-motion";
-import { useLanguage } from "../contexts/LanguageContext";
-import { translations } from "../translations";
 
-const Experience = () => {
-  const { language } = useLanguage();
-  const t = translations[language].experience;
-
-  // Map experience items from translations
-  const experienceData = [
-    {
-      ...t.items.aiAnalytics,
-      type: "education"
-    },
-    {
-      ...t.items.analistaTestes,
-      type: "work"
-    },
-    {
-      ...t.items.analistaTestesJr,
-      type: "work"
-    },
-    {
-      ...t.items.estagiarioUnity,
-      type: "work"
-    },
-    {
-      ...t.items.cienciaComputacao,
-      type: "education"
-    }
-  ];
+// A vertical timeline whose line fills as the user scrolls through it.
+const Timeline = ({ label, Icon, items, copy, offset = 0 }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 60%"] });
 
   return (
-    <PageTransition2>
-      <div id="experience" className="experience-page">
-        <header className="experience-header">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="experience-title"
-          >
-            {t.title}
-          </motion.h1>
-          <div className="title-underline"></div>
-        </header>
+    <div className="timeline-col">
+      <Reveal className="timeline-label" index={offset}>
+        <Icon aria-hidden="true" /> {label}
+      </Reveal>
 
-        <div className="timeline-container">
-          <div className="timeline-bar"></div>
+      <ol className="timeline" ref={ref}>
+        <span className="timeline-track" aria-hidden="true">
+          <motion.span className="timeline-fill" style={{ scaleY: scrollYProgress }} />
+        </span>
 
-          {experienceData.map((item, index) => (
-            <TimelineItem key={index} data={item} index={index} />
-          ))}
-        </div>
+        {items.map((item, i) => (
+          <Reveal as="li" key={`${item.company}-${item.role}`} index={offset + i + 1} className="timeline-item">
+            <span className={`timeline-dot ${item.current ? "is-current" : ""}`} aria-hidden="true" />
+            <div className="timeline-card">
+              <p className="timeline-period">{item.period}</p>
+              <h3 className="timeline-role">{item.role}</h3>
+              <p className="timeline-company">{item.company}</p>
+              <p className="timeline-desc">{item.description}</p>
 
-        {/* Ambient Element */}
-        <div className="glow-orb"></div>
-      </div>
-    </PageTransition2>
+              {item.chips?.length > 0 && (
+                <ul className="timeline-chips" aria-label={copy.techLabel}>
+                  {item.chips.map((chip) => (
+                    <li key={chip}>{chip}</li>
+                  ))}
+                </ul>
+              )}
+
+              {item.filterLink && (
+                <a
+                  className="timeline-link"
+                  href="#projects"
+                  aria-label={copy.projectsLinkLabel}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    requestProjectsFilter(item.filterLink);
+                    scrollToSection("projects");
+                  }}
+                >
+                  {copy.projectsLink}
+                </a>
+              )}
+            </div>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
   );
 };
 
-const TimelineItem = ({ data, index }) => {
-  const isLeft = index % 2 === 0;
+const Experience = () => {
+  const t = useT("experience");
 
   return (
-    <motion.div
-      className={`timeline-item ${isLeft ? "left" : "right"}`}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-    >
-      <div className="timeline-content">
-        <div className="timeline-header-group">
-          <div className="timeline-date">{data.period}</div>
-          <h3 className="timeline-role">{data.role}</h3>
-          <span className="timeline-company">{data.company}</span>
+    <section id="experience" className="section experience" aria-labelledby="experience-title">
+      <div className="container">
+        <SectionHeader id="experience-title" title={t.title} subtitle={t.subtitle} />
+        <div className="experience-grid">
+          <Timeline label={t.workLabel} Icon={FiBriefcase} items={t.work} copy={t} />
+          <Timeline label={t.educationLabel} Icon={FiBookOpen} items={t.education} copy={t} offset={1} />
         </div>
-
-        {/* Single paragraph with decorative arrow styled via CSS */}
-        <p className="timeline-description">
-          {data.description}
-        </p>
       </div>
-
-      <div className="timeline-dot">
-        <div className="dot-core"></div>
-        <div className="dot-ripple"></div>
-      </div>
-    </motion.div>
+    </section>
   );
 };
 

@@ -1,99 +1,146 @@
-import React from "react";
-import PageTransition from "../components/PageTransition";
-import "../styles/Home.css";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import SocialIcons from "../components/SocialIcons";
-import { useLanguage } from "../contexts/LanguageContext";
-import { translations } from "../translations";
+import { FiArrowRight, FiDownload } from "react-icons/fi";
+import { useT } from "../contexts/LanguageContext";
+import { scrollToSection } from "../components/Header";
+import { cvHref } from "../lib/cv";
+import { EASE_OUT, itemEnter, pressable } from "../lib/motion";
+import "../styles/Home.css";
+
+// Spotlight that follows the pointer (mouse only; touch keeps the resting glow).
+const useSpotlight = (ref) => {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return undefined;
+    let frame = 0;
+    const onMove = (e) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
+        el.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
+      });
+    };
+    el.addEventListener("pointermove", onMove);
+    return () => {
+      cancelAnimationFrame(frame);
+      el.removeEventListener("pointermove", onMove);
+    };
+  }, [ref]);
+};
 
 const Home = () => {
-  const { language } = useLanguage();
-  const t = translations[language].home;
+  const t = useT("home");
+  const contact = useT("contact");
+  const meta = useT("meta");
+  const heroRef = useRef(null);
+  useSpotlight(heroRef);
 
-  // Configuração da animação "fluida e leve"
-  const springTransition = (delay) => ({
-    type: "spring",
-    stiffness: 100, // Suavidade da mola
-    damping: 20,    // Controle da oscilação
-    mass: 1,
-    delay: delay
-  });
-
-  const handleScrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const words = t.name.split(" ");
+  // the role only wraps at its "·" separators, never inside a term
+  const roleParts = t.role.split(" · ");
+  // running letter count, so the stagger flows across words
+  const offsets = words.map((_, w) => words.slice(0, w).join("").length);
 
   return (
-    <PageTransition>
-      <div id="home" className="home-container">
-        {/* Onda animada no rodapé - Dentro do container para rolar junto */}
-        <div className="wave-container">
-          <svg className="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path fill="#737373" fillOpacity="0.4" d="M0,96L48,122.7C96,149,192,203,288,234.7C384,267,480,277,576,245.3C672,213,768,139,864,133.3C960,128,1056,192,1152,213.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          </svg>
-        </div>
-
-        <main className="content">
-          <div className="mobile-only">
-            <SocialIcons />
-          </div>
-
-          <motion.div
-            className="home-title-wrapper"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={springTransition(0.1)}
-          >
-            <h1 className="home-title">
-              {t.greeting}{" "}
-              <motion.span
-                className="highlight-name"
-                style={{ display: "inline-block" }}
-                whileHover={{ scale: 1.05, textShadow: "0px 0px 8px rgb(255,255,255)" }}
-              >
-                {t.name}
-              </motion.span>
-            </h1>
-          </motion.div>
-
-          <motion.h2
-            className="home-subtitle"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={springTransition(0.3)}
-            whileHover={{ scale: 1.05, color: "#ffffff", cursor: "default" }}
-          >
-            {t.subtitle}
-          </motion.h2>
-
-          <motion.p
-            className="home-description"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={springTransition(0.5)}
-            whileHover={{ scale: 1.05, color: "#e0e0e0", cursor: "default" }}
-            dangerouslySetInnerHTML={{ __html: t.description }}
-          />
-
-          <motion.div
-            className="home-buttons"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={springTransition(0.7)}
-          >
-            <button onClick={() => handleScrollTo("projects")} className="btn-custom btn-primary">
-              <span className="arrow">→</span> {t.btnProjects}
-            </button>
-            <button onClick={() => handleScrollTo("about")} className="btn-custom btn-secondary">
-              <span className="arrow">→</span> {t.btnAbout}
-            </button>
-          </motion.div>
-        </main>
+    <section id="home" className="home" ref={heroRef}>
+      <div className="home-bg" aria-hidden="true">
+        <div className="home-grid" />
+        <div className="home-glow home-glow--a" />
+        <div className="home-glow home-glow--b" />
+        <div className="home-spot" />
+        <svg className="home-wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path d="M0,96L48,122.7C96,149,192,203,288,234.7C384,267,480,277,576,245.3C672,213,768,139,864,133.3C960,128,1056,192,1152,213.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L0,320Z" />
+        </svg>
       </div>
-    </PageTransition>
+
+      <div className="home-content container">
+        <motion.p
+          className="home-greeting"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0, transition: itemEnter(0) }}
+        >
+          {t.greeting}
+        </motion.p>
+
+        <h1 className="home-title" aria-label={t.name}>
+          {words.map((word, w) => (
+            <span className="home-word" key={`${word}-${w}`} aria-hidden="true">
+              {Array.from(word).map((ch, i) => (
+                <motion.span
+                  key={`${ch}-${i}`}
+                  className="home-letter"
+                  initial={{ opacity: 0, y: "0.4em" }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.1 + (offsets[w] + i) * 0.035 }}
+                >
+                  {ch}
+                </motion.span>
+              ))}
+            </span>
+          ))}
+        </h1>
+
+        <motion.p
+          className="home-role"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0, transition: itemEnter(5, 0.08, 0.6) }}
+        >
+          {roleParts.map((part, i) => (
+            <React.Fragment key={part}>
+              {i > 0 && " · "}
+              <span className="home-role-part">{part}</span>
+            </React.Fragment>
+          ))}
+        </motion.p>
+
+        <motion.p
+          className="home-description"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0, transition: itemEnter(6, 0.08, 0.7) }}
+          dangerouslySetInnerHTML={{ __html: t.description }}
+        />
+
+        <motion.div
+          className="home-ctas"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0, transition: itemEnter(7, 0.08, 0.8) }}
+        >
+          <motion.button className="btn btn-primary" onClick={() => scrollToSection("projects")} {...pressable}>
+            {t.ctaProjects} <FiArrowRight aria-hidden="true" className="btn-arrow" />
+          </motion.button>
+          <motion.a
+            className="btn btn-ghost"
+            href={cvHref(meta)}
+            download={meta.cvFile}
+            target="_blank"
+            rel="noopener noreferrer"
+            {...pressable}
+          >
+            <FiDownload aria-hidden="true" /> {contact.downloadCV}
+          </motion.a>
+        </motion.div>
+
+        <motion.dl
+          className="home-facts"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: itemEnter(9, 0.08, 1) }}
+        >
+          {t.facts.map((f) => (
+            <div className="home-fact" key={f.label}>
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))}
+        </motion.dl>
+      </div>
+
+      <button className="home-scroll" onClick={() => scrollToSection("about")} aria-label={t.scroll}>
+        <span className="home-scroll-mouse" aria-hidden="true">
+          <span className="home-scroll-dot" />
+        </span>
+      </button>
+    </section>
   );
 };
 

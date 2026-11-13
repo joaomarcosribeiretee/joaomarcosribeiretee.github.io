@@ -1,504 +1,414 @@
-import React, { useState, useEffect } from "react";
-import PageTransition5 from "../components/PageTransition5";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaArrowLeft, FaTimes } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { FaGithub } from "react-icons/fa";
+import { FiArrowUpRight, FiImage, FiPlay, FiX } from "react-icons/fi";
+import SectionHeader from "../components/SectionHeader";
+import Reveal from "../components/Reveal";
+import { scrollToSection } from "../components/Header";
+import { useLanguage, useT } from "../contexts/LanguageContext";
+import { projects, PROJECT_FILTERS } from "../data/projects";
+import { FILTER_EVENT } from "../lib/projectsFilter";
+import { DUR, EASE_DRAWER, EASE_OUT, itemEnter, pressable, transitions } from "../lib/motion";
 import "../styles/Projects.css";
-import { useLanguage } from "../contexts/LanguageContext";
-import { translations } from "../translations";
 
-// --- Dados dos Projetos (PT-BR) ---
-const projectsData = [
-  {
-    id: "tcc-fitness",
-    title: "TCC: AI FITNESS SYSTEM",
-    year: "2025",
-    context: "Mobile App & IA",
-    role: "Full Stack & IA Eng.",
-    shortDesc: "Gestão inteligente de treinos e nutrição com GPT-4o.",
-    longDesc: `
-      Projeto de Conclusão de Curso que explora o potencial de <strong>LLMs (Large Language Models)</strong> na ultra-personalização de saúde.
-      O sistema utiliza um modelo <strong>GPT-4o Mini com Fine-Tuning supervisionado</strong> para atuar como um treinador biomecânico e nutricionista especialista.
-      <br/><br/>
-      Diferente de apps comuns, ele realiza uma anamnese clínica completa e utiliza a IA para ajustar protocolos de treinamento e dieta em tempo real, respeitando todas as restrições e objetivos únicos de cada usuário.
-    `,
-    fullDetails: `
-      <h3>🧠 Inteligência Artificial Especializada</h3>
-      <p>
-        O foco do uso de IA neste projeto foi a precisão e segurança.
-      </p>
-      <ul>
-        <li><strong>Compreensão de Limitações:</strong> O sistema foi treinado para entender profundamente as especificidades do usuário (lesões, nível de experiência, tempo disponível). Ele gera planos totalmente adaptados, garantindo que cada recomendação seja segura e eficiente.</li>
-        <li><strong>Fine-Tuning e Precisão:</strong> Graças ao refinamento do modelo, alcançamos uma precisão elevada nos cálculos de macronutrientes e volume de treino, eliminando as "alucinações" comuns e garantindo a confiabilidade das prescrições.</li>
-      </ul>
+const INITIAL_COUNT = 6;
+const CHIP_COUNT = 3;
 
-      <h3>🏗️ Arquitetura & Engenharia de Software</h3>
-      <p>
-        Construído sobre os pilares da <strong>Clean Architecture</strong> para garantir desacoplamento total.
-      </p>
-      <ul>
-        <li><strong>Backend (Python/FastAPI):</strong> Arquitetura assíncrona otimizada para alta concorrência. Utiliza <em>Repository Pattern</em> para abstração de dados e injeção de dependência via contêineres.</li>
-        <li><strong>Frontend (React Native):</strong> Implementação rigorosa do padrão MVVM (Model-View-ViewModel), garantindo que a lógica de apresentação não contamine a UI, facilitando testes unitários.</li>
-      </ul>
+const FOCUSABLE = 'a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
 
-      <h3>📱 Experiência do Usuário (App)</h3>
-      <p>
-        Funciona de forma intuitiva: o usuário responde a uma anamnese e a IA constrói o plano ideal.
-      </p>
-      <ul>
-        <li><strong>Treino & Execução:</strong> O usuário visualiza seu treino e pode executá-lo em tempo real, registrando cargas e acompanhando sua progressão visualmente ao longo do tempo.</li>
-        <li><strong>Dieta Integrada:</strong> A dieta aparece de forma clara, com as refeições calculadas especificamente para o objetivo atual.</li>
-      </ul>
-    `,
-    stack: ["React Native", "TypeScript", "Python", "FastAPI", "OpenAI API", "MySQL"],
-    repoLink: "https://github.com/joaomarcosribeiretee/tcc-app-fitness",
-    videoLink: "https://www.youtube.com/embed/b5MFeshOD44?si=O_8z1jXdOhB27jmK",
-    team: ["João Marcos Ribeirete Garbelini", "Gabriel Souza de Carvalho", "Jefferson da Silva de Souza"],
-    previewColor: "linear-gradient(135deg, #FF4500 0%, #8B0000 100%)", // Orange/Red vibe for fitness
-    image: "/projects/tcc-fitness.jpg" // Image path
-  },
-  {
-    id: "marketplace",
-    title: "MARKETPLACE",
-    year: "2024",
-    context: "Sistemas Web",
-    role: "Backend & Database",
-    shortDesc: "Plataforma completa de e-commerce com autenticação e gestão de estoque.",
-    longDesc: `
-      Ecossistema de compra e venda desenvolvido com foco na <strong>integridade de dados e segurança</strong>.
-      <br/><br/>
-      O sistema permite que usuários criem contas, gerenciem seus próprios anúncios de produtos e realizem transações simuladas, tudo suportado por um banco de dados relacional robusto que garante a consistência do estoque.
-    `,
-    fullDetails: `
-      <h3>🔐 Segurança & Autenticação</h3>
-      <p>
-        Implementação de um sistema de login seguro "do zero", sem depender de serviços externos.
-      </p>
-      <ul>
-        <li><strong>Criptografia:</strong> Senhas armazenadas com hash + salt (Bcrypt), protegendo contra ataques de rainbow table.</li>
-        <li><strong>Proteção de Rotas:</strong> Middleware de autenticação que garante que apenas usuários logados possam criar/editar anúncios.</li>
-      </ul>
+const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      <h3>💾 Arquitetura de Dados (MySQL)</h3>
-      <p>
-        Modelagem relacional complexa para sustentar o fluxo de marketplace.
-      </p>
-      <ul>
-        <li><strong>Relacionamentos:</strong> Estrutura robusta conectando <em>Users</em>, <em>Products</em> e <em>Orders</em> (1:N e N:N).</li>
-        <li><strong>Transações Atômicas:</strong> Garantia de que o estoque é debitado apenas se o pedido for confirmado com sucesso.</li>
-      </ul>
+// True while the element's content overflows to the right (drives the filter fade).
+const useHasMoreToRight = (ref, deps) => {
+  const [more, setMore] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const update = () => setMore(el.scrollLeft + el.clientWidth < el.scrollWidth - 2);
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => {
+      el.removeEventListener("scroll", update);
+      observer.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+  return more;
+};
 
-      <h3>🚀 Funcionalidades do Produto</h3>
-      <ul>
-        <li><strong>Gestão de Anúncios:</strong> CRUD completo (Create, Read, Update, Delete) com upload de imagens.</li>
-        <li><strong>Carrinho de Compras:</strong> Persistência de estado da sessão do usuário.</li>
-      </ul>
-    `,
-    stack: ["Node.js", "Express", "MySQL", "Sequelize", "Bcrypt", "EJS"],
-    repoLink: "https://github.com/joaomarcosribeiretee/marketplace",
-    videoLink: "https://www.youtube.com/embed/fIJb9g500FM?si=ftvl1HlMz3wYP3ov",
-    team: ["João Marcos Ribeirete", "Andre Cavalcanti", "Vitor Assunção", "Felipe Espel", "Gustavo Ioels"],
-    previewColor: "linear-gradient(135deg, #2c3e50 0%, #3498db 100%)", // Blue/Dark Theme
-    image: "/projects/marketplace.jpg"
-  },
-  {
-    id: "todo-list",
-    title: "TO-DO LIST APP",
-    year: "2025",
-    context: "Mobile Android",
-    role: "Android Developer",
-    shortDesc: "Sistema de produtividade com 5 módulos e UX nativa.",
-    longDesc: `
-      Aplicação Android robusta, construída com <strong>Java</strong>, focada na arquitetura de múltiplas Activities e navegação por Intents explícitas.
-      <br/><br/>
-      O projeto implementa um fluxo completo de criação, visualização e gestão de tarefas, com validação de dados em tempo real e feedback visual instantâneo (Toasts), garantindo uma experiência de usuário fluída e sem falhas.
-    `,
-    fullDetails: `
-      <h3>📱 Engenharia Mobile & Arquitetura</h3>
-      <p>
-        O diferencial deste projeto é a separação clara de responsabilidades em 5 telas distintas, cada uma com sua lógica de negócio isolada:
-      </p>
-      <ul>
-        <li><strong>Dashboard (Main):</strong> Navegação centralizada com cards coloridos e ícones intuitivos.</li>
-        <li><strong>Cadastro (Add):</strong> Formulários com validação de entrada e data de vencimento.</li>
-        <li><strong>Listagem (View):</strong> RecyclerView otimizado para scroll e performance.</li>
-        <li><strong>Detalhes (Detail):</strong> Visualização expandida com opções de conclusão.</li>
-        <li><strong>Ajustes (Settings):</strong> Switches funcionais para controle de notificações e tema.</li>
-      </ul>
+const useMediaQuery = (query) => {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = () => setMatches(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [query]);
+  return matches;
+};
 
-      <h3>🛠️ Stack Tecnológica</h3>
-      <ul>
-        <li><strong>Java & SDK Android:</strong> Desenvolvimento puramente nativo para máxima performance e controle do ciclo de vida.</li>
-        <li><strong>XML Layouts:</strong> Uso avançado de ConstraintLayout e Componentes Material Design.</li>
-        <li><strong>Gradle:</strong> Gerenciamento eficiente de dependências e build.</li>
-      </ul>
-    `,
-    stack: ["Java", "Android Studio", "XML", "Material Design"],
-    repoLink: "https://github.com/joaomarcosribeiretee/ToDoListApp_Redesigned",
-    videoLink: null,
-    team: [
-      "João Marcos Ribeirete Garbelini",
-      "Guilherme Diniz Leocadio"
-    ],
-    previewColor: "linear-gradient(135deg, #3DDC84 0%, #2A9D8F 100%)", // Android Green
-    image: "/projects/todolist2.png"
-  },
-  {
-    id: "ultrafit",
-    title: "ULTRAFIT GYM",
-    year: "2024",
-    context: "Aplicação Web",
-    role: "Full Stack Team",
-    shortDesc: "Gestão completa de alunos, treinos e avaliações físicas.",
-    longDesc: `
-      Plataforma web modernizada para substituir planilhas e métodos manuais em academias. 
-      <br/><br/>
-      Centraliza o gerenciamento de alunos, a prescrição de treinos personalizados e o histórico de avaliações físicas, proporcionando eficiência operacional para os professores.
-    `,
-    fullDetails: `
-      <h3>📊 Gestão & Eficiência</h3>
-      <p>
-        O sistema resolve a desorganização de fichas de papel e planilhas descentralizadas.
-      </p>
-      <ul>
-        <li><strong>Prescrição de Treinos:</strong> Interface intuitiva para montar fichas de treino com grupos musculares e exercícios pré-cadastrados.</li>
-      </ul>
-
-      <h3>💻 Stack Tecnológica</h3>
-      <ul>
-        <li><strong>Frontend (React):</strong> Interface reativa focada na usabilidade do profissional de educação física.</li>
-        <li><strong>Backend (Node/Express):</strong> API RESTful que gerencia as regras de negócio e persistência.</li>
-      </ul>
-    `,
-    stack: ["React", "Node.js", "Express", "MySQL"],
-    repoLink: "https://github.com/joaomarcosribeiretee/ultrafit-academy-system",
-    videoLink: "https://www.youtube.com/embed/b7eMImkw7Os?si=i0IQfqoTKufPEbp0",
-    team: [
-      "João Marcos Ribeirete Garbelini",
-      "André Cavalcanti Teles Dos Santos",
-      "Felipe Casagrande Espel",
-      "Guilherme Diniz Leocadio",
-      "Gustavo Leite Ioels",
-      "Vitor Assunção Silva"
-    ],
-    previewColor: "linear-gradient(135deg, #008080 0%, #004d4d 100%)", // Teal/Cyan vibe
-    image: "/projects/ultra-fit.jpg"
-  },
-  {
-    id: "ligamaster",
-    title: "LIGAMASTER",
-    year: "2024",
-    context: "Aplicação Web",
-    role: "Full Stack Developer",
-    shortDesc: "Plataforma completa para organização de campeonatos entre amigos.",
-    longDesc: `
-      Sistema web robusto para gerenciamento de torneios esportivos, permitindo criar e administrar campeonatos completos com <strong>times, jogos e tabelas</strong>.
-      <br/><br/>
-      A plataforma oferece ferramentas para cadastro de participantes, geração automática de chaveamentos, registro de resultados e acompanhamento de estatísticas em tempo real, tornando a organização de competições entre amigos simples e profissional.
-    `,
-    fullDetails: `
-      <h3>⚽ Gestão Completa de Campeonatos</h3>
-      <p>
-        O Ligamaster centraliza todas as funcionalidades necessárias para organizar torneios do início ao fim:
-      </p>
-      <ul>
-        <li><strong>Criação de Campeonatos:</strong> Configure torneios personalizados com diferentes formatos (eliminatória, pontos corridos, grupos).</li>
-        <li><strong>Gestão de Times:</strong> Cadastro completo de equipes participantes com informações detalhadas.</li>
-        <li><strong>Controle de Jogos:</strong> Registro de partidas, resultados e estatísticas individuais.</li>
-        <li><strong>Tabelas Automáticas:</strong> Geração dinâmica de classificações e chaveamentos baseados nos resultados.</li>
-        <li><strong>Estatísticas em Tempo Real:</strong> Acompanhamento de desempenho, artilharia e histórico de confrontos.</li>
-      </ul>
-
-      <h3>🛠️ Stack Tecnológica</h3>
-      <ul>
-        <li><strong>Backend (Node.js + Express):</strong> API RESTful para gerenciamento de dados e lógica de negócio.</li>
-        <li><strong>Banco de Dados (MySQL):</strong> Persistência relacional otimizada para consultas complexas de estatísticas.</li>
-        <li><strong>Frontend (EJS + Bootstrap):</strong> Interface responsiva e intuitiva para administração dos torneios.</li>
-        <li><strong>Algoritmos Personalizados:</strong> Lógica de chaveamento automático e cálculo de classificações.</li>
-      </ul>
-    `,
-    stack: ["Node.js", "Express", "MySQL", "EJS", "Bootstrap"],
-    repoLink: "https://github.com/joaomarcosribeiretee/Gerenciador-de-Campeonatos-",
-    videoLink: "https://www.youtube.com/embed/nuB1MMiZdAw?si=GF5dH2z5jPHLWg0",
-    team: [
-      "João Marcos Ribeirete Garbelini",
-      "André Cavalcanti Teles Dos Santos",
-      "Vitor Assunção Silva"
-    ],
-    previewColor: "linear-gradient(135deg, #004d00 0%, #002200 100%)",
-    image: "/projects/ligamaster.jpg"
-  },
-
-  {
-    id: "flashcards",
-    title: "FLASHCARDS",
-    year: "2022",
-    context: "App Multiplataforma",
-    role: "Mobile & Desktop Developer",
-    shortDesc: "Ferramenta de estudo com flashcards para mobile e desktop.",
-    longDesc: `
-      Aplicação multiplataforma para criação e revisão de <strong>flashcards</strong>, disponível tanto em <strong>dispositivos móveis</strong> quanto em <strong>desktop</strong>.
-      <br/><br/>
-      O app permite que estudantes criem, organizem e revisem conteúdos de forma eficiente através de cartões de memorização, facilitando o aprendizado ativo e a retenção de informações em qualquer lugar.
-    `,
-    fullDetails: `
-      <h3>📱 Multiplataforma Real</h3>
-      <p>
-        O Flashcards foi desenvolvido para funcionar perfeitamente em diferentes plataformas, oferecendo a mesma experiência de usuário em todos os dispositivos:
-      </p>
-      <ul>
-        <li><strong>Versão Mobile:</strong> Aplicativo nativo para Android e iOS, permitindo estudo em movimento.</li>
-        <li><strong>Versão Desktop:</strong> Aplicação standalone para Windows, macOS e Linux, ideal para sessões de estudo mais longas.</li>
-        <li><strong>Sincronização:</strong> Dados compartilhados entre plataformas para continuidade do aprendizado.</li>
-      </ul>
-
-      <h3>🎯 Funcionalidades de Estudo</h3>
-      <ul>
-        <li><strong>Criação de Flashcards:</strong> Interface intuitiva para criar cartões com perguntas e respostas.</li>
-        <li><strong>Organização por Decks:</strong> Agrupe flashcards por matérias ou tópicos específicos.</li>
-        <li><strong>Modo de Revisão:</strong> Sistema de repetição espaçada para otimizar a memorização.</li>
-        <li><strong>Estatísticas de Progresso:</strong> Acompanhe seu desempenho e evolução nos estudos.</li>
-        <li><strong>Offline First:</strong> Funciona sem conexão com internet, sincronizando quando disponível.</li>
-      </ul>
-
-      <h3>🛠️ Stack Tecnológica</h3>
-      <ul>
-        <li><strong>Mobile (React Native + Expo):</strong> Desenvolvimento cross-platform para iOS e Android.</li>
-        <li><strong>Desktop (Electron):</strong> Aplicação desktop multiplataforma com tecnologias web.</li>
-        <li><strong>Banco de Dados (SQLite):</strong> Persistência local eficiente em todas as plataformas.</li>
-        <li><strong>Code Sharing:</strong> Lógica de negócios compartilhada entre mobile e desktop.</li>
-      </ul>
-    `,
-    stack: ["React Native", "Electron", "SQLite", "Expo"],
-    repoLink: "https://github.com/joaomarcosribeiretee/Flashcards-Desktop",
-    videoLink: "https://www.youtube.com/embed/VL5EffGGRXs?si=9KOStMz3-Ort6M-L",
-    team: [
-      "João Marcos Ribeirete Garbelini",
-      "Felipe Espel",
-      "Gustavo Leite Ioels",
-      "Gabriel Souza de Carvalho"
-    ],
-    previewColor: "linear-gradient(135deg, #4b0082 0%, #1a0033 100%)",
-    image: "/projects/flashcards.png"
-  }
-];
-
-// --- Modal Interno Component ---
-const DetailModal = ({ isOpen, onClose, content, title, detailsLabel }) => {
-  if (!isOpen) return null;
+const ProjectCard = ({ project, copy, openLabel, onOpen, index }) => {
+  const extra = project.stack.length - CHIP_COUNT;
   return (
-    <div className="text-modal-overlay" onClick={onClose}>
+    <motion.li
+      layout
+      className="project-card-item"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0, transition: itemEnter(index, 0.05, 0.3) }}
+      exit={{ opacity: 0, scale: 0.96, transition: transitions.fast }}
+      transition={transitions.layout}
+    >
+      <button className="project-card" onClick={(e) => onOpen(project, e.currentTarget)}>
+        <div className="project-cover">
+          <img src={project.cover} alt="" loading="lazy" width="1600" height="1000" />
+          <span className="project-open" aria-hidden="true">
+            {openLabel} <FiArrowUpRight />
+          </span>
+        </div>
+        <div className="project-body">
+          <p className="project-meta">
+            <span>{project.year}</span>
+            <span aria-hidden="true">·</span>
+            <span>{copy.meta ?? copy.context}</span>
+          </p>
+          <h3 className="project-title">{copy.title}</h3>
+          <p className="project-desc">{copy.shortDesc}</p>
+          <ul className="project-chips" aria-label="Stack">
+            {project.stack.slice(0, CHIP_COUNT).map((s) => (
+              <li key={s}>{s}</li>
+            ))}
+            {extra > 0 && <li className="chip-more">+{extra}</li>}
+          </ul>
+        </div>
+      </button>
+    </motion.li>
+  );
+};
+
+const ProjectModal = ({ project, copy, t, onClose }) => {
+  const isMobile = useMediaQuery("(max-width: 720px)");
+  const { language } = useLanguage();
+  const [media, setMedia] = useState("cover");
+  const closeRef = useRef(null);
+  const panelRef = useRef(null);
+  const quality = project.quality?.[language] ?? [];
+
+  useEffect(() => {
+    // The focus ring on this first focus only shows if the modal was opened with the
+    // keyboard (see src/lib/inputModality.js and the focus rules in App.css).
+    closeRef.current?.focus({ preventScroll: true });
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      // focus trap: Tab and Shift+Tab cycle inside the dialog
+      const panel = panelRef.current;
+      if (!panel) return;
+      const items = [...panel.querySelectorAll(FOCUSABLE)];
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      if (!panel.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  const goToContact = () => {
+    onClose();
+    // wait for the sheet to leave before scrolling the page behind it
+    setTimeout(() => scrollToSection("contact"), DUR.slow * 1000);
+  };
+
+  const panelMotion = isMobile
+    ? {
+        initial: { y: "100%" },
+        animate: { y: 0, transition: { duration: 0.45, ease: EASE_DRAWER } },
+        exit: { y: "100%", transition: { duration: DUR.slow, ease: EASE_DRAWER } },
+      }
+    : {
+        initial: { opacity: 0, scale: 0.96, y: 12 },
+        animate: { opacity: 1, scale: 1, y: 0, transition: { duration: DUR.slow, ease: EASE_OUT } },
+        exit: { opacity: 0, scale: 0.97, transition: { duration: DUR.base, ease: EASE_OUT } },
+      };
+
+  const solo = project.team.length === 1;
+
+  return (
+    <motion.div
+      className="modal-backdrop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: transitions.base }}
+      exit={{ opacity: 0, transition: transitions.base }}
+      onClick={onClose}
+    >
       <motion.div
-        className="text-modal-content"
+        ref={panelRef}
+        className="modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
         onClick={(e) => e.stopPropagation()}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
+        {...panelMotion}
       >
-        <button className="text-modal-close" onClick={onClose}><FaTimes /></button>
-        <h2 className="text-modal-title">{title} - {detailsLabel}</h2>
-        <div className="text-modal-body" dangerouslySetInnerHTML={{ __html: content }}></div>
+        <div className="modal-topbar">
+          {project.video ? (
+            <div className="media-tabs" role="tablist">
+              {[
+                { id: "cover", label: t.cover, Icon: FiImage },
+                { id: "video", label: t.video, Icon: FiPlay },
+              ].map(({ id, label, Icon }) => (
+                <button
+                  key={id}
+                  role="tab"
+                  aria-selected={media === id}
+                  className={`media-tab ${media === id ? "is-active" : ""}`}
+                  onClick={() => setMedia(id)}
+                >
+                  {media === id && (
+                    <motion.span className="media-tab-pill" layoutId="media-pill" transition={transitions.layout} />
+                  )}
+                  <Icon aria-hidden="true" /> <span>{label}</span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <span />
+          )}
+          <button ref={closeRef} className="modal-close" onClick={onClose} aria-label={t.close}>
+            <FiX aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="modal-scroll">
+          <div className="modal-media">
+            {media === "video" && project.video ? (
+              <iframe
+                src={`${project.video}?autoplay=1&rel=0`}
+                title={copy.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <img src={project.cover} alt={copy.title} />
+            )}
+          </div>
+
+          <div className="modal-content">
+            <header className="modal-header">
+              <h2 id="project-modal-title" className="modal-title">{copy.title}</h2>
+              <dl className="modal-meta">
+                <div>
+                  <dt>{t.year}</dt>
+                  <dd>{project.year}</dd>
+                </div>
+                <div>
+                  <dt>{t.context}</dt>
+                  <dd>{copy.context}</dd>
+                </div>
+                <div>
+                  <dt>{t.role}</dt>
+                  <dd>{copy.role}</dd>
+                </div>
+              </dl>
+            </header>
+
+            <div className="modal-columns">
+              <div className="modal-main">
+                <h3 className="modal-label">{t.overview}</h3>
+                <p className="modal-overview" dangerouslySetInnerHTML={{ __html: copy.longDesc }} />
+
+                <h3 className="modal-label">{t.highlights}</h3>
+                <div className="modal-details" dangerouslySetInnerHTML={{ __html: copy.fullDetails }} />
+
+                {quality.length > 0 && (
+                  <div className="modal-details modal-quality">
+                    <h3>{t.quality}</h3>
+                    <ul>
+                      {quality.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              <aside className="modal-side">
+                <div className="modal-block">
+                  <h3 className="modal-label">{t.stack}</h3>
+                  <ul className="modal-stack">
+                    {project.stack.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="modal-block">
+                  <h3 className="modal-label">{solo ? t.solo : t.team}</h3>
+                  {!solo && (
+                    <ul className="modal-team">
+                      {project.team.map((m) => (
+                        <li key={m}>{m}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                <motion.a className="btn btn-primary btn-block" href={project.repo} target="_blank" rel="noopener noreferrer" {...pressable}>
+                  <FaGithub aria-hidden="true" /> {t.github}
+                </motion.a>
+
+                <p className="modal-cta">
+                  {t.footer}{" "}
+                  <button className="link-button" onClick={goToContact}>
+                    {t.footerLink}
+                  </button>
+                </p>
+              </aside>
+            </div>
+          </div>
+        </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 
 const Projects = () => {
-  const { language } = useLanguage();
-  const t = translations[language].projects;
+  const t = useT("projects");
+  const [filter, setFilter] = useState("all");
+  const [expanded, setExpanded] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const triggerRef = useRef(null);
+  const filtersRef = useRef(null);
+  const filtersHaveMore = useHasMoreToRight(filtersRef, [t]);
 
-  // Helper function to get translated project data
-  const getProjectData = (projectId) => {
-    const projectMap = {
-      'tcc-fitness': t.tccFitness,
-      'marketplace': t.marketplace,
-      'todo-list': t.todoList,
-      'ultrafit': t.ultrafit,
-      'ligamaster': t.ligamaster,
-      'flashcards': t.flashcards
+  // other sections (e.g. the FIAP card in Experience) can choose the filter
+  useEffect(() => {
+    const onFilter = (e) => {
+      if (!PROJECT_FILTERS.includes(e.detail)) return;
+      setFilter(e.detail);
+      setExpanded(false);
     };
-    return projectMap[projectId] || {};
+    window.addEventListener(FILTER_EVENT, onFilter);
+    return () => window.removeEventListener(FILTER_EVENT, onFilter);
+  }, []);
+
+  const filtered = filter === "all" ? projects : projects.filter((p) => p.tags.includes(filter));
+  const canCollapse = filtered.length > INITIAL_COUNT;
+  const visible = canCollapse && !expanded ? filtered.slice(0, INITIAL_COUNT) : filtered;
+
+  const open = (project, trigger) => {
+    triggerRef.current = trigger;
+    setSelected(project);
   };
 
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [hoveredProject, setHoveredProject] = useState(null);
-  const [showDetailModal, setShowDetailModal] = useState(false);
+  const close = React.useCallback(() => setSelected(null), []);
 
-  useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [selectedProject]);
-
-  const currentPreview = projectsData.find(p => p.id === hoveredProject);
+  const toggleExpanded = () => {
+    if (expanded) scrollToSection("projects");
+    setExpanded((e) => !e);
+  };
 
   return (
-    <PageTransition5>
-      <div id="projects" className="projects-page-container">
+    <section id="projects" className="section projects" aria-labelledby="projects-title">
+      <div className="container">
+        <SectionHeader id="projects-title" title={t.title} subtitle={t.subtitle} />
 
-        {/* --- LIST VIEW (Esquerda) --- */}
-        <div className="projects-list-wrapper">
-          <header className="projects-header-minimal">
-            <h1 className="list-main-title">{t.title}</h1>
-            <span className="list-subtitle">{t.subtitle}</span>
-          </header>
-
-          <div className="projects-list">
-            {projectsData.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="project-list-item"
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-                onClick={() => setSelectedProject(project)}
-                whileHover={{ x: 20 }}
-              >
-                <div className="project-item-content">
-                  <span className="project-index">0{index + 1}</span>
-                  <div className="project-info-group">
-                    <h2 className="project-list-title">{getProjectData(project.id).title}</h2>
-                    <span className="project-list-category">{getProjectData(project.id).context}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+        <Reveal className="project-filters" index={1}>
+          <div className="segmented-wrap" data-fade={filtersHaveMore}>
+          <div className="segmented" role="group" aria-label={t.title} ref={filtersRef}>
+            {PROJECT_FILTERS.map((f) => {
+              const count = f === "all" ? projects.length : projects.filter((p) => p.tags.includes(f)).length;
+              return (
+                <button
+                  key={f}
+                  className={`segmented-option ${filter === f ? "is-active" : ""}`}
+                  aria-pressed={filter === f}
+                  onClick={(e) => {
+                    setFilter(f);
+                    setExpanded(false);
+                    // keep the chosen filter inside the scrollable row on small screens
+                    e.currentTarget.scrollIntoView({
+                      inline: "nearest",
+                      block: "nearest",
+                      behavior: prefersReducedMotion() ? "auto" : "smooth",
+                    });
+                  }}
+                >
+                  {filter === f && (
+                    <motion.span className="segmented-pill" layoutId="filter-pill" transition={transitions.layout} />
+                  )}
+                  <span className="segmented-label">
+                    {t.filters[f]} <span className="segmented-count">{count}</span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
-        </div>
+          </div>
+        </Reveal>
 
-        {/* --- IMAGE PREVIEW (Direita / Fundo) --- */}
-        <div className="project-preview-stage">
-          <AnimatePresence mode="wait">
-            {currentPreview && (
-              <motion.div
-                key={currentPreview.id}
-                className="preview-card"
-                initial={{ opacity: 0, scale: 0.95, rotate: -2 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                style={{
-                  background: currentPreview.previewColor,
-                  backgroundImage: currentPreview.image ? `url(${currentPreview.image})` : currentPreview.previewColor,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              >
-                {!currentPreview.image && (
-                  <span className="preview-placeholder-text">{getProjectData(currentPreview.id).title}</span>
-                )}
-              </motion.div>
-            )}
+        <motion.ul
+          className="projects-grid"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0, transition: transitions.reveal }}
+          viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+        >
+          <AnimatePresence mode="popLayout" initial={false}>
+            {visible.map((project, i) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                copy={t.items[project.id]}
+                openLabel={t.open}
+                onOpen={open}
+                index={i}
+              />
+            ))}
           </AnimatePresence>
-        </div>
+        </motion.ul>
 
-        {/* --- DETAIL OVERLAY (Case Study) --- */}
-        <AnimatePresence>
-          {selectedProject && (
-            <motion.div
-              className="project-detail-overlay"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            >
-
-              <button className="close-detail-btn" onClick={() => { setSelectedProject(null); setShowDetailModal(false); }}>
-                <FaArrowLeft /> {t.close}
-              </button>
-
-              <div className="detail-content">
-                <div className="detail-hero">
-                  <h1 className="detail-title">{getProjectData(selectedProject.id).title}</h1>
-                  <div className="detail-meta">
-                    <span className="meta-item"><strong>{t.year}:</strong> {getProjectData(selectedProject.id).year}</span>
-                    <span className="meta-item"><strong>{t.context}:</strong> {getProjectData(selectedProject.id).context}</span>
-                    <span className="meta-item"><strong>{t.role}:</strong> {getProjectData(selectedProject.id).role}</span>
-                  </div>
-                </div>
-
-                <div className="detail-grid">
-                  <div className="detail-left">
-                    <h3 className="section-label">{t.overview}</h3>
-                    <p className="detail-description" dangerouslySetInnerHTML={{ __html: getProjectData(selectedProject.id).longDesc }}></p>
-
-                    {selectedProject.team && (
-                      <div className="detail-team" style={{ marginBottom: '2rem' }}>
-                        <h3 className="section-label">{t.team}</h3>
-                        <p style={{ color: '#aaa', fontFamily: "'Inria Sans', sans-serif" }}>
-                          {selectedProject.team.join(", ")}
-                        </p>
-                      </div>
-                    )}
-                    <div className="detail-actions">
-
-                      {selectedProject.repoLink && (
-                        <a href={selectedProject.repoLink} target="_blank" rel="noreferrer" className="action-btn">
-                          <FaGithub /> {t.githubRepo}
-                        </a>
-                      )}
-
-                      <button
-                        className="action-btn highlight"
-                        onClick={() => setShowDetailModal(true)}
-                      >
-                        {t.viewDetails}
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="detail-right" id="techs">
-                    <h3 className="section-label">{t.stack}</h3>
-                    <div className="tech-tags">
-                      {selectedProject.stack.map(tech => (
-                        <span key={tech} className="tech-tag">{tech}</span>
-                      ))}
-                    </div>
-
-                    <div className="media-preview">
-                      {selectedProject.videoLink ? (
-                        <div className="video-wrapper">
-                          <iframe
-                            src={selectedProject.videoLink}
-                            title={getProjectData(selectedProject.id).title}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          ></iframe>
-                        </div>
-                      ) : (
-                        <div className="no-media-placeholder">
-                          <span>Preview Visual em Breve</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="detail-footer">
-                  <p>{t.footer} <a href="#/contact">{t.footerLink}</a></p>
-                </div>
-              </div>
-
-              {/* Text Modal Rendering */}
-              <AnimatePresence>
-                {showDetailModal && (
-                  <DetailModal
-                    isOpen={showDetailModal}
-                    onClose={() => setShowDetailModal(false)}
-                    content={getProjectData(selectedProject.id).fullDetails}
-                    title={getProjectData(selectedProject.id).title}
-                    detailsLabel={t.detailsLabel}
-                  />
-                )}
-              </AnimatePresence>
-
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+        {canCollapse && (
+          <div className="projects-more">
+            <motion.button className="btn btn-ghost" onClick={toggleExpanded} {...pressable}>
+              {expanded ? t.showLess : `${t.showAll} (${filtered.length})`}
+            </motion.button>
+          </div>
+        )}
       </div>
-    </PageTransition5>
+
+      <AnimatePresence onExitComplete={() => triggerRef.current?.focus({ preventScroll: true })}>
+        {selected && (
+          <ProjectModal
+            key={selected.id}
+            project={selected}
+            copy={t.items[selected.id]}
+            t={t}
+            onClose={close}
+          />
+        )}
+      </AnimatePresence>
+    </section>
   );
 };
 

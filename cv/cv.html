@@ -1,0 +1,132 @@
+<!doctype html>
+<!-- Résumé source. Rendered to public/docs by cv/render.mjs (?lang=pt | ?lang=en). -->
+<html><head><meta charset="utf-8"><title>João Marcos Ribeirete Garbelini</title>
+<style>
+  @page { size: A4; margin: 11mm 14mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Arial, Helvetica, sans-serif; color: #1a1a1a; font-size: 9.2pt; line-height: 1.36; }
+  a { color: #0b6aa8; text-decoration: none; }
+  header { text-align: center; padding-bottom: 9pt; border-bottom: 1.4pt solid #1a1a1a; }
+  h1 { font-size: 19pt; letter-spacing: .01em; }
+  .role { margin-top: 2pt; font-size: 11pt; font-weight: 600; color: #0b6aa8; }
+  .contact { margin-top: 5pt; font-size: 9pt; color: #444; }
+  .contact span + span::before { content: " | "; color: #999; }
+  section { margin-top: 8pt; }
+  h2 { font-size: 10.5pt; text-transform: uppercase; letter-spacing: .06em; padding-bottom: 3pt; margin-bottom: 6pt; border-bottom: .6pt solid #bbb; }
+  .summary { color: #333; }
+  .item + .item { margin-top: 5pt; }
+  .item-h { display: flex; justify-content: space-between; gap: 12pt; font-weight: 700; }
+  .item-h span:last-child { font-weight: 600; color: #555; white-space: nowrap; }
+  .org { color: #0b6aa8; font-weight: 600; }
+  ul { margin: 3pt 0 0 13pt; }
+  li { margin-top: 1pt; }
+  .skills { display: grid; grid-template-columns: 110pt 1fr; gap: 2.5pt 8pt; }
+  .skills b { font-weight: 700; }
+  .proj b { font-weight: 700; }
+  .proj .stack { color: #555; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20pt; }
+</style></head>
+<body>
+<main id="cv"></main>
+<script>
+const lang = new URLSearchParams(location.search).get("lang") === "en" ? "en" : "pt";
+const L = {
+  pt: {
+    role: "Desenvolvedor Full Stack · QA (Automação de Testes)",
+    location: "São Paulo, SP",
+    h: { summary: "Resumo", exp: "Experiência profissional", edu: "Formação acadêmica", skills: "Tecnologias", projects: "Projetos selecionados", lang: "Idiomas", courses: "Cursos complementares" },
+    summary: "Desenvolvedor full stack e QA, formado em Ciência da Computação (PUC-SP) e cursando a Pós Tech IA para Devs (FIAP). Experiência com automação de testes (Playwright, Percy, Cypress) e desenvolvimento web e mobile com React, React Native, Node.js e Python. Nos projetos recentes, integro LLMs, RAG e agentes em produtos reais.",
+    exp: [
+      { role: "Analista de Testes", org: "Lucy", period: "2025 – atual", bullets: [
+        "Testes manuais e automatizados para garantir a qualidade das entregas.",
+        "Automação de fluxos com Playwright e regressão visual com Percy.",
+        "Foco em confiabilidade do sistema e experiência do usuário." ] },
+      { role: "Analista de Testes Jr", org: "Virtual Town", period: "2023 – 2025", bullets: [
+        "Execução e gestão do ciclo de vida de testes no Jira.",
+        "Criação de um painel em HTML, CSS, JavaScript e Express que automatizou tarefas recorrentes do time." ] },
+      { role: "Estagiário Unity", org: "VRGlass", period: "2022 – 2023", bullets: [
+        "Suporte ao desenvolvimento de jogos: detecção e correção de erros.",
+        "Melhorias de processo para estabilidade e desempenho dos sistemas." ] },
+    ],
+    edu: [
+      { role: "Pós Tech IA para Devs", org: "FIAP", period: "2026 – cursando" },
+      { role: "Bacharelado em Ciência da Computação", org: "PUC-SP", period: "2022 – 2025" },
+    ],
+    skills: [
+      ["Front-end", "React, React Native, Next.js, TypeScript, JavaScript, Tailwind, HTML, CSS, Expo"],
+      ["Back-end", "Node.js, Express, Fastify, Python, FastAPI, Prisma"],
+      ["Banco de dados", "PostgreSQL, MySQL, SQLite, Supabase, Redis"],
+      ["IA & Dados", "OpenAI API, LangChain, LangGraph, fine-tuning (LoRA/QLoRA), RAG, scikit-learn, Pandas, SHAP"],
+      ["Testes & QA", "Playwright, Percy, Cypress, Postman, Jira"],
+      ["Ferramentas", "Git, GitHub, Docker, Electron, Figma, Adobe CC"],
+    ],
+    projects: [
+      ["Relâmpago", "assistente de voz que organiza o Google Agenda: transcrição, agente e fala com OpenAI.", "Next.js 16, TypeScript, OpenAI, Google Calendar API"],
+      ["Nublar Finance", "dashboard financeiro pessoal desktop, com a API como fonte da verdade.", "Electron, React, Prisma, PostgreSQL, Turborepo"],
+      ["MedProtocol AI (FIAP)", "assistente de protocolos hospitalares simulados com LLM ajustada, RAG com fontes e validação humana.", "Python, LangChain, LangGraph, LoRA, SQLite"],
+      ["Risco Cardíaco (FIAP)", "triagem com Random Forest otimizado para recall: 91,7% de recall e ROC-AUC 0,885 no teste.", "scikit-learn, XGBoost, SHAP"],
+      ["TCC: AI Fitness System", "app de treino e dieta personalizados por GPT-4o mini com fine-tuning.", "React Native, FastAPI, OpenAI, MySQL"],
+    ],
+    langs: ["Português (nativo)", "Inglês (intermediário) · CCAA 2011–2018, Academia Washington 2018–2019"],
+    courses: ["CC50 · Ciência da Computação de Harvard no Brasil", "Formação Front-end (HTML, CSS, JavaScript e React) · Udemy"],
+  },
+  en: {
+    role: "Full Stack Developer · QA (Test Automation)",
+    location: "São Paulo, Brazil",
+    h: { summary: "Summary", exp: "Experience", edu: "Education", skills: "Skills", projects: "Selected projects", lang: "Languages", courses: "Courses" },
+    summary: "Full stack developer and QA with a Computer Science degree (PUC-SP), currently taking FIAP's Post Tech in AI for Devs. Experienced in test automation (Playwright, Percy, Cypress) and web and mobile development with React, React Native, Node.js and Python. My recent projects put LLMs, RAG and agents into real products.",
+    exp: [
+      { role: "QA Analyst", org: "Lucy", period: "2025 – present", bullets: [
+        "Manual and automated testing to ensure delivery quality.",
+        "Flow automation with Playwright and visual regression with Percy.",
+        "Focus on system reliability and user experience." ] },
+      { role: "Junior QA Analyst", org: "Virtual Town", period: "2023 – 2025", bullets: [
+        "Ran and managed the test life cycle in Jira.",
+        "Built an HTML, CSS, JavaScript and Express panel that automated the team's recurring tasks." ] },
+      { role: "Unity Intern", org: "VRGlass", period: "2022 – 2023", bullets: [
+        "Supported game development: finding and fixing bugs.",
+        "Process improvements for system stability and performance." ] },
+    ],
+    edu: [
+      { role: "Post Tech AI for Devs", org: "FIAP", period: "2026 – in progress" },
+      { role: "B.Sc. in Computer Science", org: "PUC-SP", period: "2022 – 2025" },
+    ],
+    skills: [
+      ["Front-end", "React, React Native, Next.js, TypeScript, JavaScript, Tailwind, HTML, CSS, Expo"],
+      ["Back-end", "Node.js, Express, Fastify, Python, FastAPI, Prisma"],
+      ["Databases", "PostgreSQL, MySQL, SQLite, Supabase, Redis"],
+      ["AI & Data", "OpenAI API, LangChain, LangGraph, fine-tuning (LoRA/QLoRA), RAG, scikit-learn, Pandas, SHAP"],
+      ["Testing & QA", "Playwright, Percy, Cypress, Postman, Jira"],
+      ["Tools", "Git, GitHub, Docker, Electron, Figma, Adobe CC"],
+    ],
+    projects: [
+      ["Relâmpago", "voice assistant that organizes Google Calendar: transcription, agent and speech with OpenAI.", "Next.js 16, TypeScript, OpenAI, Google Calendar API"],
+      ["Nublar Finance", "personal finance desktop dashboard, with the API as source of truth.", "Electron, React, Prisma, PostgreSQL, Turborepo"],
+      ["MedProtocol AI (FIAP)", "simulated hospital protocol assistant with a fine-tuned LLM, cited RAG and human review.", "Python, LangChain, LangGraph, LoRA, SQLite"],
+      ["Heart Risk (FIAP)", "screening with a recall-tuned Random Forest: 91.7% recall and 0.885 ROC-AUC on test.", "scikit-learn, XGBoost, SHAP"],
+      ["Thesis: AI Fitness System", "training and diet app personalized by a fine-tuned GPT-4o mini.", "React Native, FastAPI, OpenAI, MySQL"],
+    ],
+    langs: ["Portuguese (native)", "English (intermediate) · CCAA 2011–2018, Academia Washington 2018–2019"],
+    courses: ["CC50 · Harvard's Computer Science course in Brazil", "Front-end program (HTML, CSS, JavaScript and React) · Udemy"],
+  },
+}[lang];
+document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
+const item = (e) => `<div class="item"><div class="item-h"><span>${e.role} · <span class="org">${e.org}</span></span><span>${e.period}</span></div>${e.bullets ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join("")}</ul>` : ""}</div>`;
+document.getElementById("cv").innerHTML = `
+<header>
+  <h1>João Marcos Ribeirete Garbelini</h1>
+  <p class="role">${L.role}</p>
+  <p class="contact"><span>${L.location}</span><span>(43) 99972-4044</span><span><a href="mailto:jmribeirete@hotmail.com">jmribeirete@hotmail.com</a></span></p>
+  <p class="contact"><span><a href="https://www.linkedin.com/in/joaomarcosribeirete/">linkedin.com/in/joaomarcosribeirete</a></span><span><a href="https://github.com/joaomarcosribeiretee">github.com/joaomarcosribeiretee</a></span><span><a href="https://joaomarcosribeiretee.github.io">joaomarcosribeiretee.github.io</a></span></p>
+</header>
+<section><h2>${L.h.summary}</h2><p class="summary">${L.summary}</p></section>
+<section><h2>${L.h.exp}</h2>${L.exp.map(item).join("")}</section>
+<section><h2>${L.h.edu}</h2>${L.edu.map(item).join("")}</section>
+<section><h2>${L.h.skills}</h2><div class="skills">${L.skills.map(([k, v]) => `<b>${k}</b><span>${v}</span>`).join("")}</div></section>
+<section><h2>${L.h.projects}</h2><ul class="proj">${L.projects.map(([n, d, s]) => `<li><b>${n}:</b> ${d} <span class="stack">(${s})</span></li>`).join("")}</ul></section>
+<div class="two">
+  <section><h2>${L.h.lang}</h2><ul>${L.langs.map(x => `<li>${x}</li>`).join("")}</ul></section>
+  <section><h2>${L.h.courses}</h2><ul>${L.courses.map(x => `<li>${x}</li>`).join("")}</ul></section>
+</div>`;
+</script>
+</body></html>

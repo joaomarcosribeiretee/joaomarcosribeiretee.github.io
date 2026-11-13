@@ -1,50 +1,58 @@
 .language-toggle {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    z-index: 9999;
-
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #1a1a1a;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    padding: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  padding-left: 10px;
+  border-radius: var(--r-pill);
+  background: var(--fill-subtle);
+  border: 1px solid var(--line);
 }
 
-.language-toggle svg {
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    /* Slightly rounded corners for the flag itself */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+/* Decorative: same grey as the inactive option. */
+.lang-icon {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-right: 4px;
+  color: var(--text-2);
 }
 
-.language-toggle:hover {
-    transform: scale(1.1);
-    background: #252525;
-    border-color: rgba(255, 255, 255, 0.4);
+.lang-option {
+  position: relative;
+  border: 0;
+  background: none;
+  height: 36px;
+  min-width: 42px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
 }
 
-.language-toggle:active {
-    transform: scale(0.95);
+.lang-option:hover,
+.lang-option.is-active {
+  color: var(--text);
 }
 
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .language-toggle {
-        bottom: 1.5rem;
-        left: 1.5rem;
-        width: 50px;
-        height: 50px;
-    }
+/* Active state = background + text colour only. The ring is for keyboard focus
+   (the global :focus-visible rules in App.css decide when it shows). */
+.lang-option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-radius: var(--r-pill);
+}
+
+.lang-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--surface-2);
+}
+
+.lang-label {
+  position: relative;
 }
